@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: v-console-prod
-  namespace: v-console-prod
+  name: ng-battleship-prod
+  namespace: ng-battleship-prod
   labels:
-    app: v-console-prod
+    app: ng-battleship-prod
 spec:
   selector:
     matchLabels:
-      app: v-console-prod
+      app: ng-battleship-prod
   replicas: 3
   strategy:
     rollingUpdate:
@@ -18,11 +18,11 @@ spec:
   template:
     metadata:
       labels:
-        app: v-console-prod
+        app: ng-battleship-prod
     spec:
       containers:
-      - name: v-console-prod
-        image: vincentbuiwork/v-console:prod
+      - name: ng-battleship-prod
+        image: vincentbuiwork/ng-battleship:prod
         imagePullPolicy: Always
         resources:
           requests:

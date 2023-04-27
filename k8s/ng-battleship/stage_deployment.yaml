@@ -1,14 +1,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: v-console-stage
-  namespace: v-console-stage
+  name: ng-battleship-stage
+  namespace: ng-battleship-stage
   labels:
-    app: v-console-stage
+    app: ng-battleship-stage
 spec:
   selector:
     matchLabels:
-      app: v-console-stage
+      app: ng-battleship-stage
   replicas: 1
   strategy:
     rollingUpdate:
@@ -18,11 +18,11 @@ spec:
   template:
     metadata:
       labels:
-        app: v-console-stage
+        app: ng-battleship-stage
     spec:
       containers:
-      - name: v-console-stage
-        image: vincentbuiwork/v-console:stage
+      - name: ng-battleship-stage
+        image: vincentbuiwork/ng-battleship:stage
         imagePullPolicy: Always
         resources:
           requests:

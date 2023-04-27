@@ -1,19 +1,19 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: v-console-stage-service
+  name: ng-battleship-stage-service
   labels:
-    app: v-console-stage
+    app: ng-battleship-stage
 spec:
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.105
+  loadBalancerIP: 192.168.1.107
   externalIPs:
-  - 192.168.1.105
+  - 192.168.1.107
   ports:
   - name: http
     port: 82 #local out port
     protocol: TCP
     targetPort: 80 # container port
   selector:
-    app: v-console-stage #find all pod with app name
+    app: ng-battleship-stage #find all pod with app name
   sessionAffinity: None

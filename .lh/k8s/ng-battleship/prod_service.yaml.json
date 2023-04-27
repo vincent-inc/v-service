@@ -1,0 +1,18 @@
+{
+    "sourceFile": "k8s/ng-battleship/prod_service.yaml",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1682620329707,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1682620329707,
+            "name": "Commit-0",
+            "content": "apiVersion: v1\r\nkind: Service\r\nmetadata:\r\n  name: ng-battleship-prod-service\r\n  labels:\r\n    app: ng-battleship-prod\r\nspec:\r\n  type: LoadBalancer\r\n  loadBalancerIP: 192.168.1.107\r\n  externalIPs:\r\n  - 192.168.1.107\r\n  ports:\r\n  - name: http\r\n    port: 80 #local out port\r\n    protocol: TCP\r\n    targetPort: 80 # container port\r\n  selector:\r\n    app: ng-battleship-prod #find all pod with app name\r\n  sessionAffinity: None\r\n"
+        }
+    ]
+}

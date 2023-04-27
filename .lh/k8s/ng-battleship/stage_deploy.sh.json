@@ -1,0 +1,18 @@
+{
+    "sourceFile": "k8s/ng-battleship/stage_deploy.sh",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1682620331141,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1682620331141,
+            "name": "Commit-0",
+            "content": "namespace=ng-battleship-stage\nmicrok8s kubectl delete namespace ${namespace}\nmicrok8s kubectl create namespace ${namespace}\nmicrok8s kubectl -n ${namespace} apply -f stage_deployment.yaml\nmicrok8s kubectl -n ${namespace} apply -f stage_service.yaml"
+        }
+    ]
+}
