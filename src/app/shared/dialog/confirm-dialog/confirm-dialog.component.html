@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{data.title}}</h1>
+<div mat-dialog-content>
+  <textarea name="" id="" cols="50" rows="10" readonly>{{data.message}}</textarea>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" [mat-dialog-close]="yes.toLowerCase()">{{yes}}</button>
+  <button *ngIf="no" mat-raised-button color="warn" mat-dialog-close>{{no}}</button>
+</div>
