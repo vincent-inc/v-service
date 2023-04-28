@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/shared/model/Authenticator.model.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1682704820288,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1682704820288,
+            "name": "Commit-0",
+            "content": "export interface Jwt {\r\n    jwt: string;\r\n}\r\n\r\nexport interface User {\r\n    id:          number;\r\n    username:    string;\r\n    password:    string;\r\n    userProfile: UserProfile;\r\n    userRoles:   UserRole[];\r\n}\r\n\r\nexport interface UserProfile {\r\n    id:          number;\r\n    firstName:   string;\r\n    lastName:    string;\r\n    phoneNumber: string;\r\n    email:       string;\r\n    address:     string;\r\n    city:        string;\r\n    state:       string;\r\n    zip:         string;\r\n    alias:       string;\r\n}\r\n\r\nexport interface UserRole {\r\n    id?:    number;\r\n    name:  string;\r\n    level: number;\r\n}\r\n\r\nexport interface Route {\r\n    id?:     number;\r\n    path:   string;\r\n    method: string;\r\n    secure: boolean;\r\n    roles:  UserRole[];\r\n}\r\n"
+        }
+    ]
+}

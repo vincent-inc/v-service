@@ -1,3 +1,21 @@
-<ul class="">
-  <li></li>
+<ul class="margin-center">
+  <li>
+    <app-mat-form-field-input
+    [value]="username" (validValueOutput)="username = $event.toString()"
+    (validValueOutput)="usernameValid = $event"
+    label="Username"
+    placeholder="some username"
+    styleWidth="100%"
+    ></app-mat-form-field-input>
+  </li>
+  <li>
+    <app-mat-form-field-input
+    [value]="password" (validValueOutput)="password = $event.toString()"
+    (validValueOutput)="passwordValid = $event"
+    label="password"
+    placeholder="some password"
+    styleWidth="100%"
+    [showVisibleSwitch]="true"
+    ></app-mat-form-field-input>
+  </li>
 </ul>

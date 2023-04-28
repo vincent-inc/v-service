@@ -20,6 +20,7 @@ export interface UserProfile {
     city:        string;
     state:       string;
     zip:         string;
+    alias:       string;
 }
 
 export interface UserRole {
