@@ -1,2 +1,11 @@
-<h1>hello</h1>
-<iframe style="width: 100%; height: 100%;" src="http://192.168.1.105:83/login">
+<router-outlet></router-outlet>
+
+<mat-drawer-container style="height: 100%; width: 100%;" autosize>
+    <mat-drawer #drawer  mode="side">
+      <app-side-drawer></app-side-drawer>
+    </mat-drawer>
+    
+    <app-header [drawer]="drawer"></app-header>
+    <router-outlet></router-outlet>
+</mat-drawer-container>
+

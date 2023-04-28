@@ -1,0 +1,46 @@
+{
+    "sourceFile": "src/app/app.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 7,
+            "patches": [
+                {
+                    "date": 1682620987577,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1682621011530,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,8 +7,8 @@\n })\n export class AppComponent {\n   title = 'ng-battleship';\n \n-  getStorage(): string {\n-    sessionStorage.getItem(\"jwt\");\n+  getStorage(): any {\n+    return sessionStorage.getItem(\"jwt\");\n   }\n }\n"
+                },
+                {
+                    "date": 1682621050817,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,7 +8,7 @@\n export class AppComponent {\n   title = 'ng-battleship';\n \n   getStorage(): any {\n-    return sessionStorage.getItem(\"jwt\");\n+    return localStorage.getItem(\"jwt\");\n   }\n }\n"
+                },
+                {
+                    "date": 1682621225535,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,7 +8,8 @@\n export class AppComponent {\n   title = 'ng-battleship';\n \n   getStorage(): any {\n+    \n     return localStorage.getItem(\"jwt\");\n   }\n }\n"
+                },
+                {
+                    "date": 1682622516843,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,9 @@\n   getStorage(): any {\n     \n     return localStorage.getItem(\"jwt\");\n   }\n+\n+  getPage(): any {\n+\n+  }\n }\n"
+                },
+                {
+                    "date": 1682622523719,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,7 +13,7 @@\n     return localStorage.getItem(\"jwt\");\n   }\n \n   getPage(): any {\n-\n+    \n   }\n }\n"
+                },
+                {
+                    "date": 1682622864192,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,5 @@\n   getStorage(): any {\n     \n     return localStorage.getItem(\"jwt\");\n   }\n-\n-  getPage(): any {\n-    \n-  }\n }\n"
+                },
+                {
+                    "date": 1682630034610,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,10 +6,5 @@\n   styleUrls: ['./app.component.scss']\n })\n export class AppComponent {\n   title = 'ng-battleship';\n-\n-  getStorage(): any {\n-    \n-    return localStorage.getItem(\"jwt\");\n-  }\n }\n"
+                }
+            ],
+            "date": 1682620987577,
+            "name": "Commit-0",
+            "content": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html',\n  styleUrls: ['./app.component.scss']\n})\nexport class AppComponent {\n  title = 'ng-battleship';\n\n  getStorage(): string {\n    sessionStorage.getItem(\"jwt\");\n  }\n}\n"
+        }
+    ]
+}

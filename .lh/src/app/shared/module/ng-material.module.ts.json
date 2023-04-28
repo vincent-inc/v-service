@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/shared/module/ng-material.module.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1682700788767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1682700788767,
+            "name": "Commit-0",
+            "content": "import { NgModule } from '@angular/core';\n\nimport {CdkTableModule} from '@angular/cdk/table';\nimport {MatButtonModule} from \"@angular/material/button\";\nimport {MatToolbarModule} from \"@angular/material/toolbar\";\nimport {MatIconModule} from \"@angular/material/icon\";\nimport {MatInputModule} from \"@angular/material/input\";\nimport {MatSidenavModule} from \"@angular/material/sidenav\";\nimport {MatListModule} from \"@angular/material/list\";\nimport {MatCardModule} from \"@angular/material/card\";\nimport {MatTableModule} from \"@angular/material/table\";\nimport {MatDialogModule} from \"@angular/material/dialog\";\nimport {MatSelectModule} from \"@angular/material/select\";\nimport {MatBadgeModule} from \"@angular/material/badge\";\nimport {MatRadioModule} from \"@angular/material/radio\";\nimport {MatExpansionModule} from \"@angular/material/expansion\";\nimport { MatFormFieldModule } from '@angular/material/form-field';\nimport { MatMenuModule } from '@angular/material/menu';\nimport {MatPaginatorModule} from '@angular/material/paginator';\nimport { FormsModule } from '@angular/forms';\nimport {MatTreeModule} from '@angular/material/tree';\nimport {MatTabsModule} from '@angular/material/tabs';\nimport {MatSnackBarModule} from '@angular/material/snack-bar';\nimport { MatSortModule } from '@angular/material/sort';\nimport { BrowserModule } from '@angular/platform-browser';\n\n@NgModule({\n  declarations: [\n    \n  ],\n  imports: [\n    MatButtonModule,\n    MatToolbarModule,\n    MatIconModule,\n    MatInputModule,\n    MatSidenavModule,\n    MatListModule,\n    MatCardModule,\n    MatTableModule,\n    MatDialogModule,\n    MatSelectModule,\n    MatBadgeModule,\n    MatRadioModule,\n    MatExpansionModule,\n    CdkTableModule,\n    MatMenuModule,\n    MatFormFieldModule,\n    MatPaginatorModule,\n    FormsModule,\n    MatTreeModule,\n    MatTabsModule,\n    MatSnackBarModule,\n    MatSortModule,\n    BrowserModule\n  ],\n  exports: [\n    MatButtonModule,\n    MatToolbarModule,\n    MatIconModule,\n    MatInputModule,\n    MatSidenavModule,\n    MatListModule,\n    MatCardModule,\n    MatTableModule,\n    MatDialogModule,\n    MatSelectModule,\n    MatBadgeModule,\n    MatRadioModule,\n    MatExpansionModule,\n    CdkTableModule,\n    MatMenuModule,\n    MatFormFieldModule,\n    MatPaginatorModule,\n    FormsModule,\n    MatTreeModule,\n    MatTabsModule,\n    MatSnackBarModule,\n    MatSortModule,\n    BrowserModule,\n  ]\n})\nexport class NgMaterialModule { }\n"
+        }
+    ]
+}

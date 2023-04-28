@@ -1,0 +1,12 @@
+<ul>
+  <li><h1>Dashboard</h1></li>
+  <hr>
+  <li><button mat-flat-button [routerLink]="['/home']" routerLinkActive="router-link-active" >Home</button></li>
+  <li><button *ngIf="!authenticatorService.isLoginB" mat-flat-button [routerLink]="['/login']" routerLinkActive="router-link-active" >Login</button></li>
+  <li><button *ngIf="authenticatorService.isLoginB" mat-flat-button (click)="authenticatorService.logout()" >Logout</button></li>
+  <li><button *ngIf="!authenticatorService.isLoginB" mat-flat-button [routerLink]="['/register']" routerLinkActive="router-link-active" >Register</button></li>
+  <br>
+  <li><h1>Setting</h1></li>
+  <hr>
+  <li><button mat-flat-button >User</button></li>
+</ul>
