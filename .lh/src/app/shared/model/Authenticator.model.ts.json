@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1682704820288,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1682711185701,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,38 +1,38 @@\n export interface Jwt {\r\n-    jwt: string;\r\n+    jwt?: string;\r\n }\r\n \r\n export interface User {\r\n-    id:          number;\r\n-    username:    string;\r\n-    password:    string;\r\n-    userProfile: UserProfile;\r\n-    userRoles:   UserRole[];\r\n+    id?:          number;\r\n+    username?:    string;\r\n+    password?:    string;\r\n+    userProfile?: UserProfile;\r\n+    userRoles?:   UserRole[];\r\n }\r\n \r\n export interface UserProfile {\r\n-    id:          number;\r\n-    firstName:   string;\r\n-    lastName:    string;\r\n-    phoneNumber: string;\r\n-    email:       string;\r\n-    address:     string;\r\n-    city:        string;\r\n-    state:       string;\r\n-    zip:         string;\r\n-    alias:       string;\r\n+    id?:          number;\r\n+    firstName?:   string;\r\n+    lastName?:    string;\r\n+    phoneNumber?: string;\r\n+    email?:       string;\r\n+    address?:     string;\r\n+    city?:        string;\r\n+    state?:       string;\r\n+    zip?:         string;\r\n+    alias?:       string;\r\n }\r\n \r\n export interface UserRole {\r\n     id?:    number;\r\n-    name:  string;\r\n-    level: number;\r\n+    name?:  string;\r\n+    level?: number;\r\n }\r\n \r\n export interface Route {\r\n     id?:     number;\r\n-    path:   string;\r\n-    method: string;\r\n-    secure: boolean;\r\n-    roles:  UserRole[];\r\n+    path?:   string;\r\n+    method?: string;\r\n+    secure?: boolean;\r\n+    roles?:  UserRole[];\r\n }\r\n"
                 }
             ],
             "date": 1682704820288,

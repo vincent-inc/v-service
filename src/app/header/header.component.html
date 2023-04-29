@@ -3,6 +3,8 @@
     <mat-icon>menu</mat-icon>
   </button>
 
+  <span *ngIf="getAlias()">Hello: {{getAlias()}}</span>
+
   <span class="spacer"></span>
   <button mat-icon-button aria-label="Example icon-button with heart icon">
     <mat-icon>favorite</mat-icon>

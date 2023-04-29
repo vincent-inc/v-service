@@ -27,5 +27,13 @@ export class HeaderComponent implements OnInit {
   getURL(): string {
     return document.URL;
   }
-  
+
+  getAlias(): string {
+    if(this.authenticatorService.currentUser?.userProfile?.alias)
+      return this.authenticatorService.currentUser?.userProfile?.alias;
+    else if(this.authenticatorService.currentUser?.userProfile?.firstName && this.authenticatorService.currentUser?.userProfile?.lastName)
+      return `${this.authenticatorService.currentUser?.userProfile?.firstName} ${this.authenticatorService.currentUser?.userProfile?.lastName}`
+    else 
+      return ""
+  }
 }

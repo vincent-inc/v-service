@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Jwt, Route, User, UserRole } from '../model/Authenticator.model';
 import { SettingService } from './Setting.service';
 import { Observable, first, interval } from 'rxjs';
+import { UsernameExistResponse } from '../model/Response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { Observable, first, interval } from 'rxjs';
 export class AuthenticatorService {
 
   jwt?: string | null;
-  private currentUser: User | undefined | null;
+  currentUser: User | undefined | null;
   isLoginB: boolean = false;
 
   private prefix = "authenticator"
@@ -32,20 +33,22 @@ export class AuthenticatorService {
     return this.httpClient.post<Jwt>(`${this.settingService.getGatewayUrl()}/${this.prefix}/auth/login`, user);
   }
 
-  private async updateUser(): Promise<void>
+  private async updateUser(): Promise<boolean>
   {
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<boolean>((resolve, reject) => {
       this.httpClient.get<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users`)
       .pipe(first()).subscribe(
         res => {
           this.currentUser = res;
           this.isLoginB = true;
+          resolve(true);
         },
         error => {
           this.currentUser = null;
           this.isLoginB = false;
+          resolve(false);
         },
-        () => resolve()
+        () => resolve(true)
       );
     });
   }
@@ -62,29 +65,40 @@ export class AuthenticatorService {
     await this.updateUser().then().catch();
   }
 
-  isLoginCall(): void {
-    this.isLogin().pipe(first()).subscribe(
-      async res => {
-        this.isLoginB = true
-      },
-      error => {
-        this.isLoginB = false
-      }
-    );
+  async isLoginCall(): Promise<void> {
+    // this.isLogin().pipe(first()).subscribe(
+    //   async res => {
+    //     this.isLoginB = true
+    //   },
+    //   error => {
+    //     this.isLoginB = false
+    //   }
+    // );
+    
+    await this.updateUser().then(b => this.isLoginB = b);
   }
 
-  isLoginCallWithReroute(navigate?: string): void {
-    this.isLogin().pipe(first()).subscribe(
-      async res => {
-        this.isLoginB = true;
-        if(navigate)
-          this.router.navigate([navigate]);
-      },
-      error => {
-        this.isLoginB = false;
-        this.router.navigate(["/login"]);
-      }
-    );
+  async isLoginCallWithReroute(navigate?: string): Promise<void> {
+    // this.isLogin().pipe(first()).subscribe(
+    //   async res => {
+    //     this.isLoginB = true;
+    //     if(navigate)
+    //       this.router.navigate([navigate]);
+    //   },
+    //   error => {
+    //     this.isLoginB = false;
+    //     this.router.navigate(["/login"]);
+    //   }
+    // );
+
+    let isLogin = await this.updateUser();
+    this.isLoginB = isLogin;
+
+    if(isLogin)
+      this.router.navigate([navigate]);
+    else
+      this.router.navigate(["/login"]);
+
   }
 
   isLogin(): Observable<void> {
@@ -115,6 +129,35 @@ export class AuthenticatorService {
     return this.httpClient.get<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users`);
   }
 
+  public isUsernameExist(username: string): Observable<UsernameExistResponse> {
+    return this.httpClient.get<UsernameExistResponse>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users/username/${username}`);
+  }
+
+  public getAllUsers(): Observable<User[]> {
+    return this.httpClient.get<User[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users`);
+  }
+
+  public getUsers(id: number): Observable<User> {
+    return this.httpClient.get<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users/${id}`);
+  }
+
+  public postUsers(User: User): Observable<User> {
+    return this.httpClient.post<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users`, User);
+  }
+
+  public putUsers(User: User): Observable<User> {
+    return this.httpClient.put<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users/${User.id}`, User);
+  }
+
+  public patchUsers(User: User): Observable<User> {
+    return this.httpClient.patch<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users/${User.id}`, User);
+  }
+
+  public deleteUsers(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users/${id}`);
+  }
+
+  //UserRoles
   public getAllRoles(): Observable<UserRole[]> {
     return this.httpClient.get<UserRole[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/roles`);
   }

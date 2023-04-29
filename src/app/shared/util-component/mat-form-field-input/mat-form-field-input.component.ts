@@ -101,9 +101,9 @@ export class MatFormFieldInputComponent implements OnInit
     this.valueOutput.emit(this.value);
   }
 
-  emitValidValue(): void
+  emitValidValue(valid: boolean): void
   {
-    this.validValueOutput.emit(this.isValidValue());
+    this.validValueOutput.emit(valid);
   }
 
   clear(): void
@@ -168,13 +168,20 @@ export class MatFormFieldInputComponent implements OnInit
   }
 
   isValidValue(): boolean {
-    
     if(this.required && this.value === '')
+    {
+      this.emitValidValue(false);
       return false;
+    }
 
     if(this.validatorFn)
-      return !this.getValidatorMessage();
+    {
+      let valid = !this.getValidatorMessage()
+      this.emitValidValue(valid);
+      return valid;
+    }
 
+    this.emitValidValue(true);
     return true;
   }
 }

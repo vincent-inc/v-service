@@ -3,11 +3,47 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1682700755284,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1682742478402,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,10 @@\n   <button mat-icon-button aria-label=\"Example icon-button with menu icon\" (click)=\"drawer?.toggle()\">\n     <mat-icon>menu</mat-icon>\n   </button>\n \n+  <span>sss</span>\n+\n   <span class=\"spacer\"></span>\n   <button mat-icon-button aria-label=\"Example icon-button with heart icon\">\n     <mat-icon>favorite</mat-icon>\n   </button>\n"
+                },
+                {
+                    "date": 1682742540452,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n   <button mat-icon-button aria-label=\"Example icon-button with menu icon\" (click)=\"drawer?.toggle()\">\n     <mat-icon>menu</mat-icon>\n   </button>\n \n-  <span>sss</span>\n+  <span>Hello: {{authenticatorService.currentUser.alias!}}</span>\n \n   <span class=\"spacer\"></span>\n   <button mat-icon-button aria-label=\"Example icon-button with heart icon\">\n     <mat-icon>favorite</mat-icon>\n"
+                },
+                {
+                    "date": 1682742553976,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n   <button mat-icon-button aria-label=\"Example icon-button with menu icon\" (click)=\"drawer?.toggle()\">\n     <mat-icon>menu</mat-icon>\n   </button>\n \n-  <span>Hello: {{authenticatorService.currentUser.alias!}}</span>\n+  <span>Hello: {{authenticatorService.currentUser.alias}}</span>\n \n   <span class=\"spacer\"></span>\n   <button mat-icon-button aria-label=\"Example icon-button with heart icon\">\n     <mat-icon>favorite</mat-icon>\n"
+                },
+                {
+                    "date": 1682742577568,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n   <button mat-icon-button aria-label=\"Example icon-button with menu icon\" (click)=\"drawer?.toggle()\">\n     <mat-icon>menu</mat-icon>\n   </button>\n \n-  <span>Hello: {{authenticatorService.currentUser.alias}}</span>\n+  <span *ngIf=\"authenticatorService.currentUser\">Hello: {{authenticatorService.currentUser.alias!}}</span>\n \n   <span class=\"spacer\"></span>\n   <button mat-icon-button aria-label=\"Example icon-button with heart icon\">\n     <mat-icon>favorite</mat-icon>\n"
+                },
+                {
+                    "date": 1682742904390,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n   <button mat-icon-button aria-label=\"Example icon-button with menu icon\" (click)=\"drawer?.toggle()\">\n     <mat-icon>menu</mat-icon>\n   </button>\n \n-  <span *ngIf=\"authenticatorService.currentUser\">Hello: {{authenticatorService.currentUser.alias!}}</span>\n+  <span *ngIf=\"getAlias()\">Hello: {{getAlias()}}</span>\n \n   <span class=\"spacer\"></span>\n   <button mat-icon-button aria-label=\"Example icon-button with heart icon\">\n     <mat-icon>favorite</mat-icon>\n"
+                },
+                {
+                    "date": 1682742933876,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n   <button mat-icon-button aria-label=\"Example icon-button with menu icon\" (click)=\"drawer?.toggle()\">\n     <mat-icon>menu</mat-icon>\n   </button>\n \n-  <span *ngIf=\"getAlias()\">Hello: {{getAlias()}}</span>\n+  <span *ngIf=\"getAlias()\">Hello: {{this.authenticatorService.currentUser?.userProfile?.alias}}</span>\n \n   <span class=\"spacer\"></span>\n   <button mat-icon-button aria-label=\"Example icon-button with heart icon\">\n     <mat-icon>favorite</mat-icon>\n"
+                },
+                {
+                    "date": 1682742964178,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n   <button mat-icon-button aria-label=\"Example icon-button with menu icon\" (click)=\"drawer?.toggle()\">\n     <mat-icon>menu</mat-icon>\n   </button>\n \n-  <span *ngIf=\"getAlias()\">Hello: {{this.authenticatorService.currentUser?.userProfile?.alias}}</span>\n+  <span *ngIf=\"this.authenticatorService.currentUser?.userProfile?.alias\">Hello: {{this.authenticatorService.currentUser?.userProfile?.alias}}</span>\n \n   <span class=\"spacer\"></span>\n   <button mat-icon-button aria-label=\"Example icon-button with heart icon\">\n     <mat-icon>favorite</mat-icon>\n"
+                },
+                {
+                    "date": 1682742971063,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n   <button mat-icon-button aria-label=\"Example icon-button with menu icon\" (click)=\"drawer?.toggle()\">\n     <mat-icon>menu</mat-icon>\n   </button>\n \n-  <span *ngIf=\"this.authenticatorService.currentUser?.userProfile?.alias\">Hello: {{this.authenticatorService.currentUser?.userProfile?.alias}}</span>\n+  <span>Hello: {{this.authenticatorService.currentUser?.userProfile?.alias}}</span>\n \n   <span class=\"spacer\"></span>\n   <button mat-icon-button aria-label=\"Example icon-button with heart icon\">\n     <mat-icon>favorite</mat-icon>\n"
+                },
+                {
+                    "date": 1682743041986,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n   <button mat-icon-button aria-label=\"Example icon-button with menu icon\" (click)=\"drawer?.toggle()\">\n     <mat-icon>menu</mat-icon>\n   </button>\n \n-  <span>Hello: {{this.authenticatorService.currentUser?.userProfile?.alias}}</span>\n+  <span *ngIf=\"getAlias()\">Hello: {{getAlias()}}</span>\n \n   <span class=\"spacer\"></span>\n   <button mat-icon-button aria-label=\"Example icon-button with heart icon\">\n     <mat-icon>favorite</mat-icon>\n"
                 }
             ],
             "date": 1682700755284,
