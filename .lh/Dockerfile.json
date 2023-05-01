@@ -1,0 +1,18 @@
+{
+    "sourceFile": "Dockerfile",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1682971848537,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1682971848537,
+            "name": "Commit-0",
+            "content": "FROM nginx:stable-alpine3.17-slim\r\nCOPY dist/ng-battleship /usr/share/nginx/html\r\nCOPY ngnix-angular.conf /etc/nginx/conf.d/default.conf\r\nEXPOSE 80\r\nEXPOSE 81\r\nEXPOSE 82\r\nEXPOSE 83"
+        }
+    ]
+}

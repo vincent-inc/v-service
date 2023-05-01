@@ -6,9 +6,9 @@ metadata:
     app: ng-battleship-dev
 spec:
   type: LoadBalancer
-  loadBalancerIP: 192.168.1.107
+  loadBalancerIP: 10.24.24.107
   externalIPs:
-  - 192.168.1.107
+  - 10.24.24.107
   ports:
   - name: http
     port: 83 #local out port
