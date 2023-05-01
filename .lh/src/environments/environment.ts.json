@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1682630106853,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1682973165601,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \r\n export const environment = \r\n {\r\n   production: false,\r\n-  gateway_api: 'http://192.168.1.101:83'\r\n+  gateway_api: 'http://10.24.24.101:83',\r\n   v_console: 'http://192.168.1.105:83'\r\n };\r\n \r\n /*\r\n"
                 }
             ],
             "date": 1682630106853,
