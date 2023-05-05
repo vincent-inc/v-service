@@ -14,6 +14,8 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './shared/guards/auth.interceptor';
+import { BattleshipComponent } from './game/battleship/battleship.component';
+import { LobbyComponent } from './game/lobby/lobby.component';
 
 @NgModule({
   declarations: [			
@@ -22,7 +24,9 @@ import { AuthInterceptor } from './shared/guards/auth.interceptor';
       HeaderComponent,
       SideDrawerComponent,
       HomeComponent,
-      RegisterComponent
+      RegisterComponent,
+      BattleshipComponent,
+      LobbyComponent
    ],
   imports: [
     NgEssentialModule,

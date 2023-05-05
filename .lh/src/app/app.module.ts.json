@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 4,
+            "activePatchIndex": 5,
             "patches": [
                 {
                     "date": 1682618286655,
@@ -24,6 +24,10 @@
                 {
                     "date": 1682701365063,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,22 +9,32 @@\n import { NgDialogModule } from './shared/module/ng-dialog.module ';\n import { LoginComponent } from './login/login.component';\n import { HeaderComponent } from './header/header.component';\n import { SideDrawerComponent } from './side-drawer/side-drawer.component';\n+import { HomeComponent } from './home/home.component';\n+import { RegisterComponent } from './register/register.component';\n+import { HTTP_INTERCEPTORS } from '@angular/common/http';\n+import { AuthInterceptor } from './shared/guards/auth.interceptor';\n \n @NgModule({\n-  declarations: [\t\n+  declarations: [\t\t\t\n     AppComponent,\n       LoginComponent,\n       HeaderComponent,\n-      SideDrawerComponent\n+      SideDrawerComponent,\n+      HomeComponent,\n+      RegisterComponent\n    ],\n   imports: [\n     NgEssentialModule,\n     NgMaterialModule,\n     NgComponentModule,\n     NgDialogModule,\n   ],\n-  providers: [],\n+  providers: [{\n+    provide: HTTP_INTERCEPTORS,\n+    useClass: AuthInterceptor,\n+    multi: true\n+  }],\n   bootstrap: [AppComponent]\n })\n export class AppModule { }\n"
+                },
+                {
+                    "date": 1682973554017,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,17 +13,21 @@\n import { HomeComponent } from './home/home.component';\n import { RegisterComponent } from './register/register.component';\n import { HTTP_INTERCEPTORS } from '@angular/common/http';\n import { AuthInterceptor } from './shared/guards/auth.interceptor';\n+import { BattleshipComponent } from './game/battleship/battleship.component';\n+import { LobbyComponent } from './game/lobby/lobby.component';\n \n @NgModule({\n   declarations: [\t\t\t\n     AppComponent,\n       LoginComponent,\n       HeaderComponent,\n       SideDrawerComponent,\n       HomeComponent,\n-      RegisterComponent\n+      RegisterComponent,\n+      BattleshipComponent,\n+      LobbyComponent\n    ],\n   imports: [\n     NgEssentialModule,\n     NgMaterialModule,\n"
                 }
             ],
             "date": 1682618286655,

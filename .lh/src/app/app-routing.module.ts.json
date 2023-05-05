@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1682630305577,
@@ -12,6 +12,10 @@
                 {
                     "date": 1682701166437,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,13 +1,23 @@\n import { NgModule } from '@angular/core';\n import { RouterModule, Routes } from '@angular/router';\n import { LoginComponent } from './login/login.component';\n+import { HomeComponent } from './home/home.component';\n+import { RegisterComponent } from './register/register.component';\n \n const routes: Routes = [\n   {\n+    path: 'home',\n+    component: HomeComponent\n+  },\n+  {\n     path: 'login',\n     component: LoginComponent\n-  }\n+  },\n+  {\n+    path: 'register',\n+    component: RegisterComponent\n+  },\n ];\n \n @NgModule({\n   imports: [RouterModule.forRoot(routes)],\n"
+                },
+                {
+                    "date": 1682973710275,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n import { RouterModule, Routes } from '@angular/router';\n import { LoginComponent } from './login/login.component';\n import { HomeComponent } from './home/home.component';\n import { RegisterComponent } from './register/register.component';\n+import { LobbyComponent } from './game/lobby/lobby.component';\n \n const routes: Routes = [\n   {\n     path: 'home',\n@@ -16,8 +17,17 @@\n   {\n     path: 'register',\n     component: RegisterComponent\n   },\n+  {\n+    path: 'game',\n+    children: [\n+      {\n+        path: 'lobby',\n+        component: LobbyComponent\n+      }\n+    ]\n+  }\n ];\n \n @NgModule({\n   imports: [RouterModule.forRoot(routes)],\n"
                 }
             ],
             "date": 1682630305577,

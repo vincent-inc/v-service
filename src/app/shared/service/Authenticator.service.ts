@@ -66,39 +66,19 @@ export class AuthenticatorService {
   }
 
   async isLoginCall(): Promise<void> {
-    // this.isLogin().pipe(first()).subscribe(
-    //   async res => {
-    //     this.isLoginB = true
-    //   },
-    //   error => {
-    //     this.isLoginB = false
-    //   }
-    // );
     
     await this.updateUser().then(b => this.isLoginB = b);
   }
 
   async isLoginCallWithReroute(navigate?: string): Promise<void> {
-    // this.isLogin().pipe(first()).subscribe(
-    //   async res => {
-    //     this.isLoginB = true;
-    //     if(navigate)
-    //       this.router.navigate([navigate]);
-    //   },
-    //   error => {
-    //     this.isLoginB = false;
-    //     this.router.navigate(["/login"]);
-    //   }
-    // );
 
     let isLogin = await this.updateUser();
     this.isLoginB = isLogin;
 
-    if(isLogin)
+    if(isLogin && navigate)
       this.router.navigate([navigate]);
-    else
+    else if(!isLogin)
       this.router.navigate(["/login"]);
-
   }
 
   isLogin(): Observable<void> {
@@ -134,7 +114,7 @@ export class AuthenticatorService {
   }
 
   public getAllUsers(): Observable<User[]> {
-    return this.httpClient.get<User[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users`);
+    return this.httpClient.get<User[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users/all`);
   }
 
   public getUsers(id: number): Observable<User> {

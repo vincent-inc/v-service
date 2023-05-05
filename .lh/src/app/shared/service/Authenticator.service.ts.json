@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 20,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1682711862532,
@@ -88,6 +88,10 @@
                 {
                     "date": 1682743758608,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,9 +73,9 @@\n     //   error => {\n     //     this.isLoginB = false\n     //   }\n     // );\n-\n+    \n     await this.updateUser().then(b => this.isLoginB = b);\n   }\n \n   async isLoginCallWithReroute(navigate?: string): Promise<void> {\n"
+                },
+                {
+                    "date": 1683326031831,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -65,41 +65,21 @@\n     await this.updateUser().then().catch();\n   }\n \n   async isLoginCall(): Promise<void> {\n-    // this.isLogin().pipe(first()).subscribe(\n-    //   async res => {\n-    //     this.isLoginB = true\n-    //   },\n-    //   error => {\n-    //     this.isLoginB = false\n-    //   }\n-    // );\n     \n     await this.updateUser().then(b => this.isLoginB = b);\n   }\n \n   async isLoginCallWithReroute(navigate?: string): Promise<void> {\n-    // this.isLogin().pipe(first()).subscribe(\n-    //   async res => {\n-    //     this.isLoginB = true;\n-    //     if(navigate)\n-    //       this.router.navigate([navigate]);\n-    //   },\n-    //   error => {\n-    //     this.isLoginB = false;\n-    //     this.router.navigate([\"/login\"]);\n-    //   }\n-    // );\n \n     let isLogin = await this.updateUser();\n     this.isLoginB = isLogin;\n \n-    if(isLogin)\n+    if(isLogin && navigate)\n       this.router.navigate([navigate]);\n-    else\n+    else if(!isLogin)\n       this.router.navigate([\"/login\"]);\n-\n   }\n \n   isLogin(): Observable<void> {\n     return this.httpClient.get<void>(`${this.settingService.getGatewayUrl()}/${this.prefix}/auth`);\n@@ -133,9 +113,9 @@\n     return this.httpClient.get<UsernameExistResponse>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users/username/${username}`);\n   }\n \n   public getAllUsers(): Observable<User[]> {\n-    return this.httpClient.get<User[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users`);\n+    return this.httpClient.get<User[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users/all`);\n   }\n \n   public getUsers(id: number): Observable<User> {\n     return this.httpClient.get<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users/${id}`);\n"
                 }
             ],
             "date": 1682711862532,

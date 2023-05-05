@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/game/lobby/lobby.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1682973539498,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1682973539498,
+            "name": "Commit-0",
+            "content": "import { Component, OnInit } from '@angular/core';\n\n@Component({\n  selector: 'app-lobby',\n  templateUrl: './lobby.component.html',\n  styleUrls: ['./lobby.component.scss']\n})\nexport class LobbyComponent implements OnInit {\n\n  constructor() { }\n\n  ngOnInit() {\n  }\n\n}\n"
+        }
+    ]
+}

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+import { LobbyComponent } from './game/lobby/lobby.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,15 @@ const routes: Routes = [
     path: 'register',
     component: RegisterComponent
   },
+  {
+    path: 'game',
+    children: [
+      {
+        path: 'lobby',
+        component: LobbyComponent
+      }
+    ]
+  }
 ];
 
 @NgModule({

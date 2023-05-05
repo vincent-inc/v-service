@@ -6,6 +6,11 @@
   <li><button *ngIf="authenticatorService.isLoginB" mat-flat-button (click)="authenticatorService.logout()" >Logout</button></li>
   <li><button *ngIf="!authenticatorService.isLoginB" mat-flat-button [routerLink]="['/register']" routerLinkActive="router-link-active" >Register</button></li>
   <br>
+  <li><h1>GAME</h1></li>
+  <hr>
+  <li><button mat-flat-button [routerLink]="['/game/lobby']" routerLinkActive="router-link-active"  >Lobby</button></li>
+  <li><button mat-flat-button >Battle Ship</button></li>
+  <br>
   <li><h1>Setting</h1></li>
   <hr>
   <li><button mat-flat-button >User</button></li>
