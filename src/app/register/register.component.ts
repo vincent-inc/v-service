@@ -52,7 +52,7 @@ export class RegisterComponent implements OnInit, AfterContentChecked {
     else
       this.error = "";
 
-    this.authenticatorService.postUsers(user).pipe(first()).subscribe(
+    this.authenticatorService.postUser(user).pipe(first()).subscribe(
       res => {
         let dialog = this.matDialog.open(ConfirmDialog, {data: {title: "Register Successful", message: "Do you want to auto login with registered information?\nAnd redirect to home?"}});
       

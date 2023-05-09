@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/side-drawer/side-drawer.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1683640921418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1683640921418,
+            "name": "Commit-0",
+            "content": "import { Component, OnInit } from '@angular/core';\r\nimport { AuthenticatorService } from '../shared/service/Authenticator.service';\r\n\r\n@Component({\r\n  selector: 'app-side-drawer',\r\n  templateUrl: './side-drawer.component.html',\r\n  styleUrls: ['./side-drawer.component.scss']\r\n})\r\nexport class SideDrawerComponent implements OnInit {\r\n\r\n  constructor(public authenticatorService: AuthenticatorService) { }\r\n\r\n  ngOnInit() {\r\n  }\r\n\r\n}\r\n"
+        }
+    ]
+}

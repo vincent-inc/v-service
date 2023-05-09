@@ -113,57 +113,77 @@ export class AuthenticatorService {
     return this.httpClient.get<UsernameExistResponse>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users/username/${username}`);
   }
 
-  public getAllUsers(): Observable<User[]> {
+  public getUsers(): Observable<User[]> {
     return this.httpClient.get<User[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users/all`);
   }
 
-  public getUsers(id: number): Observable<User> {
+  public getUser(id: number): Observable<User> {
     return this.httpClient.get<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users/${id}`);
   }
 
-  public postUsers(User: User): Observable<User> {
+  public postUser(User: User): Observable<User> {
     return this.httpClient.post<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users`, User);
   }
 
-  public putUsers(User: User): Observable<User> {
+  public putUser(User: User): Observable<User> {
     return this.httpClient.put<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users/${User.id}`, User);
   }
 
-  public patchUsers(User: User): Observable<User> {
+  public patchUser(User: User): Observable<User> {
     return this.httpClient.patch<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users/${User.id}`, User);
   }
 
-  public deleteUsers(id: number): Observable<void> {
+  public deleteUser(id: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users/${id}`);
   }
 
   //UserRoles
-  public getAllRoles(): Observable<UserRole[]> {
+  public getUserRoles(): Observable<UserRole[]> {
     return this.httpClient.get<UserRole[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/roles`);
   }
 
+  public getUserRole(id: number): Observable<UserRole> {
+    return this.httpClient.get<UserRole>(`${this.settingService.getGatewayUrl()}/${this.prefix}/roles/${id}`);
+  }
+
+  public postUserRole(role: UserRole): Observable<UserRole> {
+    return this.httpClient.post<UserRole>(`${this.settingService.getGatewayUrl()}/${this.prefix}/roles`, role);
+  }
+
+  public putUserRole(role: UserRole): Observable<UserRole> {
+    return this.httpClient.put<UserRole>(`${this.settingService.getGatewayUrl()}/${this.prefix}/roles/${role.id}`, role);
+  }
+
+  public patchUserRole(role: UserRole): Observable<UserRole> {
+    return this.httpClient.patch<UserRole>(`${this.settingService.getGatewayUrl()}/${this.prefix}/roles/${role.id}`, role);
+  }
+
+  public deleteUserRole(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.settingService.getGatewayUrl()}/${this.prefix}/roles/${id}`);
+  }
+
   //Routes
-  public getAllRoutes(): Observable<Route[]> {
+  public getRoutes(): Observable<Route[]> {
     return this.httpClient.get<Route[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/routes`);
   }
 
-  public getRoutes(id: number): Observable<Route> {
+  public getRoute(id: number): Observable<Route> {
     return this.httpClient.get<Route>(`${this.settingService.getGatewayUrl()}/${this.prefix}/routes/${id}`);
   }
 
-  public postRoutes(route: Route): Observable<Route> {
+  public postRoute(route: Route): Observable<Route> {
     return this.httpClient.post<Route>(`${this.settingService.getGatewayUrl()}/${this.prefix}/routes`, route);
   }
 
-  public putRoutes(route: Route): Observable<Route> {
+  public putRoute(route: Route): Observable<Route> {
     return this.httpClient.put<Route>(`${this.settingService.getGatewayUrl()}/${this.prefix}/routes/${route.id}`, route);
   }
 
-  public patchRoutes(route: Route): Observable<Route> {
+  public patchRoute(route: Route): Observable<Route> {
     return this.httpClient.patch<Route>(`${this.settingService.getGatewayUrl()}/${this.prefix}/routes/${route.id}`, route);
   }
 
-  public deleteRoutes(id: number): Observable<void> {
+  public deleteRoute(id: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.settingService.getGatewayUrl()}/${this.prefix}/routes/${id}`);
   }
 }
