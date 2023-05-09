@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LobbyComponent } from './game/lobby/lobby.component';
+import { GirlfriendTestComponent } from './trivia/girlfriend-test/girlfriend-test.component';
 
 const routes: Routes = [
   {
@@ -24,6 +25,15 @@ const routes: Routes = [
       {
         path: 'lobby',
         component: LobbyComponent
+      }
+    ]
+  },
+  {
+    path: 'trivia',
+    children: [
+      {
+        path: 'girlfriend_test',
+        component: GirlfriendTestComponent
       }
     ]
   }
