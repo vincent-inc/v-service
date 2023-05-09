@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 44,
+            "activePatchIndex": 45,
             "patches": [
                 {
                     "date": 1682701849143,
@@ -184,6 +184,10 @@
                 {
                     "date": 1682741706727,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,7 @@\n <ul class=\"margin-center\">\n-  <li *ngIf=\"error\" class=\"text-center\" style=\"color: red;\">{{error}}\n+  <li *ngIf=\"error\" class=\"text-center\" style=\"color: red;\">\n+    {{error}}\n     <hr>\n   </li>\n   <li>\n     <app-mat-form-field-input\n"
+                },
+                {
+                    "date": 1683641871119,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,41 +1,38 @@\n-<ul class=\"margin-center\">\n-  <li *ngIf=\"error\" class=\"text-center\" style=\"color: red;\">\n-    {{error}}\n-    <hr>\n-  </li>\n-  <li>\n-    <app-mat-form-field-input\n-    [value]=\"alias\" (valueOutput)=\"alias = $event.toString()\"\n-    (validValueOutput)=\"aliasValid = $event\"\n-    [required]=\"true\"\n-    label=\"alias\"\n-    placeholder=\"some alias\"\n-    styleWidth=\"100%\"\n-    ></app-mat-form-field-input>\n-  </li>\n-  <li>\n-    <app-mat-form-field-input\n-    [value]=\"username\" (valueOutput)=\"username = $event.toString()\"\n-    (validValueOutput)=\"usernameValid = $event\"\n-    [required]=\"true\"\n-    label=\"Username\"\n-    placeholder=\"some username\"\n-    styleWidth=\"100%\">\n-    </app-mat-form-field-input>\n-  </li>\n-  <li>\n-    <app-mat-form-field-input\n-    [value]=\"password\" (valueOutput)=\"password = $event.toString()\"\n-    (validValueOutput)=\"passwordValid = $event\"\n-    [required]=\"true\"\n-    label=\"password\"\n-    placeholder=\"some password\"\n-    styleWidth=\"100%\"\n-    [showVisibleSwitch]=\"true\"\n-    ></app-mat-form-field-input>\n-  </li>\n-  <li>\n-    <button mat-raised-button color=\"primary\" style=\"width: 100%;\" [disabled]=\"validForm\" (click)=\"register()\">Register</button>\n-  </li>\n-  <h3>Need to <a routerLink=\"/login\">login</a> ?</h3>\n+<ul class=\"margin-center\">\r\n+  <li *ngIf=\"error\" class=\"text-center\" style=\"color: red;\">\r\n+    {{error}}\r\n+    <hr>\r\n+  </li>\r\n+  <li>\r\n+    <app-mat-form-field-input\r\n+    [value]=\"alias\" (valueOutput)=\"alias = $event.toString()\"\r\n+    [required]=\"true\"\r\n+    label=\"alias\"\r\n+    placeholder=\"some alias\"\r\n+    styleWidth=\"100%\"\r\n+    ></app-mat-form-field-input>\r\n+  </li>\r\n+  <li>\r\n+    <app-mat-form-field-input\r\n+    [value]=\"username\" (valueOutput)=\"username = $event.toString()\"\r\n+    [required]=\"true\"\r\n+    label=\"Username\"\r\n+    placeholder=\"some username\"\r\n+    styleWidth=\"100%\">\r\n+    </app-mat-form-field-input>\r\n+  </li>\r\n+  <li>\r\n+    <app-mat-form-field-input\r\n+    [value]=\"password\" (valueOutput)=\"password = $event.toString()\"\r\n+    [required]=\"true\"\r\n+    label=\"password\"\r\n+    placeholder=\"some password\"\r\n+    styleWidth=\"100%\"\r\n+    [showVisibleSwitch]=\"true\"\r\n+    ></app-mat-form-field-input>\r\n+  </li>\r\n+  <li>\r\n+    <button mat-raised-button color=\"primary\" style=\"width: 100%;\" [disabled]=\"validForm\" (click)=\"register()\">Register</button>\r\n+  </li>\r\n+  <h3>Need to <a routerLink=\"/login\">login</a> ?</h3>\r\n </ul>\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1682701849143,

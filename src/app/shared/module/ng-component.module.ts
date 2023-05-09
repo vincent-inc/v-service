@@ -5,13 +5,21 @@ import { MatFormFieldInputComponent } from '../util-component/mat-form-field-inp
 import { NgEssentialModule } from './ng-essential.module';
 import { NgMaterialModule } from './ng-material.module';
 import { CopyToClipboardDirective } from '../directive/copy-to-clipboard.directive';
+import { FilterNamePipe } from '../pipes/filter-name.pipe';
+import { FilterNameReversePipe } from '../pipes/filter-name-reverse.pipe';
+import { MatTableComponent } from '../util-component/mat-table/mat-table.component';
+import { MatFormFieldGroupDirective } from '../directive/mat-form-field-group.directive';
 
 @NgModule({
   declarations: [
     CopyToClipboardUtilComponent,
     InputTypeSwitchComponent,
     MatFormFieldInputComponent,
-    CopyToClipboardDirective
+    CopyToClipboardDirective,
+    FilterNamePipe,
+    FilterNameReversePipe,
+    MatTableComponent,
+    MatFormFieldGroupDirective
   ],
   imports: [
     NgMaterialModule,
@@ -21,7 +29,11 @@ import { CopyToClipboardDirective } from '../directive/copy-to-clipboard.directi
     CopyToClipboardUtilComponent,
     InputTypeSwitchComponent,
     MatFormFieldInputComponent,
-    CopyToClipboardDirective
+    CopyToClipboardDirective,
+    FilterNamePipe,
+    FilterNameReversePipe,
+    MatTableComponent,
+    MatFormFieldGroupDirective
   ]
 })
 export class NgComponentModule { }

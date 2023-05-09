@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/shared/module/ng-component.module.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1683641505152,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1683641505152,
+            "name": "Commit-0",
+            "content": "import { NgModule } from '@angular/core';\r\nimport { CopyToClipboardUtilComponent } from '../util-component/copy-to-clipboard-util/copy-to-clipboard-util.component';\r\nimport { InputTypeSwitchComponent } from '../util-component/input-type-switch/input-type-switch.component';\r\nimport { MatFormFieldInputComponent } from '../util-component/mat-form-field-input/mat-form-field-input.component';\r\nimport { NgEssentialModule } from './ng-essential.module';\r\nimport { NgMaterialModule } from './ng-material.module';\r\nimport { FilterNamePipe } from '../pipes/filter-name.pipe';\r\nimport { FilterNameReversePipe } from '../pipes/filter-name-reverse.pipe';\r\nimport { MatTableComponent } from '../util-component/mat-table/mat-table.component';\r\nimport { CopyToClipboardDirective } from '../directive/copy-to-clipboard.directive';\r\nimport { MatFormFieldGroupDirective } from '../directive/mat-form-field-group.directive';\r\n\r\n@NgModule({\r\n  declarations: [\r\n    CopyToClipboardUtilComponent,\r\n    InputTypeSwitchComponent,\r\n    MatFormFieldInputComponent,\r\n    CopyToClipboardDirective,\r\n    FilterNamePipe,\r\n    FilterNameReversePipe,\r\n    MatTableComponent,\r\n    MatFormFieldGroupDirective\r\n  ],\r\n  imports: [\r\n    NgMaterialModule,\r\n    NgEssentialModule\r\n  ],\r\n  exports: [\r\n    CopyToClipboardUtilComponent,\r\n    InputTypeSwitchComponent,\r\n    MatFormFieldInputComponent,\r\n    CopyToClipboardDirective,\r\n    FilterNamePipe,\r\n    FilterNameReversePipe,\r\n    MatTableComponent,\r\n    MatFormFieldGroupDirective\r\n  ]\r\n})\r\nexport class NgComponentModule { }\r\n"
+        }
+    ]
+}

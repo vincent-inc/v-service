@@ -41,7 +41,8 @@ export class RegisterComponent implements OnInit, AfterContentChecked {
       password: this.password,
       userProfile: {
         alias: this.alias
-      }
+      },
+      enable: true
     }
 
     let isExist = await this.isUsernameValid(this.username);

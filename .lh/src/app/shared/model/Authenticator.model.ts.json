@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 2,
             "patches": [
                 {
                     "date": 1682704820288,
@@ -12,6 +12,10 @@
                 {
                     "date": 1682711185701,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,38 +1,38 @@\n export interface Jwt {\r\n-    jwt: string;\r\n+    jwt?: string;\r\n }\r\n \r\n export interface User {\r\n-    id:          number;\r\n-    username:    string;\r\n-    password:    string;\r\n-    userProfile: UserProfile;\r\n-    userRoles:   UserRole[];\r\n+    id?:          number;\r\n+    username?:    string;\r\n+    password?:    string;\r\n+    userProfile?: UserProfile;\r\n+    userRoles?:   UserRole[];\r\n }\r\n \r\n export interface UserProfile {\r\n-    id:          number;\r\n-    firstName:   string;\r\n-    lastName:    string;\r\n-    phoneNumber: string;\r\n-    email:       string;\r\n-    address:     string;\r\n-    city:        string;\r\n-    state:       string;\r\n-    zip:         string;\r\n-    alias:       string;\r\n+    id?:          number;\r\n+    firstName?:   string;\r\n+    lastName?:    string;\r\n+    phoneNumber?: string;\r\n+    email?:       string;\r\n+    address?:     string;\r\n+    city?:        string;\r\n+    state?:       string;\r\n+    zip?:         string;\r\n+    alias?:       string;\r\n }\r\n \r\n export interface UserRole {\r\n     id?:    number;\r\n-    name:  string;\r\n-    level: number;\r\n+    name?:  string;\r\n+    level?: number;\r\n }\r\n \r\n export interface Route {\r\n     id?:     number;\r\n-    path:   string;\r\n-    method: string;\r\n-    secure: boolean;\r\n-    roles:  UserRole[];\r\n+    path?:   string;\r\n+    method?: string;\r\n+    secure?: boolean;\r\n+    roles?:  UserRole[];\r\n }\r\n"
+                },
+                {
+                    "date": 1683641332216,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,4 +1,6 @@\n+import { MatRow } from \"./Mat.model\";\r\n+\r\n export interface Jwt {\r\n     jwt?: string;\r\n }\r\n \r\n@@ -7,8 +9,9 @@\n     username?:    string;\r\n     password?:    string;\r\n     userProfile?: UserProfile;\r\n     userRoles?:   UserRole[];\r\n+    enable:       boolean;\r\n }\r\n \r\n export interface UserProfile {\r\n     id?:          number;\r\n@@ -35,4 +38,22 @@\n     method?: string;\r\n     secure?: boolean;\r\n     roles?:  UserRole[];\r\n }\r\n+\r\n+export default class UserRow implements MatRow\r\n+{\r\n+    id?:                   number;\r\n+    username?:              string;\r\n+    email?:                 string;\r\n+    enable?:                boolean;\r\n+    userRoles?:             string;\r\n+\r\n+    constructor(id: number, username: string, email: string, enable: boolean, userRoles: string) {\r\n+        this.id = id;\r\n+        this.username = username;\r\n+        this.email = email;\r\n+        this.enable = enable;\r\n+        this.userRoles = userRoles;\r\n+    }\r\n+}\r\n+\r\n"
                 }
             ],
             "date": 1682704820288,

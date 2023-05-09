@@ -1,9 +1,13 @@
 <mat-form-field [appearance]="getAppearance()" [color]="matColor"  [style.width.ch]="getSize(value.toString())" [style.width]="styleWidth">
   <mat-label>{{label}}</mat-label>
-  <input [ngStyle]="{color: isValidValue() ? 'white' : 'red'}" matInput [type]="defaultType" [(ngModel)]="value" #input (keyup)="emitValue()" (paste)="emitValue()" [placeholder]="placeholder" [required]="required" [disabled]="disable" [min]="min" [max]="max">
+  <input [ngStyle]="{color: error ? 'red' : 'white'}" matInput [type]="defaultType" [(ngModel)]="value" #input (paste)="emitValueWithCondition()" (ngModelChange)="emitValueWithCondition();" [placeholder]="placeholder" [required]="required" [disabled]="disable" [min]="min" [max]="max">
   <mat-error>{{label}} can't be empty</mat-error>
-  <mat-hint *ngIf="!isValidValue()" style="color: red;">{{getValidatorMessage()}}</mat-hint>
-  <button *ngIf="value && !disable" matSuffix mat-icon-button (click)="clear()">
+  <mat-hint *ngIf="error" style="color: red;">{{error}}</mat-hint>
+  <mat-hint *ngIf="manuallyEmitValue && isValueChange()" style="color: goldenrod;">Press apply icon to apply input</mat-hint>
+  <button *ngIf="manuallyEmitValue && isValueChange()" matSuffix mat-icon-button (click)="emitValue()">
+    <mat-icon>check_circle_outline</mat-icon>
+  </button>
+  <button *ngIf="showClearIcon && value && !disable" matSuffix mat-icon-button (click)="clear()">
     <mat-icon>close</mat-icon>
   </button>
   <button *ngIf="value && !disable && showGoto" matSuffix mat-icon-button (click)="openLink(value.toString())">

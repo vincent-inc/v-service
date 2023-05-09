@@ -1,3 +1,5 @@
+import { MatRow } from "./Mat.model";
+
 export interface Jwt {
     jwt?: string;
 }
@@ -8,6 +10,7 @@ export interface User {
     password?:    string;
     userProfile?: UserProfile;
     userRoles?:   UserRole[];
+    enable:       boolean;
 }
 
 export interface UserProfile {
@@ -36,3 +39,21 @@ export interface Route {
     secure?: boolean;
     roles?:  UserRole[];
 }
+
+export default class UserRow implements MatRow
+{
+    id?:                   number;
+    username?:              string;
+    email?:                 string;
+    enable?:                boolean;
+    userRoles?:             string;
+
+    constructor(id: number, username: string, email: string, enable: boolean, userRoles: string) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.enable = enable;
+        this.userRoles = userRoles;
+    }
+}
+

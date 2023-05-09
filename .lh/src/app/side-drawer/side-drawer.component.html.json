@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 11,
             "patches": [
                 {
                     "date": 1682701053691,
@@ -48,6 +48,10 @@
                 {
                     "date": 1682973670177,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,9 +7,9 @@\n   <li><button *ngIf=\"!authenticatorService.isLoginB\" mat-flat-button [routerLink]=\"['/register']\" routerLinkActive=\"router-link-active\" >Register</button></li>\n   <br>\n   <li><h1>GAME</h1></li>\n   <hr>\n-  <li><button mat-flat-button [routerLink]=\"['/lobby']\" routerLinkActive=\"router-link-active\"  >Lobby</button></li>\n+  <li><button mat-flat-button [routerLink]=\"['/game/lobby']\" routerLinkActive=\"router-link-active\"  >Lobby</button></li>\n   <li><button mat-flat-button >Battle Ship</button></li>\n   <br>\n   <li><h1>Setting</h1></li>\n   <hr>\n"
+                },
+                {
+                    "date": 1683641744319,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,17 +1,17 @@\n-<ul>\n-  <li><h1>Dashboard</h1></li>\n-  <hr>\n-  <li><button mat-flat-button [routerLink]=\"['/home']\" routerLinkActive=\"router-link-active\" >Home</button></li>\n-  <li><button *ngIf=\"!authenticatorService.isLoginB\" mat-flat-button [routerLink]=\"['/login']\" routerLinkActive=\"router-link-active\" >Login</button></li>\n-  <li><button *ngIf=\"authenticatorService.isLoginB\" mat-flat-button (click)=\"authenticatorService.logout()\" >Logout</button></li>\n-  <li><button *ngIf=\"!authenticatorService.isLoginB\" mat-flat-button [routerLink]=\"['/register']\" routerLinkActive=\"router-link-active\" >Register</button></li>\n-  <br>\n-  <li><h1>GAME</h1></li>\n-  <hr>\n-  <li><button mat-flat-button [routerLink]=\"['/game/lobby']\" routerLinkActive=\"router-link-active\"  >Lobby</button></li>\n-  <li><button mat-flat-button >Battle Ship</button></li>\n-  <br>\n-  <li><h1>Setting</h1></li>\n-  <hr>\n-  <li><button mat-flat-button >User</button></li>\n+<ul>\r\n+  <li><h1>Dashboard</h1></li>\r\n+  <hr>\r\n+  <li><button mat-flat-button [routerLink]=\"['/home']\" routerLinkActive=\"router-link-active\" >Home</button></li>\r\n+  <li><button *ngIf=\"!authenticatorService.isLoginB\" mat-flat-button [routerLink]=\"['/login']\" routerLinkActive=\"router-link-active\" >Login</button></li>\r\n+  <li><button *ngIf=\"authenticatorService.isLoginB\" mat-flat-button (click)=\"authenticatorService.logout()\" >Logout</button></li>\r\n+  <li><button *ngIf=\"!authenticatorService.isLoginB\" mat-flat-button [routerLink]=\"['/register']\" routerLinkActive=\"router-link-active\" >Register</button></li>\r\n+  <br>\r\n+  <li><h1>GAME</h1></li>\r\n+  <hr>\r\n+  <li><button mat-flat-button [routerLink]=\"['/game/lobby']\" routerLinkActive=\"router-link-active\"  >Lobby</button></li>\r\n+  <li><button mat-flat-button >Battle Ship</button></li>\r\n+  <br>\r\n+  <li><h1>Setting</h1></li>\r\n+  <hr>\r\n+  <li><button mat-flat-button >User</button></li>\r\n </ul>\n\\ No newline at end of file\n"
                 }
             ],
             "date": 1682701053691,

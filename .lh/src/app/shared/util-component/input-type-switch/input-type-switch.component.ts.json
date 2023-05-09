@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/app/shared/util-component/input-type-switch/input-type-switch.component.ts",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1683641350668,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1683641350668,
+            "name": "Commit-0",
+            "content": "import { Component, Input, OnInit } from '@angular/core';\r\n\r\n@Component({\r\n  selector: 'app-input-type-switch',\r\n  templateUrl: './input-type-switch.component.html',\r\n  styleUrls: ['./input-type-switch.component.scss']\r\n})\r\nexport class InputTypeSwitchComponent implements OnInit {\r\n\r\n  @Input()\r\n  switch: boolean = true;\r\n\r\n  @Input()\r\n  htmlInputElement!: HTMLInputElement;\r\n\r\n  @Input()\r\n  trueValue: string = 'text';\r\n\r\n  @Input()\r\n  falseValue: string = 'password';\r\n\r\n  @Input()\r\n  onIcon: string = 'visibility';\r\n\r\n  @Input()\r\n  offIcon: string = 'visibility_off';\r\n\r\n  constructor() { }\r\n\r\n  ngOnInit() {\r\n    this.changeVisibility();\r\n  }\r\n\r\n  changeVisibility()\r\n  {\r\n    let type: string = '';\r\n    this.switch ? type = this.trueValue : type = this.falseValue;\r\n    this.htmlInputElement.type = type;\r\n  }\r\n\r\n  switchVisibility()\r\n  {\r\n    this.switch = !this.switch;\r\n    this.changeVisibility();\r\n  }\r\n\r\n}\r\n"
+        }
+    ]
+}

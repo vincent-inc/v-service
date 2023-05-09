@@ -6,7 +6,6 @@
   <li>
     <app-mat-form-field-input
     [value]="alias" (valueOutput)="alias = $event.toString()"
-    (validValueOutput)="aliasValid = $event"
     [required]="true"
     label="alias"
     placeholder="some alias"
@@ -16,7 +15,6 @@
   <li>
     <app-mat-form-field-input
     [value]="username" (valueOutput)="username = $event.toString()"
-    (validValueOutput)="usernameValid = $event"
     [required]="true"
     label="Username"
     placeholder="some username"
@@ -26,7 +24,6 @@
   <li>
     <app-mat-form-field-input
     [value]="password" (valueOutput)="password = $event.toString()"
-    (validValueOutput)="passwordValid = $event"
     [required]="true"
     label="password"
     placeholder="some password"
