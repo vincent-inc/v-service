@@ -11,6 +11,7 @@ export class SideDrawerComponent implements OnInit {
   constructor(public authenticatorService: AuthenticatorService) { }
 
   ngOnInit() {
+    
   }
 
 }

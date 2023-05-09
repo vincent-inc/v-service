@@ -17,7 +17,8 @@ export class HeaderComponent implements OnInit {
   constructor(public authenticatorService: AuthenticatorService, private router: Router) { }
 
   ngOnInit() {
-    this.authenticatorService.isLoginCallWithReroute();
+    this.drawer?.toggle();
+    this.authenticatorService.isLoginCall();
   }
 
   logout(): void {

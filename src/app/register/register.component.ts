@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterContentInit, AfterViewChecked, Component, DoCheck, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, ChangeDetectorRef, Component, DoCheck, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AuthenticatorService } from '../shared/service/Authenticator.service';
 import { MatDialog } from '@angular/material/dialog';
 import { User } from '../shared/model/Authenticator.model';
@@ -14,25 +14,27 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit, AfterContentChecked {
 
   username: string = ''
-  usernameValid: boolean = false;
+  usernameError: string = '';
 
   password: string = ''
-  passwordValid: boolean = false;
 
   alias: string = ''
-  aliasValid: boolean = false;
 
   validForm: boolean = false;
 
   error: string = "";
 
-  constructor(private authenticatorService: AuthenticatorService, private matDialog: MatDialog, private router: Router) { }
-
-  ngOnInit() {
+  constructor(
+    private authenticatorService: AuthenticatorService, 
+    private matDialog: MatDialog, 
+    private router: Router,
+    private cd: ChangeDetectorRef
+  ) { }
+  ngAfterContentChecked(): void {
+    this.cd.detectChanges();
   }
 
-  ngAfterContentChecked(): void {
-    this.validForm = !(this.usernameValid && this.passwordValid && this.aliasValid);
+  ngOnInit() {
   }
 
   async register(): Promise<void> {
@@ -79,20 +81,26 @@ export class RegisterComponent implements OnInit, AfterContentChecked {
     );
   }
 
-  async isUsernameValid(username: string): Promise<boolean> {
-    return new Promise<boolean>((resolve, reject) => {
+  async isUsernameValid(username: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
       this.authenticatorService.isUsernameExist(username).pipe(first()).subscribe(
         res => {
-          resolve(res.exist);
+          resolve("");
         },
-        error => {reject(false)}
+        error => {reject("username already exist")}
       )
     });
   }
 
-  async validateUsernameFn(value: string): Promise<string> {
-    let message = ""
-    // await this.isUsernameValid(value).then(m => message = m).catch(m => message = m);
-    return message;
+  validateUsernameFn(): void {
+    if(!this.username)
+      return;
+
+    this.authenticatorService.isUsernameExist(this.username).pipe(first()).subscribe(
+      res => {
+        this.usernameError = res.exist ? "Username already exist" : "";
+      },
+      error => {}
+    );
   }
 }

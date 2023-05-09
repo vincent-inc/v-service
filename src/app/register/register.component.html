@@ -1,4 +1,4 @@
-<ul class="margin-center">
+<ul class="margin-center" appMatFormFieldGroup (onAllInputCheck)="validForm = $event">
   <li *ngIf="error" class="text-center" style="color: red;">
     {{error}}
     <hr>
@@ -16,6 +16,7 @@
     <app-mat-form-field-input
     [value]="username" (valueOutput)="username = $event.toString()"
     [required]="true"
+    [error]="usernameError" (onValueChange)="validateUsernameFn()"
     label="Username"
     placeholder="some username"
     styleWidth="100%">
@@ -32,7 +33,7 @@
     ></app-mat-form-field-input>
   </li>
   <li>
-    <button mat-raised-button color="primary" style="width: 100%;" [disabled]="validForm" (click)="register()">Register</button>
+    <button mat-raised-button color="primary" style="width: 100%;" [disabled]="!validForm" (click)="register()">Register</button>
   </li>
   <h3>Need to <a routerLink="/login">login</a> ?</h3>
 </ul>

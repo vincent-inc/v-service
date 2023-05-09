@@ -98,7 +98,11 @@ export class AuthenticatorService {
     );
   }
 
-  getJwt(): string {
+  getJwt(): string | null | undefined {
+    return this.jwt;
+  }
+
+  getJwtWithReroute(): string {
     if(this.jwt === null || this.jwt === undefined)
       this.router.navigate(['login']);
     return this.jwt!;
