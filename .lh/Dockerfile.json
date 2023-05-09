@@ -3,11 +3,15 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 1,
             "patches": [
                 {
                     "date": 1682971848537,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1683639782510,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,6 @@\n FROM nginx:stable-alpine3.17-slim\r\n-COPY dist/ng-battleship /usr/share/nginx/html\r\n+COPY dist/v-service /usr/share/nginx/html\r\n COPY ngnix-angular.conf /etc/nginx/conf.d/default.conf\r\n EXPOSE 80\r\n EXPOSE 81\r\n EXPOSE 82\r\n"
                 }
             ],
             "date": 1682971848537,

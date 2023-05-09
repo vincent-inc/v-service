@@ -1,5 +1,5 @@
 FROM nginx:stable-alpine3.17-slim
-COPY dist/ng-battleship /usr/share/nginx/html
+COPY dist/v-service /usr/share/nginx/html
 COPY ngnix-angular.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
 EXPOSE 81

@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ng-battleship-prod-service
+  name: v-service-dev-service
   labels:
-    app: ng-battleship-prod
+    app: v-service-dev
 spec:
   type: LoadBalancer
   loadBalancerIP: 10.24.24.107
@@ -11,9 +11,9 @@ spec:
   - 10.24.24.107
   ports:
   - name: http
-    port: 80 #local out port
+    port: 83 #local out port
     protocol: TCP
     targetPort: 80 # container port
   selector:
-    app: ng-battleship-prod #find all pod with app name
+    app: v-service-dev #find all pod with app name
   sessionAffinity: None

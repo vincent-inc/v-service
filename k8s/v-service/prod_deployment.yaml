@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ng-battleship-stage
-  namespace: ng-battleship-stage
+  name: v-service-prod-deployment
+  namespace: v-service-prod
   labels:
-    app: ng-battleship-stage
+    app: v-service-prod
 spec:
   selector:
     matchLabels:
-      app: ng-battleship-stage
-  replicas: 1
+      app: v-service-prod
+  replicas: 3
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -18,11 +18,11 @@ spec:
   template:
     metadata:
       labels:
-        app: ng-battleship-stage
+        app: v-service-prod
     spec:
       containers:
-      - name: ng-battleship-stage
-        image: vincentbuiwork/ng-battleship:stage
+      - name: v-service-prod
+        image: vincentbuiwork/v-service:prod
         imagePullPolicy: Always
         resources:
           requests:

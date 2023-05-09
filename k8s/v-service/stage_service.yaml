@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ng-battleship-stage-service
+  name: v-service-stage-service
   labels:
-    app: ng-battleship-stage
+    app: v-service-stage
 spec:
   type: LoadBalancer
   loadBalancerIP: 10.24.24.107
@@ -15,5 +15,5 @@ spec:
     protocol: TCP
     targetPort: 80 # container port
   selector:
-    app: ng-battleship-stage #find all pod with app name
+    app: v-service-stage #find all pod with app name
   sessionAffinity: None
