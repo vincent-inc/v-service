@@ -1,4 +1,4 @@
-import { UserProfile, UserRole } from "./Authenticator.model";
+import { User, UserProfile, UserRole } from "./Authenticator.model";
 import { MatRow } from "./Mat.model";
 
 export interface Question {
@@ -45,22 +45,24 @@ export interface BattleshipGame {
 }
 
 export interface Board {
-    player?:              Host;
+    player?:              User;
     currentNumberOfShip?: number;
     matrix?:              Array<string[]>;
 }
 
-export interface Host {
-    id?:          number;
-    username?:    string;
-    password?:    string;
-    userProfile?: UserProfile;
-    userRoles?:   UserRole[];
+export interface LobbyGame {
+    host?:           User;
+    playerList?:     User[];
+    spectatingList?: User[];
+    conversation?:   string[];
 }
 
-export interface LobbyGame {
-    host?:           Host;
-    playerList?:     Host[];
-    spectatingList?: Host[];
-    conversation?:   string[];
+export class LobbyRow implements MatRow {
+    id!:                    string;
+    name!:                  string;
+    description!:           string;
+    currentGame!:           string;
+    password!:              string;
+    currentNumberOfPlayer!: number;
+    maxPlayer!:             number;
 }
