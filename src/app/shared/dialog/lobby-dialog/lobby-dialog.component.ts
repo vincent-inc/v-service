@@ -13,7 +13,7 @@ import { first } from 'rxjs';
 })
 export class LobbyDialog implements OnInit, AfterViewChecked {
 
-  Lobby!: Lobby;
+  lobby!: Lobby;
   lobbyCopy!: Lobby;
   user!: User;
 
@@ -38,39 +38,43 @@ export class LobbyDialog implements OnInit, AfterViewChecked {
     this.authenticatorService.getCurrentLoginUser().pipe(first()).subscribe(
       res => {
         this.user = res;
+
+        if(this.data.lobbyId) {
+          this.vgameService.getLobby(this.data.lobbyId).pipe(first()).subscribe(
+            res => {
+              this.lobby = res;
+              this.lobbyCopy = structuredClone(this.lobby);
+            }
+          );
+        }
+        else {
+          this.lobby = {
+            id: '',
+            name:                  '',
+            description:           '',
+            currentGame:           '',
+            password:              '',
+            currentNumberOfPlayer: 1,
+            maxPlayer:             2,
+            lobbyGame:             {
+              host:           this.user,
+              playerList:     [],
+              spectatingList: [this.user],
+              conversation:   [],
+            },
+            battleshipGame:        {
+              maxPlayer:             2,
+              currentNumberOfPlayer: 0,
+              gridSize:              7,
+              maxNumberOfShip:       5
+            },
+          }
+
+          this.lobbyCopy = structuredClone(this.lobby);
+
+        }
       }
     );
-    
-    if(this.data.lobbyId) {
-      this.vgameService.getLobby(this.data.lobbyId).pipe(first()).subscribe(
-        res => {
-          this.Lobby = res;
-        }
-      );
-    }
-    else {
-      this.Lobby = {
-        id: '',
-        name:                  'string',
-        description:           'string',
-        currentGame:           'string',
-        password:              'string',
-        currentNumberOfPlayer: 1,
-        maxPlayer:             2,
-        lobbyGame:             {
-          host:           this.user,
-          playerList:     [],
-          spectatingList: [this.user],
-          conversation:   [],
-        },
-        battleshipGame:        {
-          maxPlayer:             2,
-          currentNumberOfPlayer: 0,
-          gridSize:              7,
-          maxNumberOfShip:       5
-        },
-      }
-    }
   }
 
   save() {
@@ -78,7 +82,7 @@ export class LobbyDialog implements OnInit, AfterViewChecked {
       
     }
     else {
-      this.vgameService.postLobby(this.Lobby).pipe(first()).subscribe(
+      this.vgameService.postLobby(this.lobby).pipe(first()).subscribe(
         res => {
           this.dialogRef.close('save');
         }
@@ -87,11 +91,11 @@ export class LobbyDialog implements OnInit, AfterViewChecked {
   }
 
   revert() {
-    this.Lobby = structuredClone(this.lobbyCopy);
+    this.lobby = structuredClone(this.lobbyCopy);
   }
 
   isValueNotChange(): boolean {
-    return JSON.stringify(this.Lobby) === JSON.stringify(this.lobbyCopy);
+    return JSON.stringify(this.lobby) === JSON.stringify(this.lobbyCopy);
   }
 
 }
