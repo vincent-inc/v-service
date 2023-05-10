@@ -54,7 +54,7 @@ export class LobbyDialog implements OnInit, AfterViewChecked {
             description:           '',
             currentGame:           '',
             password:              '',
-            currentNumberOfPlayer: 1,
+            currentNumberOfPlayer: 0,
             maxPlayer:             2,
             lobbyGame:             {
               host:           this.user,

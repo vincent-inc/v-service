@@ -45,11 +45,11 @@ export class MatTableComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.displayedColumns = [];
     this.init();
   }
 
   init() {
+    this.displayedColumns = [];
     if(this.matRows.length > 0) {
       for (const [key, value] of Object.entries(this.matRows[0])) {
         this.displayedColumns.push(key.toString())

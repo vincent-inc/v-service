@@ -26,6 +26,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.init();
+
     this.lobbyFetch = setInterval(() => {
       this.init();
     }, 2000); //1s
