@@ -23,6 +23,8 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { MatSortModule } from '@angular/material/sort';
 import { BrowserModule } from '@angular/platform-browser';
+import {MatStepperModule} from '@angular/material/stepper';
+ 
 
 @NgModule({
   declarations: [
@@ -51,7 +53,8 @@ import { BrowserModule } from '@angular/platform-browser';
     MatTabsModule,
     MatSnackBarModule,
     MatSortModule,
-    BrowserModule
+    BrowserModule,
+    MatStepperModule
   ],
   exports: [
     MatButtonModule,
@@ -77,6 +80,7 @@ import { BrowserModule } from '@angular/platform-browser';
     MatSnackBarModule,
     MatSortModule,
     BrowserModule,
+    MatStepperModule
   ]
 })
 export class NgMaterialModule { }

@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Question } from '../model/VGame.model';
 import { SettingService } from './Setting.service';
+import HttpClientUtils from '../model/HttpClientUtils.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,16 @@ export class VGameService {
 
   constructor(
     private httpClient: HttpClient,
-    private settingService: SettingService
+    private settingService: SettingService,
   ) { }
   
   // Question
+  public getAnyMatchQuestions(question: Question): Observable<Question[]> {
+    let params = HttpClientUtils.toHttpParams(question);
+
+    return this.httpClient.get<Question[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/questions/match_any`, {params: params});
+  }
+
   public getQuestions(): Observable<Question[]> {
     return this.httpClient.get<Question[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/questions`);
   }

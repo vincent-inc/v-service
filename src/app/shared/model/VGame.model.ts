@@ -7,6 +7,7 @@ export interface Question {
     possibleAnswer?: string[];
     orderBy?:        number;
     answer?:         Answer;
+    selectedAnswer?: string[];
 }
 
 export interface Answer {
