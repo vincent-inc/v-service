@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Question } from '../model/VGame.model';
+import { Lobby, Question } from '../model/VGame.model';
 import { SettingService } from './Setting.service';
 import HttpClientUtils from '../model/HttpClientUtils.model';
 
@@ -46,6 +46,31 @@ export class VGameService {
 
   public deleteQuestion(id: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.settingService.getGatewayUrl()}/${this.prefix}/questions/${id}`);
+  }  
+
+  // Lobby
+  public getLobbies(): Observable<Lobby[]> {
+    return this.httpClient.get<Lobby[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies`);
+  }
+
+  public getLobby(id: number): Observable<Lobby> {
+    return this.httpClient.get<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/${id}`);
+  }
+
+  public postLobby(lobby: Lobby): Observable<Lobby> {
+    return this.httpClient.post<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies`, lobby);
+  }
+
+  public putLobby(lobby: Lobby): Observable<Lobby> {
+    return this.httpClient.put<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/${lobby.id}`, lobby);
+  }
+
+  public patchLobby(lobby: Lobby): Observable<Lobby> {
+    return this.httpClient.patch<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/${lobby.id}`, lobby);
+  }
+
+  public deleteLobby(id: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/${id}`);
   }  
 
 }
