@@ -16,7 +16,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   constructor(
     private vgameService: VGameService
   ) { }
-
+  
   ngOnDestroy(): void {
     clearInterval(this.lobbyFetch);
   }
@@ -48,7 +48,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   }
 
   createNewLobby() {
-
+    
   }
 
 }
