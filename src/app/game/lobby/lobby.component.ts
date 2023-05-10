@@ -38,13 +38,13 @@ export class LobbyComponent implements OnInit, OnDestroy {
         this.LobbyRows = [];
         res.forEach(lobby => {
           this.LobbyRows.push({
-            id:                    lobby.id!,
-            name:                  lobby.name!,
-            description:           lobby.description!,
-            currentGame:           lobby.currentGame!,
-            password:              lobby.password!,
-            currentNumberOfPlayer: lobby.currentNumberOfPlayer!,
-            maxPlayer:             lobby.maxPlayer!,
+            id:                     lobby.id!,
+            name:                   lobby.name!,
+            description:            lobby.description!,
+            game:                   lobby.currentGame!,
+            player:                 lobby.currentNumberOfPlayer!,
+            max_player:             lobby.maxPlayer!,
+            password:               lobby.password ? true: false
           })
         })
       }
@@ -56,7 +56,10 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
     dialog.afterClosed().pipe(first()).subscribe(
       res => {
-        if(res)
+        if(res) {
+          
+        }
+        else
           this.init();
       }
     );

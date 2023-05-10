@@ -17,6 +17,7 @@ import { AuthInterceptor } from './shared/guards/auth.interceptor';
 import { BattleshipComponent } from './game/battleship/battleship.component';
 import { LobbyComponent } from './game/lobby/lobby.component';
 import { GirlfriendTestComponent } from './trivia/girlfriend-test/girlfriend-test.component';
+import { LobbyDetailComponent } from './game/lobby/lobby-detail/lobby-detail.component';
 
 @NgModule({
   declarations: [			
@@ -28,7 +29,8 @@ import { GirlfriendTestComponent } from './trivia/girlfriend-test/girlfriend-tes
       RegisterComponent,
       BattleshipComponent,
       LobbyComponent,
-      GirlfriendTestComponent
+      GirlfriendTestComponent,
+      LobbyDetailComponent
    ],
   imports: [
     NgEssentialModule,

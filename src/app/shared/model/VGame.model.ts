@@ -61,8 +61,8 @@ export class LobbyRow implements MatRow {
     id!:                    string;
     name!:                  string;
     description!:           string;
-    currentGame!:           string;
-    password!:              string;
-    currentNumberOfPlayer!: number;
-    maxPlayer!:             number;
+    game!:                  string;
+    player!:                number;
+    max_player!:            number;
+    password!:              boolean;
 }

@@ -84,7 +84,7 @@ export class LobbyDialog implements OnInit, AfterViewChecked {
     else {
       this.vgameService.postLobby(this.lobby).pipe(first()).subscribe(
         res => {
-          this.dialogRef.close('save');
+          this.dialogRef.close(res.id);
         }
       );
     }
