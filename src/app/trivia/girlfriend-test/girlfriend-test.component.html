@@ -21,10 +21,16 @@
           <ng-template matStepLabel>Finish</ng-template>
           <p>Congratulation on finish the Quiz</p>
           <div>
-            <button mat-button (click)="reset()">Do it again?</button>
+            <button mat-button (click)="reset(); stepper.reset();">Do it again?</button>
           </div>
           <div>
             <button mat-button (click)="seeResult()">See result</button>
+          </div>
+          <hr>
+          <div *ngIf="lock">
+            <h2>Your score: {{score}}%/100%</h2>
+            <h2>Your point: {{point}}/{{maxPoint}}</h2>
+            <h2>{{message}}</h2>
           </div>
         </mat-step>
       </mat-stepper>

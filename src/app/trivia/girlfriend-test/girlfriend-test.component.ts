@@ -18,6 +18,11 @@ export class GirlfriendTestComponent implements OnInit {
 
   lock: boolean = false;
 
+  score: number = 0;
+  point: number = 0;
+
+  message: string = '';
+
   constructor(
     private vgameService: VGameService
   ) { }
@@ -36,6 +41,7 @@ export class GirlfriendTestComponent implements OnInit {
         this.preprocess(res);
         this.questions = res;
         this.lock = false;
+        this.message = '';
       }
     );
   }
@@ -43,7 +49,7 @@ export class GirlfriendTestComponent implements OnInit {
   preprocess(questions: Question[]) {
     this.maxPoint = 0;
     this.shuffle(questions);
-    this.maxQuestion = 1 + (Math.random() * questions.length - 1);
+    this.maxQuestion = 1 + Math.floor(Math.random() * questions.length);
 
     while(questions.length > this.maxQuestion) {
       questions.pop();
@@ -76,6 +82,45 @@ export class GirlfriendTestComponent implements OnInit {
 
   seeResult() {
     this.lock = true;
+    let totalPoint = 0;
+    this.questions.forEach(q => {
+      let point = q.answer!.pointPerCorrectAnswer!;
+      q.selectedAnswer!.forEach(sa => {
+        if(q.answer!.correctAnswer!.indexOf(sa) >= 0) 
+          totalPoint += point;
+        else if(sa) 
+          totalPoint -= point;
+        
+      })
+    })
+
+    this.point = totalPoint;
+    if(this.point < 0)
+      this.point = 0;
+    this.score = (100 / this.maxPoint) * this.point;
+
+    if(this.score >= 90)
+      this.message = 'A+. Hello there Honey, I love you!'
+    else if(this.score >= 85)
+      this.message = 'A. You are my girlfriend'
+    else if(this.score >= 80)
+      this.message = 'A-. almost girlfriend certify'
+    else if(this.score >= 75)
+      this.message = 'B+. WOW that is almost impressive'
+    else if(this.score >= 70)
+      this.message = 'B. quite average'
+    else if(this.score >= 65)
+      this.message = 'C+. are you who I think you are?'
+    else if(this.score >= 60)
+      this.message = 'C. not bad, IMPOSTOR!'
+    else if(this.score >= 55)
+      this.message = 'D+. decent, but not good enough'
+    else if(this.score >= 50)
+      this.message = 'D. are you even trying?'
+    else if(this.score >= 40)
+      this.message = 'E. definitely not my girlfriend'
+    else
+      this.message = 'F. Go Away, you impostor!'
   }
 
   selectAnswer(question: Question, index: number, input: HTMLInputElement):void {
