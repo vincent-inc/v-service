@@ -53,7 +53,7 @@ export class VGameService {
     return this.httpClient.get<Lobby[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies`);
   }
 
-  public getLobby(id: number): Observable<Lobby> {
+  public getLobby(id: string): Observable<Lobby> {
     return this.httpClient.get<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/${id}`);
   }
 
@@ -69,7 +69,7 @@ export class VGameService {
     return this.httpClient.patch<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/${lobby.id}`, lobby);
   }
 
-  public deleteLobby(id: number): Observable<void> {
+  public deleteLobby(id: string): Observable<void> {
     return this.httpClient.delete<void>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/${id}`);
   }  
 
