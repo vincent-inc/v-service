@@ -9,9 +9,12 @@
       [matRows]="LobbyRows"
       [displayFilter]="true"
       [displayPagination]="true"
-      ></app-mat-table>
+      (onEditRow)="enterLobby($event)"
+    ></app-mat-table>
     </li>
     <hr>
     <li><button mat-raised-button color="primary" style="width: 100%;" (click)="createNewLobby()">Create new Lobby</button></li>
   </ul>
 </div>
+
+<router-outlet></router-outlet>

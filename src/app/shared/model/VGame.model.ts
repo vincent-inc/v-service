@@ -58,11 +58,11 @@ export interface LobbyGame {
 }
 
 export class LobbyRow implements MatRow {
-    id!:                    string;
-    name!:                  string;
-    description!:           string;
-    game!:                  string;
-    player!:                number;
-    max_player!:            number;
-    password!:              boolean;
+    id?:                    string;
+    name?:                  string;
+    description?:           string;
+    game?:                  string;
+    player?:                number;
+    max_player?:            number;
+    password?:              boolean;
 }

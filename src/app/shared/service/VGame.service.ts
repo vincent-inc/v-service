@@ -49,6 +49,14 @@ export class VGameService {
   }  
 
   // Lobby
+  public joinLobby(lobbyId: string): Observable<Lobby> {
+    return this.httpClient.post<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/join/${lobbyId}`, null);
+  }
+
+  public leaveLobby(lobbyId: string): Observable<Lobby> {
+    return this.httpClient.post<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/leave/${lobbyId}`, null);
+  }
+
   public getLobbies(): Observable<Lobby[]> {
     return this.httpClient.get<Lobby[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies`);
   }
@@ -72,5 +80,4 @@ export class VGameService {
   public deleteLobby(id: string): Observable<void> {
     return this.httpClient.delete<void>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/${id}`);
   }  
-
 }

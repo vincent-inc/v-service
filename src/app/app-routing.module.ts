@@ -5,6 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LobbyComponent } from './game/lobby/lobby.component';
 import { GirlfriendTestComponent } from './trivia/girlfriend-test/girlfriend-test.component';
+import { LobbyDetailComponent } from './game/lobby/lobby-detail/lobby-detail.component';
 
 const routes: Routes = [
   {
@@ -23,8 +24,17 @@ const routes: Routes = [
     path: 'game',
     children: [
       {
-        path: 'lobby',
+        path: 'lobbies',
         component: LobbyComponent
+      },
+      {
+        path: 'lobby',
+        children: [
+          {
+            path: '**',
+            component: LobbyDetailComponent
+          }
+        ]
       }
     ]
   },

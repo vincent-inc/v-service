@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { first } from 'rxjs';
 import { LobbyDialog } from 'src/app/shared/dialog/lobby-dialog/lobby-dialog.component';
 import { Lobby, LobbyRow } from 'src/app/shared/model/VGame.model';
@@ -17,7 +18,8 @@ export class LobbyComponent implements OnInit, OnDestroy {
 
   constructor(
     private vgameService: VGameService,
-    private matDialog: MatDialog
+    private matDialog: MatDialog,
+    private router: Router
   ) { }
   
   ngOnDestroy(): void {
@@ -63,6 +65,10 @@ export class LobbyComponent implements OnInit, OnDestroy {
           this.init();
       }
     );
+  }
+
+  enterLobby(LobbyRow: LobbyRow) {
+    this.router.navigate(['/game/lobby/', LobbyRow.id]);
   }
 
 }
