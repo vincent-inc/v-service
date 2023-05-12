@@ -4,11 +4,11 @@ import { Question } from 'src/app/shared/model/VGame.model';
 import { VGameService } from 'src/app/shared/service/VGame.service';
 
 @Component({
-  selector: 'app-girlfriend-test',
-  templateUrl: './girlfriend-test.component.html',
-  styleUrls: ['./girlfriend-test.component.scss']
+  selector: 'app-general-questions',
+  templateUrl: './general-questions.component.html',
+  styleUrls: ['./general-questions.component.scss']
 })
-export class GirlfriendTestComponent implements OnInit {
+export class GeneralQuestionsComponent implements OnInit {
 
   questions: Question[] = [];
 
@@ -23,17 +23,19 @@ export class GirlfriendTestComponent implements OnInit {
 
   message: string = '';
 
+  category: string = '';
+
   constructor(
     private vgameService: VGameService
   ) { }
 
   ngOnInit() {
-    this.init();
+    // this.init();
   }
 
   init() {
     let exampleQuestion: Question = {
-      category: "GF"
+      category: this.category
     }
 
     this.vgameService.getAnyMatchQuestions(exampleQuestion).pipe(first()).subscribe(

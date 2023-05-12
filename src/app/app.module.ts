@@ -16,9 +16,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './shared/guards/auth.interceptor';
 import { BattleshipComponent } from './game/battleship/battleship.component';
 import { LobbyComponent } from './game/lobby/lobby.component';
-import { GirlfriendTestComponent } from './trivia/girlfriend-test/girlfriend-test.component';
 import { LobbyDetailComponent } from './game/lobby/lobby-detail/lobby-detail.component';
 import { VincentComponent } from './about/vincent/vincent.component';
+import { GeneralQuestionsComponent } from './trivia/general-questions/general-questions.component';
 
 @NgModule({
   declarations: [			
@@ -30,9 +30,9 @@ import { VincentComponent } from './about/vincent/vincent.component';
       RegisterComponent,
       BattleshipComponent,
       LobbyComponent,
-      GirlfriendTestComponent,
       LobbyDetailComponent,
-      VincentComponent
+      VincentComponent,
+      GeneralQuestionsComponent
    ],
   imports: [
     NgEssentialModule,

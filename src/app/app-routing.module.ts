@@ -4,9 +4,9 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LobbyComponent } from './game/lobby/lobby.component';
-import { GirlfriendTestComponent } from './trivia/girlfriend-test/girlfriend-test.component';
 import { LobbyDetailComponent } from './game/lobby/lobby-detail/lobby-detail.component';
 import { VincentComponent } from './about/vincent/vincent.component';
+import { GeneralQuestionsComponent } from './trivia/general-questions/general-questions.component';
 
 const routes: Routes = [
   {
@@ -43,8 +43,8 @@ const routes: Routes = [
     path: 'trivia',
     children: [
       {
-        path: 'girlfriend_test',
-        component: GirlfriendTestComponent
+        path: 'questionnaire',
+        component: GeneralQuestionsComponent
       }
     ]
   },

@@ -1,7 +1,17 @@
 <div class="margin-center" >
   <ul>
-    <li><h1 class="text-center">Welcome to girlfriend test</h1></li>
-    <li><h2 class="text-center">Well how well do you know Vincent 😉</h2></li>
+    <li>
+      <app-mat-form-field-input
+      [value]="category" (valueOutput)="category = $event.toString()"
+      (onValueChange)="init()"
+      label="Question category"
+      styleWidth="100%"
+      ></app-mat-form-field-input>
+    </li>
+    <div *ngIf="category === 'GF'">
+      <li><h1 class="text-center">Welcome to girlfriend test</h1></li>
+      <li><h2 class="text-center">Well how well do you know Vincent 😉</h2></li>
+    </div>
     <li *ngIf="questions.length > 0">
       <mat-stepper orientation="vertical" #stepper>
         <mat-step *ngFor="let question of questions">
