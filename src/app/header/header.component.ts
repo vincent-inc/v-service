@@ -3,6 +3,7 @@ import { MatDrawer } from '@angular/material/sidenav';
 import { AuthenticatorService } from '../shared/service/Authenticator.service';
 import { first } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SettingService } from '../shared/service/Setting.service';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,11 @@ export class HeaderComponent implements OnInit {
   @Input()
   drawer?: MatDrawer;
 
-  constructor(public authenticatorService: AuthenticatorService, private router: Router) { }
+  constructor(
+    public authenticatorService: AuthenticatorService, 
+    private router: Router,
+    private settingService: SettingService
+    ) { }
 
   ngOnInit() {
     this.drawer?.toggle();
@@ -36,5 +41,12 @@ export class HeaderComponent implements OnInit {
       return `${this.authenticatorService.currentUser?.userProfile?.firstName} ${this.authenticatorService.currentUser?.userProfile?.lastName}`
     else 
       return ""
+  }
+
+  getDisplayHeader(): boolean {
+    let display = this.settingService.getDisplayHeader();
+    if (!display)
+      this.drawer?.close();
+    return display;
   }
 }

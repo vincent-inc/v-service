@@ -10,10 +10,20 @@ export class SettingService {
 
   apiGatewayUrl: string = environment.gateway_api;
 
+  displayHeader: boolean = true;
+
   constructor(private httpClient: HttpClient, private router: Router) { }
 
   getGatewayUrl(): string {
     return this.apiGatewayUrl;
+  }
+
+  getDisplayHeader(): boolean {
+    return this.displayHeader;
+  }
+
+  toggleDisplayHeader(): void {
+    this.displayHeader = !this.displayHeader;
   }
 
 }

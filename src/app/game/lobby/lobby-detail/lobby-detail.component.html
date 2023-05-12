@@ -1,8 +1,17 @@
 <div class="margin-center" *ngIf="lobby">
   <ul>
     <li><h1 class="text-center">{{lobby.name}}</h1></li>
-    <li>
-      
+    <li class="lobby-body">
+      <div class="box">
+        <ul>
+          <li><h2>Current host: {{lobby.lobbyGame!.host!.userProfile!.alias}}</h2></li>
+          <li><h2>Spectating People</h2></li>
+          <hr>
+          <li *ngFor="let user of lobby.lobbyGame!.spectatingList">
+            <h3>{{user.userProfile!.alias}}</h3>
+          </li>
+        </ul>
+      </div>
     </li>
   </ul>
 </div>

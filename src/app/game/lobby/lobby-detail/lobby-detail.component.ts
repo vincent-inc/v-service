@@ -23,7 +23,7 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     clearInterval(this.lobbyFetch);
-    
+
     this.vgameService.leaveLobby(this.lobbyId).pipe(first()).subscribe(
       res => {}
     );
