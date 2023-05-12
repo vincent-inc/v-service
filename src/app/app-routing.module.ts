@@ -6,6 +6,7 @@ import { RegisterComponent } from './register/register.component';
 import { LobbyComponent } from './game/lobby/lobby.component';
 import { GirlfriendTestComponent } from './trivia/girlfriend-test/girlfriend-test.component';
 import { LobbyDetailComponent } from './game/lobby/lobby-detail/lobby-detail.component';
+import { VincentComponent } from './about/vincent/vincent.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,24 @@ const routes: Routes = [
         component: GirlfriendTestComponent
       }
     ]
+  },
+  {
+    path: 'about',
+    children: [
+      {
+        path: 'vincent',
+        component: VincentComponent
+      },
+      {
+        path: 'iframe',
+        children: [
+          {
+            path: 'vincent',
+            component: VincentComponent
+          }
+        ]
+      }
+    ] 
   }
 ];
 

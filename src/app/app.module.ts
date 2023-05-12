@@ -18,6 +18,7 @@ import { BattleshipComponent } from './game/battleship/battleship.component';
 import { LobbyComponent } from './game/lobby/lobby.component';
 import { GirlfriendTestComponent } from './trivia/girlfriend-test/girlfriend-test.component';
 import { LobbyDetailComponent } from './game/lobby/lobby-detail/lobby-detail.component';
+import { VincentComponent } from './about/vincent/vincent.component';
 
 @NgModule({
   declarations: [			
@@ -30,7 +31,8 @@ import { LobbyDetailComponent } from './game/lobby/lobby-detail/lobby-detail.com
       BattleshipComponent,
       LobbyComponent,
       GirlfriendTestComponent,
-      LobbyDetailComponent
+      LobbyDetailComponent,
+      VincentComponent
    ],
   imports: [
     NgEssentialModule,

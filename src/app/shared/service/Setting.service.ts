@@ -22,6 +22,10 @@ export class SettingService {
     return this.displayHeader;
   }
 
+  setDisplayHeader(value: boolean): void {
+    this.displayHeader = value;
+  }
+
   toggleDisplayHeader(): void {
     this.displayHeader = !this.displayHeader;
   }
