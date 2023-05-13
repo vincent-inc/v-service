@@ -15,14 +15,17 @@ export class VincentComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    let urls = this.router.url.split('/');
-
-    if(urls.some(u => u === 'iframe'))
+    if(this.isIframe())
       this.settingService.setDisplayHeader(false);
   }
 
   ngOnDestroy(): void {
     this.settingService.setDisplayHeader(true);
+  }
+
+  isIframe(): boolean {
+    let urls = this.router.url.split('/');
+    return urls.some(u => u === 'iframe');
   }
 
 }
