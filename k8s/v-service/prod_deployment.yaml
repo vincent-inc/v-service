@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: v-service-prod
-  replicas: 3
+  replicas: 6
   strategy:
     rollingUpdate:
       maxSurge: 25%

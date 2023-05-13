@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: v-service-stage
+  name: v-service-stage-deployment
   namespace: v-service-stage
   labels:
     app: v-service-stage
@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: v-service-stage
-  replicas: 1
+  replicas: 3
   strategy:
     rollingUpdate:
       maxSurge: 25%
