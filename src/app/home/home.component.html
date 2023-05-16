@@ -5,6 +5,6 @@
     <hr>
     <li><h3>this web service is still under development and testing, some feature might not be available or bug, please use with a grain of salt 😉</h3></li>
     <li *ngIf="isInWrongURL()"><h4 style="color: red">! you are in the wrong domain, this domain is currently not working or deprecated</h4></li>
-    <li *ngIf="isInWrongURL()"><h4 style="color: red"><a href="https://vincentprivate.synology.me:10780/home">Go here</a></h4></li>
+    <li *ngIf="isInWrongURL()"><h4 style="color: red"><a [href]="[rightDomain, '/home']">Go here</a></h4></li>
   </ul>
 </div>
