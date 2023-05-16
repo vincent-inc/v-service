@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
+  rightDomain = 'https://vincentprivate.synology.me:10780';
+
   constructor() { }
 
   ngOnInit() {
@@ -14,7 +16,10 @@ export class HomeComponent implements OnInit {
   }
 
   isInWrongURL(): boolean {
-    return this.getURL().includes("https://vincentprivate.synology.me");
+    let url = this.getURL();
+    if(url.includes(this.rightDomain))
+      return false;
+    return true;
   }
 
   getURL(): string {
