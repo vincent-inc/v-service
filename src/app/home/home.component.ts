@@ -10,6 +10,15 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
+  }
+
+  isInWrongURL(): boolean {
+    return this.getURL().includes("https://vincentprivate.synology.me");
+  }
+
+  getURL(): string {
+    return document.URL;
   }
 
 }
