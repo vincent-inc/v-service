@@ -5,9 +5,9 @@
       <div class="box">
         <ul>
           <li><h2>Current host: {{lobby.lobbyGame!.host!.userProfile!.alias}}</h2></li>
-          <li><h2>Spectating People</h2></li>
+          <li><h2>People</h2></li>
           <hr>
-          <li *ngFor="let user of lobby.lobbyGame!.spectatingList">
+          <li *ngFor="let user of lobby.lobbyGame!.playerList">
             <h3>{{user.userProfile!.alias}}</h3>
           </li>
         </ul>

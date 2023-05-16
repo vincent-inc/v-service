@@ -56,10 +56,10 @@ export class LobbyDialog implements OnInit, AfterViewChecked {
             password:              '',
             currentNumberOfPlayer: 0,
             maxPlayer:             2,
+            messages:              [],
             lobbyGame:             {
               playerList:     [],
               spectatingList: [],
-              conversation:   [],
             },
             battleshipGame:        {
               maxPlayer:             2,

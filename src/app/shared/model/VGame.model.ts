@@ -34,6 +34,13 @@ export interface Lobby {
     maxPlayer?:             number;
     lobbyGame?:             LobbyGame;
     battleshipGame?:        BattleshipGame;
+    messages:               Message[];
+}
+
+export interface Message {
+    message:                string;
+    time:                   Time;
+    sendBy:                 string;
 }
 
 export interface BattleshipGame {
@@ -54,8 +61,18 @@ export interface LobbyGame {
     host?:           User;
     playerList?:     User[];
     spectatingList?: User[];
-    conversation?:   string[];
 }
+
+export interface Time {
+    year:   number;
+    month:  number;
+    day:    number;
+    hours:  number;
+    minute: number;
+    second: number;
+    maxDay: number;
+}
+
 
 export class LobbyRow implements MatRow {
     id?:                    string;
