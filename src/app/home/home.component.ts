@@ -15,6 +15,10 @@ export class HomeComponent implements OnInit {
 
   }
 
+  getRightDomain() {
+    return this.rightDomain + '/home'
+  }
+
   isInWrongURL(): boolean {
     let url = this.getURL();
     if(url.includes(this.rightDomain))
