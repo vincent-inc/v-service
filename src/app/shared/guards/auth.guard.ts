@@ -1,42 +1,73 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, CanDeactivate, CanLoad, Route, Router, RouterStateSnapshot, UrlSegment, UrlTree } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, filter, map } from 'rxjs';
 import { AuthenticatorService } from '../service/Authenticator.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate /*, CanActivateChild, CanDeactivate<unknown>, CanLoad */
+export class AuthGuard /*, CanActivateChild, CanDeactivate<unknown>, CanLoad */
 {
   constructor(private authenticatorService: AuthenticatorService, private router: Router){}
+
+  isLogin(): Observable<boolean> | Promise<boolean> | boolean {
+    if(!this.authenticatorService.getJwt())
+      return false;
+
+    return this.authenticatorService.getCurrentLoginUser().pipe(
+    map(user => {
+      return user ? true : false;
+    }));
+  }
+
+  isChildLogin(): Observable<boolean> | Promise<boolean> | boolean {
+    if(!this.authenticatorService.getJwt())
+      return false;
+
+    return this.authenticatorService.getCurrentLoginUser().pipe(
+    map(user => {
+      return user ? true : false;
+    }));
+  }
+
+  isLoginWithRole(role: string): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    if(!this.authenticatorService.getJwt())
+      return false;
+    
+    return this.authenticatorService.getCurrentLoginUser().pipe(
+    map(user => {
+      let isLogin = user ? true : false;
+      let matchUserRole = this.authenticatorService.currentUser!.userRoles!.some(u => u.name?.toUpperCase() === role.toUpperCase());
+      return isLogin && matchUserRole;
+    }));
+  }
+  
+  isChildLoginWithRole(role: string): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    if(!this.authenticatorService.getJwt())
+    return false;
+  
+    return this.authenticatorService.getCurrentLoginUser().pipe(
+    map(user => {
+      let isLogin = user ? true : false;
+      let matchUserRole = this.authenticatorService.currentUser!.userRoles!.some(u => u.name?.toUpperCase() === role.toUpperCase());
+      return isLogin && matchUserRole;
+    }));
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-
-    // const checkLogin = async () => {
-    //   await this.userService.autoCheckSessionLogin()
-    // }
     
-    // this.userService.autoUpdateUser().then(() => {
-    //   if(!this.userService.isLogin())
-    //     this.router.navigate(['/login']).catch();
-    // });
-    
-    // (async () => await this.userService.checkIsLogin())();
-
-    // if(!this.authenticatorService.isLogin())
-    //   this.router.navigate(['/login']).catch();
-
-    // return this.authenticatorService.isLogin();
-    return false;
+    return this.isLogin();
   }
   
-  // canActivateChild(
-  //   childRoute: ActivatedRouteSnapshot,
-  //   state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-  //   return true;
-  // }
+  canActivateChild(
+    childRoute: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+
+    return this.isLogin();
+  }
+
   // canDeactivate(
   //   component: unknown,
   //   currentRoute: ActivatedRouteSnapshot,

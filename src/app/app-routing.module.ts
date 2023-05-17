@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, inject } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
@@ -7,6 +7,7 @@ import { LobbyComponent } from './game/lobby/lobby.component';
 import { LobbyDetailComponent } from './game/lobby/lobby-detail/lobby-detail.component';
 import { VincentComponent } from './about/vincent/vincent.component';
 import { GeneralQuestionsComponent } from './trivia/general-questions/general-questions.component';
+import { AuthGuard } from './shared/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -19,14 +20,17 @@ const routes: Routes = [
   },
   {
     path: 'register',
-    component: RegisterComponent
+    component: RegisterComponent,
+    canActivate: [() => !inject(AuthGuard).isLogin()],
   },
   {
     path: 'game',
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'lobbies',
-        component: LobbyComponent
+        component: LobbyComponent,
       },
       {
         path: 'lobby',
@@ -41,6 +45,8 @@ const routes: Routes = [
   },
   {
     path: 'trivia',
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [
       {
         path: 'questionnaire',
