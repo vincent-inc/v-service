@@ -13,6 +13,8 @@ import { VGameService } from 'src/app/shared/service/VGame.service';
 })
 export class LobbyComponent implements OnInit, OnDestroy {
 
+  lobbyRoute: string = '/game/lobby/';
+
   LobbyRows: LobbyRow[] = [];
   private lobbyFetch?: any;
 
@@ -59,7 +61,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
     dialog.afterClosed().pipe(first()).subscribe(
       res => {
         if(res) {
-          
+          this.router.navigate([this.lobbyRoute, res]);
         }
         else
           this.init();
@@ -68,7 +70,7 @@ export class LobbyComponent implements OnInit, OnDestroy {
   }
 
   enterLobby(LobbyRow: LobbyRow) {
-    this.router.navigate(['/game/lobby/', LobbyRow.id]);
+    this.router.navigate([this.lobbyRoute, LobbyRow.id]);
   }
 
 }
