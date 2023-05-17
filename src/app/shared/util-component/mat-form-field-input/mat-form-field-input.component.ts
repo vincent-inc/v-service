@@ -125,6 +125,12 @@ export class MatFormFieldInputComponent implements OnInit, OnChanges {
     if (this.alwayUppercase && typeof value === 'string')
       value = value.toUpperCase();
 
+    if (this.defaultType === 'number' && this.min && +value < +this.min)
+      value = +this.min;
+
+    if (this.defaultType === 'number' && this.max && +value > +this.max)
+      value = +this.max;
+
     this.valueOutput.emit(value);
     this.onValueChange.emit();
   }

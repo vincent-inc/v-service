@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
 import { LobbyDialog } from 'src/app/shared/dialog/lobby-dialog/lobby-dialog.component';
-import { Lobby } from 'src/app/shared/model/VGame.model';
+import { Lobby, Message } from 'src/app/shared/model/VGame.model';
 import { AuthenticatorService } from 'src/app/shared/service/Authenticator.service';
 import { VGameService } from 'src/app/shared/service/VGame.service';
 
@@ -17,6 +17,10 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
   lobbyId!: string;
   lobby!: Lobby;
   message: string = '';
+
+  maxMessageDisplay: number = 10;
+
+  displayChat: boolean = true;
 
   private lobbyFetch?: any;
 
@@ -39,15 +43,19 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
     let urls = this.router.url.split('/');
     this.lobbyId = urls[urls.length - 1];
     this.lobbyFetch = setInterval(() => {
-      this.vgameService.getLobby(this.lobbyId).pipe(first()).subscribe(
-        res => {
-          if(this.isNotSame(res, this.lobby))
-            this.lobby = res;
-        }
-      );
+      this.updateLobby();
     }, 1000); //1s
     
     this.init();
+  }
+
+  updateLobby() {
+    this.vgameService.getLobby(this.lobbyId).pipe(first()).subscribe(
+      res => {
+        if(this.isNotSame(res, this.lobby))
+          this.lobby = res;
+      }
+    );
   }
 
   init() {
@@ -82,7 +90,21 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
     let dialog = this.matDialog.open(LobbyDialog, {data: {lobbyId: this.lobbyId}});
 
     dialog.afterClosed().pipe(first()).subscribe(
-      res => {}
+      res => {
+        this.updateLobby();
+      }
     );
+  }
+
+  getMessages(): Message[] {
+    let messages = structuredClone(this.lobby.messages)
+    while(messages.length > this.maxMessageDisplay)
+      messages = messages.slice(1, messages.length);
+
+    return messages;
+  }
+
+  getTime(message: Message): string {
+    return `${message.time.month}/${message.time.day}/${message.time.year} at ${message.time.hours}:${message.time.minute}:${message.time.second}`;
   }
 }

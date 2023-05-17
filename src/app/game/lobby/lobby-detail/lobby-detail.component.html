@@ -8,21 +8,36 @@
           <li *ngIf="isHost()">
             <button mat-raised-button color="primary" (click)="changeRoomSetting()">Change Room setting</button>
           </li>
+          <li>
+            <button mat-raised-button color="primary" (click)="displayChat = !displayChat">Show/hide chat</button>
+          </li>
           <li><h2>People</h2></li>
           <hr>
           <li *ngFor="let user of lobby.lobbyInfo!.playerList">
-            <h3>{{user.userProfile!.alias}}</h3>
+            <span>{{user.userProfile!.alias}}</span>
+            <button mat-raised-button color="warn" *ngIf="isHost()">Kick</button>
           </li>
         </ul>
       </div>
 
-      <div class="box">
+      <div class="box" *ngIf="displayChat">
         <ul>
           <li><h2>Chat Box</h2></li>
+          <li>
+            <app-mat-form-field-input
+            label="Max number of display message"
+            [value]="maxMessageDisplay" (valueOutput)="maxMessageDisplay = +$event"
+            max="50"
+            min="0"
+            defaultType="number"
+            [showClearIcon]="false"
+            ></app-mat-form-field-input>
+          </li>
           <hr>
           <ng-container *ngIf="lobby.messages">
-            <li *ngFor="let message of lobby.messages">
-              <h3>{{message.sendBy}}: {{message.message}}</h3>
+            <li *ngFor="let message of getMessages()">
+              <span>{{message.sendBy}}: {{getTime(message)}}</span>
+              <h3>{{message.message}}</h3>
             </li>
           </ng-container>
           <hr>
