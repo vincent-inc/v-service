@@ -32,7 +32,7 @@ export interface Lobby {
     password?:              string;
     currentNumberOfPlayer?: number;
     maxPlayer?:             number;
-    lobbyGame?:             LobbyGame;
+    lobbyInfo?:             LobbyGame;
     battleshipGame?:        BattleshipGame;
     messages:               Message[];
 }

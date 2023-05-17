@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
+import { LobbyDialog } from 'src/app/shared/dialog/lobby-dialog/lobby-dialog.component';
 import { Lobby } from 'src/app/shared/model/VGame.model';
+import { AuthenticatorService } from 'src/app/shared/service/Authenticator.service';
 import { VGameService } from 'src/app/shared/service/VGame.service';
 
 @Component({
@@ -19,7 +22,9 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private vgameService: VGameService,
-    private router: Router
+    private router: Router,
+    private authenticatorService: AuthenticatorService,
+    private matDialog: MatDialog
   ) { }
 
   ngOnDestroy(): void {
@@ -35,18 +40,27 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
     this.lobbyId = urls[urls.length - 1];
     this.lobbyFetch = setInterval(() => {
       this.vgameService.getLobby(this.lobbyId).pipe(first()).subscribe(
-        res => this.lobby = res
+        res => {
+          if(this.isNotSame(res, this.lobby))
+            this.lobby = res;
+        }
       );
     }, 1000); //1s
+    
     this.init();
   }
 
   init() {
     this.vgameService.joinLobby(this.lobbyId).pipe(first()).subscribe(
       res => {
-        this.lobby = res;
+        if(this.isNotSame(res, this.lobby))
+          this.lobby = res;
       }
     );
+  }
+
+  isNotSame(lobby1: Lobby, lobby2: Lobby): boolean {
+    return JSON.stringify(lobby1) !== JSON.stringify(lobby2);
   }
 
   sendMessage() {
@@ -59,4 +73,16 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
     );
   }
 
+  isHost(): boolean {
+    let userId = this.authenticatorService.currentUser!.id;
+    return this.lobby.lobbyInfo!.host!.id === userId;
+  }
+
+  changeRoomSetting() {
+    let dialog = this.matDialog.open(LobbyDialog, {data: {lobbyId: this.lobbyId}});
+
+    dialog.afterClosed().pipe(first()).subscribe(
+      res => {}
+    );
+  }
 }

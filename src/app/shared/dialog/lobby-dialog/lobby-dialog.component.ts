@@ -57,7 +57,7 @@ export class LobbyDialog implements OnInit, AfterViewChecked {
             currentNumberOfPlayer: 0,
             maxPlayer:             2,
             messages:              [],
-            lobbyGame:             {
+            lobbyInfo:             {
               playerList:     [],
               spectatingList: [],
             },
@@ -78,7 +78,12 @@ export class LobbyDialog implements OnInit, AfterViewChecked {
 
   save() {
     if(this.data.lobbyId) {
-      
+      this.resetLobbyGame(this.lobby);
+      this.vgameService.patchLobby(this.lobby).pipe(first()).subscribe(
+        res => {
+          this.dialogRef.close(res.id);
+        }
+      );
     }
     else {
       this.vgameService.postLobby(this.lobby).pipe(first()).subscribe(
@@ -86,6 +91,15 @@ export class LobbyDialog implements OnInit, AfterViewChecked {
           this.dialogRef.close(res.id);
         }
       );
+    }
+  }
+
+  resetLobbyGame(lobby: Lobby) {
+    lobby.battleshipGame = {
+      maxPlayer:             2,
+      currentNumberOfPlayer: 0,
+      gridSize:              7,
+      maxNumberOfShip:       5
     }
   }
 
