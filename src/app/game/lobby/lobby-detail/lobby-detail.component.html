@@ -12,6 +12,26 @@
           </li>
         </ul>
       </div>
+
+      <div class="box">
+        <ul>
+          <li><h2>Chat Box</h2></li>
+          <hr>
+          <ng-container *ngIf="lobby.messages">
+            <li *ngFor="let message of lobby.messages">
+              <h3>{{message.sendBy}}:{{message.message}}</h3>
+            </li>
+          </ng-container>
+          <hr>
+          <li class="lobby-body">
+            <app-mat-form-field-input
+            label="Send a message"
+            [value]="message" (valueOutput)="message = $event.toString()"
+            ></app-mat-form-field-input>
+            <button mat-raised-button color="primary" (click)="sendMessage()">Send</button>
+          </li>
+        </ul>  
+      </div>
     </li>
   </ul>
 </div>

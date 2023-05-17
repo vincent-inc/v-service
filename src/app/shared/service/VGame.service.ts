@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Lobby, Question } from '../model/VGame.model';
+import { Lobby, Message, Question } from '../model/VGame.model';
 import { SettingService } from './Setting.service';
 import HttpClientUtils from '../model/HttpClientUtils.model';
 
@@ -56,6 +56,12 @@ export class VGameService {
   public leaveLobby(lobbyId: string): Observable<Lobby> {
     return this.httpClient.post<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/leave/${lobbyId}`, null);
   }
+
+  public sendMessage(lobbyId: string, message: string): Observable<Lobby> {
+    return this.httpClient.post<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/chat/${lobbyId}`, {message: message});
+  }
+
+  //-------------------
 
   public getLobbies(): Observable<Lobby[]> {
     return this.httpClient.get<Lobby[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies`);

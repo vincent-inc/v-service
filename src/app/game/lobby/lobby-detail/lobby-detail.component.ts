@@ -13,6 +13,7 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
 
   lobbyId!: string;
   lobby!: Lobby;
+  message: string = '';
 
   private lobbyFetch?: any;
 
@@ -45,6 +46,16 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
       res => {
         this.lobby = res;
       }
+    );
+  }
+
+  sendMessage() {
+    this.vgameService.sendMessage(this.lobbyId, this.message).pipe(first()).subscribe(
+      res => {
+        this.lobby = res;
+      },
+      error => {},
+      () => {this.message = ''}
     );
   }
 
