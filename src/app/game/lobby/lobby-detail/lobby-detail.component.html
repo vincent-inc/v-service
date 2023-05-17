@@ -19,7 +19,7 @@
           <hr>
           <ng-container *ngIf="lobby.messages">
             <li *ngFor="let message of lobby.messages">
-              <h3>{{message.sendBy}}:{{message.message}}</h3>
+              <h3>{{message.sendBy}}: {{message.message}}</h3>
             </li>
           </ng-container>
           <hr>
@@ -27,6 +27,7 @@
             <app-mat-form-field-input
             label="Send a message"
             [value]="message" (valueOutput)="message = $event.toString()"
+            (onEnter)="sendMessage()"
             ></app-mat-form-field-input>
             <button mat-raised-button color="primary" (click)="sendMessage()">Send</button>
           </li>

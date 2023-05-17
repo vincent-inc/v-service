@@ -22,6 +22,9 @@ export class MatFormFieldInputComponent implements OnInit, OnChanges {
   @Output()
   onValueChange: EventEmitter<void> = new EventEmitter();
 
+  @Output()
+  onEnter: EventEmitter<void> = new EventEmitter();
+
   @Input()
   error: string = '';
 
