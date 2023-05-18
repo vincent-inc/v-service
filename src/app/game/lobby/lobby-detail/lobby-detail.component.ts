@@ -53,6 +53,11 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
       res => {
         if(this.isNotSame(res, this.lobby))
           this.lobby = res;
+
+        if(!this.lobbyFetch)
+          this.lobbyFetch = setInterval(() => {
+            this.updateLobby();
+          }, 1000); //1s
       },
       error => {
         if(error.status === 400) {
@@ -64,9 +69,10 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
                 this.vgameService.joinLobbyWithPassword(this.lobbyId, res).pipe(first()).subscribe(
                   res => {
 
-                    this.lobbyFetch = setInterval(() => {
-                      this.updateLobby();
-                    }, 1000); //1s
+                    if(!this.lobbyFetch)
+                      this.lobbyFetch = setInterval(() => {
+                        this.updateLobby();
+                      }, 1000); //1s
 
                     if(this.isNotSame(res, this.lobby))
                       this.lobby = res;
