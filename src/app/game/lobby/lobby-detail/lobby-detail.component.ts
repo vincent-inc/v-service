@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
+import { InputDialog } from 'src/app/shared/dialog/input-dialog/input-dialog.component';
 import { LobbyDialog } from 'src/app/shared/dialog/lobby-dialog/lobby-dialog.component';
 import { Lobby, Message } from 'src/app/shared/model/VGame.model';
 import { AuthenticatorService } from 'src/app/shared/service/Authenticator.service';
@@ -13,6 +14,8 @@ import { VGameService } from 'src/app/shared/service/VGame.service';
   styleUrls: ['./lobby-detail.component.scss']
 })
 export class LobbyDetailComponent implements OnInit, OnDestroy {
+
+  lobbyRoute = '/game/lobbies'
 
   lobbyId!: string;
   lobby!: Lobby;
@@ -42,11 +45,44 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
   ngOnInit() {
     let urls = this.router.url.split('/');
     this.lobbyId = urls[urls.length - 1];
-    this.lobbyFetch = setInterval(() => {
-      this.updateLobby();
-    }, 1000); //1s
-    
     this.init();
+  }
+
+  init() {
+    this.vgameService.joinLobby(this.lobbyId).pipe(first()).subscribe(
+      res => {
+        if(this.isNotSame(res, this.lobby))
+          this.lobby = res;
+      },
+      error => {
+        if(error.status === 400) {
+          let dialog = this.matDialog.open(InputDialog, {data: {title: 'Enter lobby password', yes: "join", no: "back"}})
+
+          dialog.afterClosed().pipe(first()).subscribe(
+            res => {
+              if(res) {
+                this.vgameService.joinLobbyWithPassword(this.lobbyId, res).pipe(first()).subscribe(
+                  res => {
+
+                    this.lobbyFetch = setInterval(() => {
+                      this.updateLobby();
+                    }, 1000); //1s
+
+                    if(this.isNotSame(res, this.lobby))
+                      this.lobby = res;
+                  },
+                  error => {
+                    this.router.navigate([this.lobbyRoute]);
+                  }
+                );
+              }
+              else
+                this.router.navigate([this.lobbyRoute]);
+            }
+          );
+        }
+      }
+    );
   }
 
   updateLobby() {
@@ -58,14 +94,7 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
     );
   }
 
-  init() {
-    this.vgameService.joinLobby(this.lobbyId).pipe(first()).subscribe(
-      res => {
-        if(this.isNotSame(res, this.lobby))
-          this.lobby = res;
-      }
-    );
-  }
+  
 
   isNotSame(lobby1: Lobby, lobby2: Lobby): boolean {
     return JSON.stringify(lobby1) !== JSON.stringify(lobby2);

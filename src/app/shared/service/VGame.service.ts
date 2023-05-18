@@ -53,6 +53,10 @@ export class VGameService {
     return this.httpClient.post<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/join/${lobbyId}`, null);
   }
 
+  public joinLobbyWithPassword(lobbyId: string, password: string): Observable<Lobby> {
+    return this.httpClient.post<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/join/${lobbyId}`, {password: password});
+  }
+  
   public leaveLobby(lobbyId: string): Observable<Lobby> {
     return this.httpClient.post<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/leave/${lobbyId}`, null);
   }

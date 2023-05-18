@@ -4,6 +4,6 @@
   <textarea *ngIf="data.multipleLine" cols="50" rows="10" [(ngModel)]="input"></textarea>
 </div>
 <div mat-dialog-actions>
-  <button *ngIf="no" mat-raised-button color="warn" mat-dialog-close>{{no}}</button>
   <button mat-raised-button color="primary" [mat-dialog-close]="input" cdkFocusInitial>{{yes}}</button>
+  <button *ngIf="no" mat-raised-button color="warn" mat-dialog-close>{{no}}</button>
 </div>
