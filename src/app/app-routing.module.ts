@@ -8,6 +8,7 @@ import { LobbyDetailComponent } from './game/lobby/lobby-detail/lobby-detail.com
 import { VincentComponent } from './about/vincent/vincent.component';
 import { GeneralQuestionsComponent } from './trivia/general-questions/general-questions.component';
 import { AuthGuard } from './shared/guards/auth.guard';
+import { CoolSymbolComponent } from './document/cool-symbol/cool-symbol.component';
 
 const routes: Routes = [
   {
@@ -51,6 +52,15 @@ const routes: Routes = [
       {
         path: 'questionnaire',
         component: GeneralQuestionsComponent
+      }
+    ]
+  },
+  {
+    path: 'utils',
+    children: [
+      {
+        path: 'ascii_symbol',
+        component: CoolSymbolComponent
       }
     ]
   },
