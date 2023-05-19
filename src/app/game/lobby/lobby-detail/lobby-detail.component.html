@@ -4,7 +4,7 @@
     <li class="lobby-body">
       <div class="box">
         <ul>
-          <li><h2>Current host: {{lobby.lobbyInfo!.host!.userProfile!.alias}}</h2></li>
+          <li><h2>Current host: {{getHost(lobby).userProfile!.alias}}</h2></li>
           <li *ngIf="isHost()">
             <button mat-raised-button color="primary" (click)="changeRoomSetting()">Change Room setting</button>
           </li>

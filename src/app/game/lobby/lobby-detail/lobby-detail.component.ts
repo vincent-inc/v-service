@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { first } from 'rxjs';
 import { InputDialog } from 'src/app/shared/dialog/input-dialog/input-dialog.component';
 import { LobbyDialog } from 'src/app/shared/dialog/lobby-dialog/lobby-dialog.component';
+import { User } from 'src/app/shared/model/Authenticator.model';
 import { Lobby, Message } from 'src/app/shared/model/VGame.model';
 import { AuthenticatorService } from 'src/app/shared/service/Authenticator.service';
 import { VGameService } from 'src/app/shared/service/VGame.service';
@@ -118,7 +119,11 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
 
   isHost(): boolean {
     let userId = this.authenticatorService.currentUser!.id;
-    return this.lobby.lobbyInfo!.host!.id === userId;
+    return this.getHost(this.lobby).id === userId;
+  }
+
+  getHost(lobby: Lobby): User {
+    return lobby.lobbyInfo!.playerList![0];
   }
 
   changeRoomSetting() {

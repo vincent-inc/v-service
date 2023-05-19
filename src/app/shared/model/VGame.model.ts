@@ -58,7 +58,6 @@ export interface Board {
 }
 
 export interface LobbyGame {
-    host?:           User;
     playerList?:     User[];
     spectatingList?: User[];
 }

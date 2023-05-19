@@ -30,7 +30,7 @@ const routes: Routes = [
     canActivateChild: [AuthGuard],
     children: [
       {
-        path: 'lobbies',
+        path: 'lobbies', 
         component: LobbyComponent,
       },
       {
