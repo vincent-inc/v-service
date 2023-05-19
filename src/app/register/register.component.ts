@@ -38,6 +38,9 @@ export class RegisterComponent implements OnInit, AfterContentChecked {
   }
 
   async register(): Promise<void> {
+    if(!this.validForm)
+      return;
+
     let user: User = {
       username: this.username,
       password: this.password,
