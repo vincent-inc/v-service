@@ -17,6 +17,9 @@ export class RegisterComponent implements OnInit, AfterContentChecked {
   usernameError: string = '';
 
   password: string = ''
+  
+  retypePassword: string = ''
+  retypePasswordError: string = '';
 
   alias: string = ''
 
@@ -105,5 +108,12 @@ export class RegisterComponent implements OnInit, AfterContentChecked {
       },
       error => {}
     );
+  }
+
+  validateRetypePassword() {
+    if(this.password !== this.retypePassword)
+      this.retypePasswordError = 'Retype Password does not match with password'
+    else
+      this.retypePasswordError = '';
   }
 }

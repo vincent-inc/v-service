@@ -1,4 +1,4 @@
-<ul class="margin-center" appMatFormFieldGroup (onAllInputCheck)="validForm = $event">
+<ul class="margin-center" appMatFormFieldGroup (onFormSummit)="register()" (onAllInputCheck)="validForm = $event">
   <li *ngIf="error" class="text-center" style="color: red;">
     {{error}}
     <hr>
@@ -26,7 +26,19 @@
     <app-mat-form-field-input
     [value]="password" (valueOutput)="password = $event.toString()"
     [required]="true"
+    (onValueChange)="validateRetypePassword()"
     label="password"
+    placeholder="some password"
+    styleWidth="100%"
+    [showVisibleSwitch]="true"
+    ></app-mat-form-field-input>
+  </li>
+  <li>
+    <app-mat-form-field-input
+    [value]="retypePassword" (valueOutput)="retypePassword = $event.toString()"
+    [required]="true"
+    [error]="retypePasswordError" (onValueChange)="validateRetypePassword()"
+    label="retype password"
     placeholder="some password"
     styleWidth="100%"
     [showVisibleSwitch]="true"
