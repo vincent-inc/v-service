@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { first } from 'rxjs';
+import { ConfirmDialog } from 'src/app/shared/dialog/confirm-dialog/confirm-dialog.component';
 import { InputDialog } from 'src/app/shared/dialog/input-dialog/input-dialog.component';
 import { LobbyDialog } from 'src/app/shared/dialog/lobby-dialog/lobby-dialog.component';
 import { User } from 'src/app/shared/model/Authenticator.model';
@@ -56,9 +57,7 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
           this.lobby = res;
 
         if(!this.lobbyFetch)
-          this.lobbyFetch = setInterval(() => {
-            this.updateLobby();
-          }, 1000); //1s
+          this.setIntervalCall();
       },
       error => {
         if(error.status === 400) {
@@ -71,9 +70,7 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
                   res => {
 
                     if(!this.lobbyFetch)
-                      this.lobbyFetch = setInterval(() => {
-                        this.updateLobby();
-                      }, 1000); //1s
+                      this.setIntervalCall();
 
                     if(this.isNotSame(res, this.lobby))
                       this.lobby = res;
@@ -92,16 +89,30 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
     );
   }
 
+  setIntervalCall() {
+    this.lobbyFetch = setInterval(() => {
+      this.updateLobby();
+    }, 1000); //1s
+  }
+
   updateLobby() {
     this.vgameService.getLobby(this.lobbyId).pipe(first()).subscribe(
       res => {
         if(this.isNotSame(res, this.lobby))
           this.lobby = res;
+      },
+      error => {
+        clearInterval(this.lobbyFetch);
+        let dialog = this.matDialog.open(ConfirmDialog, {data: {title: 'Inactive notice!', message: 'Sorry you have been auto kick for inactive', yes: 'ok', no: ''}})
+      
+        dialog.afterClosed().pipe(first()).subscribe(
+          res => {
+            this.router.navigate([this.lobbyRoute])
+          }
+        );
       }
     );
   }
-
-  
 
   isNotSame(lobby1: Lobby, lobby2: Lobby): boolean {
     return JSON.stringify(lobby1) !== JSON.stringify(lobby2);

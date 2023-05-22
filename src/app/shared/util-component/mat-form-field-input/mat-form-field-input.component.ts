@@ -3,7 +3,7 @@ import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn,
 import { ThemePalette } from '@angular/material/core';
 import { MatFormFieldAppearance, MatFormFieldDefaultOptions } from '@angular/material/form-field';
 
-
+export const INPUT_TYPE = {input: 'INPUT', textarea: 'TEXTAREA', option: 'OPTION'}
 
 @Component({
   selector: 'app-mat-form-field-input',
@@ -24,6 +24,12 @@ export class MatFormFieldInputComponent implements OnInit, OnChanges {
 
   @Output()
   onEnter: EventEmitter<void> = new EventEmitter();
+
+  @Input()
+  inputType: string = INPUT_TYPE.input;
+
+  @Input()
+  maxlength: string = '';
 
   @Input()
   error: string = '';
@@ -214,5 +220,9 @@ export class MatFormFieldInputComponent implements OnInit, OnChanges {
 
   isValueNotChange(): boolean {
     return this.value === this.valueCopy;
+  }
+
+  isValueString(): boolean {
+    return typeof this.value === 'string';
   }
 }
