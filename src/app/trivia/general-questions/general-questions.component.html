@@ -2,10 +2,12 @@
   <ul>
     <li>
       <app-mat-form-field-input
+      label="Question category"
       [value]="category" (valueOutput)="category = $event.toString()"
       (onValueChange)="init()"
-      label="Question category"
       styleWidth="100%"
+      [required]="true"
+      maxlength="100"
       ></app-mat-form-field-input>
     </li>
     <div *ngIf="category === 'GF'">
