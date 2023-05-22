@@ -22,7 +22,7 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
-    canActivate: [async () => !inject(AuthGuard).isLogin()],
+    // canActivate: [async () => !inject(AuthGuard).isLogin()],
   },
   {
     path: 'game',
