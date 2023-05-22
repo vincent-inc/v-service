@@ -27,6 +27,7 @@
             <app-mat-form-field-input
             label="Max number of display message"
             [value]="maxMessageDisplay" (valueOutput)="maxMessageDisplay = +$event"
+            (onValueChange)="updateDisplayMessages()"
             max="50"
             min="0"
             defaultType="number"
@@ -35,26 +36,22 @@
           </li>
           <hr>
           <ng-container *ngIf="lobby.messages">
-            <li *ngFor="let message of getMessages()">
-              <span>{{message.sendBy}}: {{getTime(message)}}</span>
-              <h3 style="white-space: pre-wrap;">{{message.message.trim()}}</h3>
+            <li *ngFor="let message of displayMessages" class="text-list">
+              <span>{{message.sendBy}} | {{getTime(message)}}</span>
+              <br>
+              <span style="white-space: pre-wrap;">{{message.message.trim()}}</span>
+              <br>
+              <br>
             </li>
           </ng-container>
           <hr>
-          <li class="lobby-body">
-            <app-mat-form-field-input
-            label="Send a message"
-            [value]="message" (valueOutput)="message = $event.toString()"
-            (onEnter)="sendMessage()"
-            ></app-mat-form-field-input>
-            <button mat-raised-button color="primary" (click)="sendMessage()">Send</button>
-          </li>
           <li>
             <app-mat-form-field-text-area
             label="Send a message"
             [value]="message" (valueOutput)="message = $event.toString()"
             (onEnter)="sendMessage()"
-            [showCopyToClipboard]="true"
+            [showEnterIcon]="true"
+            [showClearIcon]="false"
             ></app-mat-form-field-text-area>
           </li>
         </ul>  

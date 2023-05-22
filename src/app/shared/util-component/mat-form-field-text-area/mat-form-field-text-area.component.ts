@@ -54,6 +54,9 @@ export class MatFormFieldTextAreaComponent implements OnInit {
   autoResize: boolean = false;
 
   @Input()
+  autoResizeHeight: boolean = true;
+
+  @Input()
   disable: boolean = false;
 
   @Input()
@@ -61,6 +64,9 @@ export class MatFormFieldTextAreaComponent implements OnInit {
 
   @Input()
   showClearIcon: boolean = true;
+
+  @Input()
+  showEnterIcon: boolean = false;
 
   @Input()
   showCopyToClipboard: boolean = false;

@@ -23,6 +23,8 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
   lobby!: Lobby;
   message: string = '';
 
+  displayMessages: Message[] = [];
+
   maxMessageDisplay: number = 10;
 
   displayChat: boolean = true;
@@ -53,8 +55,10 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
   init() {
     this.vgameService.joinLobby(this.lobbyId).pipe(first()).subscribe(
       res => {
-        if(this.isNotSame(res, this.lobby))
+        if(this.isNotSame(res, this.lobby)) {
           this.lobby = res;
+          this.updateDisplayMessages();
+        }
 
         if(!this.lobbyFetch)
           this.setIntervalCall();
@@ -72,8 +76,10 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
                     if(!this.lobbyFetch)
                       this.setIntervalCall();
 
-                    if(this.isNotSame(res, this.lobby))
+                    if(this.isNotSame(res, this.lobby)) {
                       this.lobby = res;
+                      this.updateDisplayMessages();
+                    }
                   },
                   error => {
                     this.router.navigate([this.lobbyRoute]);
@@ -98,8 +104,10 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
   updateLobby() {
     this.vgameService.getLobby(this.lobbyId).pipe(first()).subscribe(
       res => {
-        if(this.isNotSame(res, this.lobby))
+        if(this.isNotSame(res, this.lobby)) {
           this.lobby = res;
+          this.updateDisplayMessages();
+        }
       },
       error => {
         clearInterval(this.lobbyFetch);
@@ -114,18 +122,32 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
     );
   }
 
+  updateDisplayMessages(): void {
+    let messages = structuredClone(this.lobby.messages)
+    while(messages.length > this.maxMessageDisplay)
+      messages = messages.slice(1, messages.length);
+
+    if(JSON.stringify(messages) !== JSON.stringify(this.displayMessages))
+      this.displayMessages = messages;
+  }
+
   isNotSame(lobby1: Lobby, lobby2: Lobby): boolean {
     return JSON.stringify(lobby1) !== JSON.stringify(lobby2);
   }
 
   sendMessage() {
-    this.vgameService.sendMessage(this.lobbyId, this.message).pipe(first()).subscribe(
-      res => {
-        this.lobby = res;
-      },
-      error => {},
-      () => {this.message = ''}
-    );
+    if(this.message.trim()) {
+      this.vgameService.sendMessage(this.lobbyId, this.message.trim()).pipe(first()).subscribe(
+        res => {
+          this.lobby = res;
+        },
+        error => {},
+        () => {
+          this.message = '';
+          this.updateDisplayMessages();
+        }
+      );
+    }
   }
 
   isHost(): boolean {
@@ -145,14 +167,6 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
         this.updateLobby();
       }
     );
-  }
-
-  getMessages(): Message[] {
-    let messages = structuredClone(this.lobby.messages)
-    while(messages.length > this.maxMessageDisplay)
-      messages = messages.slice(1, messages.length);
-
-    return messages;
   }
 
   getTime(message: Message): string {
