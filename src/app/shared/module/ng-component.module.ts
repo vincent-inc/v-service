@@ -9,6 +9,7 @@ import { FilterNamePipe } from '../pipes/filter-name.pipe';
 import { FilterNameReversePipe } from '../pipes/filter-name-reverse.pipe';
 import { MatTableComponent } from '../util-component/mat-table/mat-table.component';
 import { MatFormFieldGroupDirective } from '../directive/mat-form-field-group.directive';
+import { MatFormFieldTextAreaComponent } from '../util-component/mat-form-field-text-area/mat-form-field-text-area.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MatFormFieldGroupDirective } from '../directive/mat-form-field-group.di
     FilterNamePipe,
     FilterNameReversePipe,
     MatTableComponent,
-    MatFormFieldGroupDirective
+    MatFormFieldGroupDirective,
+    MatFormFieldTextAreaComponent
   ],
   imports: [
     NgMaterialModule,
@@ -33,7 +35,8 @@ import { MatFormFieldGroupDirective } from '../directive/mat-form-field-group.di
     FilterNamePipe,
     FilterNameReversePipe,
     MatTableComponent,
-    MatFormFieldGroupDirective
+    MatFormFieldGroupDirective,
+    MatFormFieldTextAreaComponent
   ]
 })
 export class NgComponentModule { }

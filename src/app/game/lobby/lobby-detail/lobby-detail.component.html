@@ -37,7 +37,7 @@
           <ng-container *ngIf="lobby.messages">
             <li *ngFor="let message of getMessages()">
               <span>{{message.sendBy}}: {{getTime(message)}}</span>
-              <h3>{{message.message}}</h3>
+              <h3 style="white-space: pre-wrap;">{{message.message.trim()}}</h3>
             </li>
           </ng-container>
           <hr>
@@ -48,6 +48,14 @@
             (onEnter)="sendMessage()"
             ></app-mat-form-field-input>
             <button mat-raised-button color="primary" (click)="sendMessage()">Send</button>
+          </li>
+          <li>
+            <app-mat-form-field-text-area
+            label="Send a message"
+            [value]="message" (valueOutput)="message = $event.toString()"
+            (onEnter)="sendMessage()"
+            [showCopyToClipboard]="true"
+            ></app-mat-form-field-text-area>
           </li>
         </ul>  
       </div>
