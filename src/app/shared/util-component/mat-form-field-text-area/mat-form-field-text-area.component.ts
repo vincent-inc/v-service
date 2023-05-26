@@ -42,6 +42,12 @@ export class MatFormFieldTextAreaComponent implements OnInit {
   width: number = 40;
 
   @Input()
+  rows: string = '';
+
+  @Input()
+  cols: string = '';
+
+  @Input()
   label: string = '';
 
   @Input()
@@ -121,7 +127,7 @@ export class MatFormFieldTextAreaComponent implements OnInit {
 
     if(this.manuallyEmitValue)
       return;
-      
+
     this.valueOutput.emit(this.value);
   }
 
