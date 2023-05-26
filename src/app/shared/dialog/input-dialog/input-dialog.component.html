@@ -1,6 +1,10 @@
 <h1 mat-dialog-title>{{data.title}}</h1>
 <div mat-dialog-content>
-  <input *ngIf="!data.multipleLine" type="text" [(ngModel)]="input" [style.width.ch]="getWidth()">
+  <app-mat-form-field-input
+  *ngIf="!data.multipleLine"
+  [value]="input" (valueOutput)="input = $event.toString()"
+  [autoResize]="true"
+  ></app-mat-form-field-input>
   <textarea *ngIf="data.multipleLine" cols="50" rows="10" [(ngModel)]="input"></textarea>
 </div>
 <div mat-dialog-actions>
