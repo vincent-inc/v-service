@@ -5,12 +5,16 @@ import { NgMaterialModule } from './ng-material.module';
 import { NgEssentialModule } from './ng-essential.module';
 import { NgComponentModule } from './ng-component.module';
 import { LobbyDialog } from '../dialog/lobby-dialog/lobby-dialog.component';
+import { UserDialog } from '../dialog/user-dialog/user-dialog.component';
+import { QuestionDialog } from '../dialog/question-dialog/question-dialog.component';
 
 @NgModule({
   declarations: [
     ConfirmDialog,
     InputDialog,
-    LobbyDialog
+    LobbyDialog,
+    UserDialog,
+    QuestionDialog
   ],
   imports: [
     NgMaterialModule,
@@ -20,7 +24,9 @@ import { LobbyDialog } from '../dialog/lobby-dialog/lobby-dialog.component';
   exports: [
     ConfirmDialog,
     InputDialog,
-    LobbyDialog
+    LobbyDialog,
+    UserDialog,
+    QuestionDialog
   ]
 })
 export class NgDialogModule { }
