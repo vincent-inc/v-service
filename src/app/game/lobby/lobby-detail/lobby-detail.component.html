@@ -13,9 +13,12 @@
           </li>
           <li><h2>People</h2></li>
           <hr>
-          <li *ngFor="let user of lobby.lobbyInfo!.playerList">
-            <span>{{user.userProfile!.alias}}</span>
-            <button mat-raised-button color="warn" *ngIf="isHost()">Kick</button>
+          <li *ngFor="let player of players">
+            <button mat-button [matMenuTriggerFor]="menu" color="basic">{{player.alias}}</button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="kickPlayer(player.id)">Kick</button>
+              <button mat-menu-item>Add friend</button>
+            </mat-menu>
           </li>
         </ul>
       </div>

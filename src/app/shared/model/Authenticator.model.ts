@@ -57,3 +57,12 @@ export default class UserRow implements MatRow
     }
 }
 
+export class Player {
+    id!: number;
+    alias!: string;
+    
+    constructor(user: User) {
+        this.id = user.id!;
+        this.alias = user.userProfile!.alias!;
+    }
+}

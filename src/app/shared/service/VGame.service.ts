@@ -65,6 +65,10 @@ export class VGameService {
     return this.httpClient.post<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/chat/${lobbyId}`, {message: message});
   }
 
+  public kickPlayer(lobbyId: string, userId: number) {
+    return this.httpClient.post<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/kick/${lobbyId}/${userId}`, null);
+  }
+
   //-------------------
 
   public getLobbies(): Observable<Lobby[]> {
