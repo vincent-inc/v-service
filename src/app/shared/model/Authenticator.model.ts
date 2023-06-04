@@ -10,11 +10,34 @@ export interface User {
     password?:    string;
     userProfile?: UserProfile;
     userRoles?:   UserRole[];
-    enable:       boolean;
+    userApis?:    UserAPI[];
+    expirable?:   boolean;
+    expireTime?:  ExpireTime;
+    enable?:      boolean;
+}
+
+export interface ExpireTime {
+    id?:     number;
+    year?:   number;
+    month?:  number;
+    day?:    number;
+    hours?:  number;
+    minute?: number;
+    second?: number;
+}
+
+export interface UserAPI {
+    id?:         number;
+    name?:       string;
+    apiKey?:     string;
+    expirable?:  boolean;
+    enable?:     boolean;
+    expireTime?: ExpireTime;
 }
 
 export interface UserProfile {
     id?:          number;
+    alias?:       string;
     firstName?:   string;
     lastName?:    string;
     phoneNumber?: string;
@@ -23,7 +46,6 @@ export interface UserProfile {
     city?:        string;
     state?:       string;
     zip?:         string;
-    alias?:       string;
 }
 
 export interface UserRole {
@@ -60,7 +82,7 @@ export default class UserRow implements MatRow
 export class Player {
     id!: number;
     alias!: string;
-    
+
     constructor(user: User) {
         this.id = user.id!;
         this.alias = user.userProfile!.alias!;
