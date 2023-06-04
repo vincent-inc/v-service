@@ -170,6 +170,6 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
   }
 
   getTime(message: Message): string {
-    return `${message.time.month}/${message.time.day}/${message.time.year} at ${message.time.hours}:${message.time.minute}:${message.time.second}`;
+    return `${message.time.month}/${message.time.day}/${message.time.year} at ${message.time.hours}:${message.time.minute}:${message.time.second} EST`;
   }
 }
