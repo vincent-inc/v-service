@@ -29,14 +29,12 @@ export class AuthenticatorService {
   }
 
   // Authentication
-  login(user: {username: string, password: string}): Observable<Jwt>{
-    return this.httpClient.post<Jwt>(`${this.settingService.getGatewayUrl()}/${this.prefix}/auth/login`, user);
-  }
+  
 
   private async updateUser(): Promise<boolean>
   {
     return new Promise<boolean>((resolve, reject) => {
-      this.httpClient.get<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users`)
+      this.httpClient.get<User>(`${this.settingService.getGatewayUrl()}/user`)
       .pipe(first()).subscribe(
         res => {
           this.currentUser = res;
@@ -80,15 +78,11 @@ export class AuthenticatorService {
     else if(!isLogin)
       this.router.navigate(["/login"]);
   }
-
-  isLogin(): Observable<void> {
-    return this.httpClient.get<void>(`${this.settingService.getGatewayUrl()}/${this.prefix}/auth`);
-  }
-
+  
   logout(): void {
     localStorage.removeItem("jwt");
     this.isLoginB = false;
-    this.httpClient.get<void>(`${this.settingService.getGatewayUrl()}/${this.prefix}/auth/logout`).pipe(first()).subscribe(
+    this.httpClient.get<void>(`${this.settingService.getGatewayUrl()}/logout`).pipe(first()).subscribe(
       res => {},
       error => {},
       () => {
@@ -108,8 +102,25 @@ export class AuthenticatorService {
     return this.jwt!;
   }
 
+  //special endpoint
+  getCurrentLoginUser(): Observable<User> {
+    return this.httpClient.get<User>(`${this.settingService.getGatewayUrl()}/user`);
+  }
+
+  registerUser(user: User): Observable<User> {
+    return this.httpClient.post<User>(`${this.settingService.getGatewayUrl()}/register`, user);
+  }
+
+  isLogin(): Observable<void> {
+    return this.httpClient.get<void>(`${this.settingService.getGatewayUrl()}/auth`);
+  }
+
+  login(user: {username: string, password: string}): Observable<Jwt>{
+    return this.httpClient.post<Jwt>(`${this.settingService.getGatewayUrl()}/login`, user);
+  }
+
   // USERs
-  public getCurrentLoginUser(): Observable<User> {
+  public getUserWithGateway(): Observable<User> {
     return this.httpClient.get<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users`);
   }
 
