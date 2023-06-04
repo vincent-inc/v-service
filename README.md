@@ -1,3 +1,9 @@
+prod build
+[![Build Status](https://vincentprivate.synology.me:112/buildStatus/icon?job=vincent-services%2Fv-eco%2Fv-service-prod)](https://vincentprivate.synology.me:112/job/vincent-services/job/v-eco/view/v-service/job/v-service-prod/)
+
+prod deploy
+[![Build Status](https://vincentprivate.synology.me:112/buildStatus/icon?job=vincent-services%2Fv-eco%2Fv-service-prod-k8s)](https://vincentprivate.synology.me:112/job/vincent-services/job/v-eco/view/v-service/job/v-service-prod-k8s/)
+
 # V-Service
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.
