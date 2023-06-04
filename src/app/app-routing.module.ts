@@ -12,6 +12,10 @@ import { CoolSymbolComponent } from './document/cool-symbol/cool-symbol.componen
 
 const routes: Routes = [
   {
+    path: '',
+    component: HomeComponent
+  },
+  {
     path: 'home',
     component: HomeComponent
   },
