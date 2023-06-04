@@ -104,7 +104,7 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
       },
       error => {
         clearInterval(this.lobbyFetch);
-        let dialog = this.matDialog.open(ConfirmDialog, { data: { title: 'Inactive notice!', message: 'Sorry you have been auto kick for inactive', yes: 'ok', no: '' } })
+        let dialog = this.matDialog.open(ConfirmDialog, { data: { title: 'Inactive notice!', message: 'Sorry you have been kick by host or being inactive', yes: 'ok', no: '' } })
 
         dialog.afterClosed().pipe(first()).subscribe(
           res => {
@@ -186,13 +186,17 @@ export class LobbyDetailComponent implements OnInit, OnDestroy {
   }
 
   kickPlayer(playerId: number) {
-    let userId = this.authenticatorService.currentUser!.id;
-    if(userId !== playerId) {
+    if(!this.isSelf(playerId)) {
       this.vgameService.kickPlayer(this.lobbyId, playerId).pipe(first()).subscribe(
         res => {
           this.patchLobby(res);
         }
       );
     }
+  }
+
+  isSelf(playerId: number): boolean {
+    let userId = this.authenticatorService.currentUser!.id;
+    return userId === playerId;
   }
 }

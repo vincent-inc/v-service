@@ -14,11 +14,16 @@
           <li><h2>People</h2></li>
           <hr>
           <li *ngFor="let player of players">
-            <button mat-button [matMenuTriggerFor]="menu" color="basic">{{player.alias}}</button>
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="kickPlayer(player.id)">Kick</button>
-              <button mat-menu-item>Add friend</button>
-            </mat-menu>
+            <ng-container *ngIf="isSelf(player.id)">
+              <button mat-button color="basic">{{player.alias}}</button>
+            </ng-container>
+            <ng-container *ngIf="!isSelf(player.id)">
+              <button mat-button [matMenuTriggerFor]="menu" color="basic">{{player.alias}}</button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="kickPlayer(player.id)">Kick</button>
+                <button mat-menu-item>Add friend</button>
+              </mat-menu>
+            </ng-container>
           </li>
         </ul>
       </div>
