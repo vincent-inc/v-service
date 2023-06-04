@@ -1,10 +1,16 @@
-prod build
-<br>
-[![Build Status](https://vincentprivate.synology.me:112/buildStatus/icon?job=vincent-services%2Fv-eco%2Fv-service-prod)](https://vincentprivate.synology.me:112/job/vincent-services/job/v-eco/view/v-service/job/v-service-prod/)
 
-prod deploy
+[![Build Status](https://vincentprivate.synology.me:112/buildStatus/icon?job=vincent-services%2Fv-eco%2Fv-service-prod&subject=Dev%20build)](https://vincentprivate.synology.me:112/job/vincent-services/job/v-eco/view/v-service/job/v-service-prod/)
+[![Build Status](https://vincentprivate.synology.me:112/buildStatus/icon?job=vincent-services%2Fv-eco%2Fv-service-prod-k8s&subject=Dev%20deploy)](https://vincentprivate.synology.me:112/job/vincent-services/job/v-eco/view/v-service/job/v-service-prod-k8s/)
+
 <br>
-[![Build Status](https://vincentprivate.synology.me:112/buildStatus/icon?job=vincent-services%2Fv-eco%2Fv-service-prod-k8s)](https://vincentprivate.synology.me:112/job/vincent-services/job/v-eco/view/v-service/job/v-service-prod-k8s/)
+
+[![Build Status](https://vincentprivate.synology.me:112/buildStatus/icon?job=vincent-services%2Fv-eco%2Fv-console-stage&subject=Stage%20build)](https://vincentprivate.synology.me:112/job/vincent-services/job/v-eco/view/v-console/job/v-console-stage/)
+[![Build Status](https://vincentprivate.synology.me:112/buildStatus/icon?job=vincent-services%2Fv-eco%2Fv-console-stage-k8s&subject=Stage%20deploy)](https://vincentprivate.synology.me:112/job/vincent-services/job/v-eco/view/v-console/job/v-console-stage-k8s/)
+
+<br>
+
+[![Build Status](https://vincentprivate.synology.me:112/buildStatus/icon?job=vincent-services%2Fv-eco%2Fv-console-prod&subject=Prod%20build)](https://vincentprivate.synology.me:112/job/vincent-services/job/v-eco/view/v-console/job/v-console-prod/)
+[![Build Status](https://vincentprivate.synology.me:112/buildStatus/icon?job=vincent-services%2Fv-eco%2Fv-console-prod-k8s&subject=Prod%20deploy)](https://vincentprivate.synology.me:112/job/vincent-services/job/v-eco/view/v-console/job/v-console-prod-k8s/)
 
 # V-Service
 
