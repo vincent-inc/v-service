@@ -35,7 +35,9 @@ export class LoginComponent implements OnInit {
         await this.authenticatorService.autoUpdateUserWithJwt(res.jwt!); 
         this.router.navigate(['home'])
       },
-      error => {this.error = 'invalid or wrong username or password'}
+      error => {
+        this.error = error.error.message;
+      }
     );
   }
 
