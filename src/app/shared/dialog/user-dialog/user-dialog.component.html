@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>User ID: {{data.userId}}</h1>
 <div mat-dialog-content>
-  <ul *ngIf="user && user.userProfile" appMatFormFieldGroup (onAllInputCheck)="validInputs = $event">
+  <ul *ngIf="user && user.userProfile" appMatFormFieldGroup (onAllInputCheck)="validInputs = $event" (onFormSummit)="save()">
     <li>
       <app-mat-form-field-input
       #matInput
@@ -50,7 +50,7 @@
       [value]="user.userProfile!.phoneNumber?.toString() ?? 0" (valueOutput)="user.userProfile!.phoneNumber = $event.toString()"
       defaultType="number"
       min="0"
-      max="999999999999999"
+      max="9999999999"
       ></app-mat-form-field-input>
     </li>
     <li>
@@ -107,6 +107,33 @@
     </ng-container>
     <li *ngIf="user.id">
       <button mat-raised-button color="primary" (click)="addNewRole()">New Role</button>
+    </li>
+    <hr>
+    <li>
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Enable</mat-label>
+        <mat-select [(ngModel)]="user.enable">
+          <mat-option [value]="true">TRUE</mat-option>
+          <mat-option [value]="false">FALSE</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </li>
+    <li>
+      <mat-form-field style="width: 100%;" appearance="fill">
+        <mat-label>Expirable</mat-label>
+        <mat-select [(ngModel)]="user.expirable">
+          <mat-option [value]="true">TRUE</mat-option>
+          <mat-option [value]="false" (click)="clearExpire()">FALSE</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </li>
+    <li *ngIf="user.expirable">
+      <app-mat-form-field-input-time
+      [value]="user.expireTime!" (valueOutput)="user.expireTime = $event"
+      label="expire"
+      type="DATE_TIME"
+      styleWidth="100%"
+      ></app-mat-form-field-input-time>
     </li>
   </ul>
 </div>

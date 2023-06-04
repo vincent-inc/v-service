@@ -119,6 +119,9 @@ export class UserDialog implements OnInit, AfterViewChecked {
 
   save(): void
   {
+    if(!this.validForm)
+      return;
+
     if(this.user.id === 0) {
       this.authenticatorService.postUser(this.user).pipe(first()).subscribe(
         res => {
@@ -131,7 +134,7 @@ export class UserDialog implements OnInit, AfterViewChecked {
       );
     }
     else {
-      this.authenticatorService.patchUser(this.user).pipe(first()).subscribe(
+      this.authenticatorService.putUser(this.user).pipe(first()).subscribe(
         res => {
           this.dialogRef.close('save')
         },
@@ -165,5 +168,9 @@ export class UserDialog implements OnInit, AfterViewChecked {
 
   removeUserRole(index: number) {
     this.user.userRoles!.splice(index, 1);
+  }
+
+  clearExpire() {
+    this.user.expireTime = undefined;
   }
 }

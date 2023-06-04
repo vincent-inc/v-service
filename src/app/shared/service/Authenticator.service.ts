@@ -5,6 +5,7 @@ import { Jwt, Route, User, UserRole } from '../model/Authenticator.model';
 import { SettingService } from './Setting.service';
 import { Observable, first, interval } from 'rxjs';
 import { UsernameExistResponse } from '../model/Response.model';
+import { Time } from '../model/Mat.model';
 
 @Injectable({
   providedIn: 'root'
@@ -100,6 +101,15 @@ export class AuthenticatorService {
     if(this.jwt === null || this.jwt === undefined)
       this.router.navigate(['login']);
     return this.jwt!;
+  }
+
+  async getTime(): Promise<Time> {
+    return new Promise<Time>((resolve, reject) => {
+      this.httpClient.get<Time>(`${this.settingService.getGatewayUrl()}/time/now`).pipe(first()).subscribe(
+        res => resolve(res),
+        error => reject()
+      );
+    })
   }
 
   //special endpoint

@@ -1,33 +1,18 @@
-import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { Component, Input, forwardRef } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
-import { MatFormFieldAppearance, MatFormFieldDefaultOptions } from '@angular/material/form-field';
+import { MatFormFieldAppearance } from '@angular/material/form-field';
+import { MatFormFieldComponent } from '../mat-form-field/mat-form-field.component';
 
 @Component({
   selector: 'app-mat-form-field-input',
   templateUrl: './mat-form-field-input.component.html',
-  styleUrls: ['./mat-form-field-input.component.scss']
+  styleUrls: ['./mat-form-field-input.component.scss'],
+  providers: [{provide: MatFormFieldComponent, useExisting: forwardRef(() => MatFormFieldInputComponent)}],
 })
-export class MatFormFieldInputComponent implements OnInit, OnChanges {
-  @Input()
-  value: string | number = '';
-
-  valueCopy: string | number = '';
-
-  @Output()
-  valueOutput: EventEmitter<string | number> = new EventEmitter();
-
-  @Output()
-  onValueChange: EventEmitter<void> = new EventEmitter();
-
-  @Output()
-  onEnter: EventEmitter<void> = new EventEmitter();
+export class MatFormFieldInputComponent extends MatFormFieldComponent {
 
   @Input()
   maxlength: string = '';
-
-  @Input()
-  error: string = '';
 
   @Input()
   placeholder: string = '';
@@ -42,19 +27,10 @@ export class MatFormFieldInputComponent implements OnInit, OnChanges {
   width: number = 40;
 
   @Input()
-  label: string = '';
-
-  @Input()
   styleWidth?: string;
 
   @Input()
-  required: boolean = false;
-
-  @Input()
   autoResize: boolean = false;
-
-  @Input()
-  disable: boolean = false;
 
   @Input()
   showGoto: boolean = false;
@@ -70,6 +46,9 @@ export class MatFormFieldInputComponent implements OnInit, OnChanges {
 
   @Input()
   showGenerateValue: boolean = false;
+
+  @Input()
+  showMinMaxHint: boolean = false;
 
   @Input()
   alwayUppercase: boolean = false;
@@ -108,16 +87,11 @@ export class MatFormFieldInputComponent implements OnInit, OnChanges {
   @Input()
   max: string = '';
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor() {
+    super();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-      this.valueCopy = structuredClone(this.value);
-  }
-
-  emitValue(): void {
+  override emitValue(): void {
     let value = this.value;
 
     if (this.alwayLowercase && typeof value === 'string')
@@ -126,14 +100,41 @@ export class MatFormFieldInputComponent implements OnInit, OnChanges {
     if (this.alwayUppercase && typeof value === 'string')
       value = value.toUpperCase();
 
-    if (this.defaultType === 'number' && this.min && +value < +this.min)
+    if (this.isValueNumber() && this.min && +value < +this.min)
       value = +this.min;
 
-    if (this.defaultType === 'number' && this.max && +value > +this.max)
+    if (this.isValueNumber() && this.max && +value > +this.max)
       value = +this.max;
 
     this.valueOutput.emit(value);
     this.onValueChange.emit();
+  }
+
+  override isValidInput(): boolean {
+    if (this.required && this.value === '')
+      return false;
+
+    if(this.exceedMax() || this.exceedMin())
+      return false;
+
+    if (this.error)
+      return false;
+
+    return true;
+  }
+
+  exceedMax(): boolean {
+    if(this.isValueNumber() && this.max)
+      return +this.value > +this.max;
+
+    return false;
+  }
+
+  exceedMin(): boolean {
+    if(this.isValueNumber() && this.min)
+      return +this.value < +this.min;
+
+    return false;
   }
 
   emitValueWithCondition(): void {
@@ -143,7 +144,7 @@ export class MatFormFieldInputComponent implements OnInit, OnChanges {
     this.emitValue();
   }
 
-  clear(): void {
+  override clear(): void {
     if (this.defaultType === 'number')
       this.value = 0;
     else
@@ -199,25 +200,7 @@ export class MatFormFieldInputComponent implements OnInit, OnChanges {
     window.open(link);
   }
 
-  isValidInput(): boolean {
-    if (this.required && this.value === '')
-      return false;
-
-    if (this.error)
-      return false;
-
-    return true;
-  }
-
-  isValueChange(): boolean {
-    return this.value !== this.valueCopy;
-  }
-
-  isValueNotChange(): boolean {
-    return this.value === this.valueCopy;
-  }
-
-  isValueString(): boolean {
-    return typeof this.value === 'string';
+  override isValueNumber(): boolean {
+    return this.defaultType === 'number' || typeof this.value === 'number';
   }
 }

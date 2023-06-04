@@ -1,33 +1,26 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
+import { MatFormFieldComponent } from '../mat-form-field/mat-form-field.component';
 
 @Component({
   selector: 'app-mat-form-field-text-area',
   templateUrl: './mat-form-field-text-area.component.html',
-  styleUrls: ['./mat-form-field-text-area.component.scss']
+  styleUrls: ['./mat-form-field-text-area.component.scss'],
+  providers: [{provide: MatFormFieldComponent, useExisting: forwardRef(() => MatFormFieldTextAreaComponent)}],
 })
-export class MatFormFieldTextAreaComponent implements OnInit {
+export class MatFormFieldTextAreaComponent extends MatFormFieldComponent {
 
   @Input()
-  value: string | number = '';
+  override value: string = '';
 
-  valueCopy: string | number = '';
-
-  @Output()
-  valueOutput: EventEmitter<string | number> = new EventEmitter();
+  override valueCopy: string = '';
 
   @Output()
-  onValueChange: EventEmitter<void> = new EventEmitter();
-
-  @Output()
-  onEnter: EventEmitter<void> = new EventEmitter();
+  override valueOutput: EventEmitter<string> = new EventEmitter();
 
   @Input()
   maxlength: string = '';
-
-  @Input()
-  error: string = '';
 
   @Input()
   placeholder: string = '';
@@ -48,22 +41,13 @@ export class MatFormFieldTextAreaComponent implements OnInit {
   cols: string = '';
 
   @Input()
-  label: string = '';
-
-  @Input()
   styleWidth?: string;
-
-  @Input()
-  required: boolean = false;
 
   @Input()
   autoResize: boolean = false;
 
   @Input()
   autoResizeHeight: boolean = true;
-
-  @Input()
-  disable: boolean = false;
 
   @Input()
   showGoto: boolean = false;
@@ -93,16 +77,11 @@ export class MatFormFieldTextAreaComponent implements OnInit {
   @Input()
   copyDisplayMessage: string = this.value.toString();
 
-  constructor() { }
-
-  ngOnInit() {
+  constructor() {
+    super();
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-      this.valueCopy = structuredClone(this.value);
-  }
-
-  emitValue(): void {
+  override emitValue(): void {
     let value = this.value;
 
     if (this.alwayLowercase && typeof value === 'string')
@@ -122,7 +101,7 @@ export class MatFormFieldTextAreaComponent implements OnInit {
     this.emitValue();
   }
 
-  clear(): void {
+  override clear(): void {
     this.value = ''
 
     if(this.manuallyEmitValue)
@@ -172,27 +151,4 @@ export class MatFormFieldTextAreaComponent implements OnInit {
   openLink(link: string): void {
     window.open(link);
   }
-
-  isValidInput(): boolean {
-    if (this.required && this.value === '')
-      return false;
-
-    if (this.error)
-      return false;
-
-    return true;
-  }
-
-  isValueChange(): boolean {
-    return this.value !== this.valueCopy;
-  }
-
-  isValueNotChange(): boolean {
-    return this.value === this.valueCopy;
-  }
-
-  isValueString(): boolean {
-    return typeof this.value === 'string';
-  }
-
 }

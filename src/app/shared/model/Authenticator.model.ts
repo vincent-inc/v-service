@@ -1,4 +1,4 @@
-import { MatRow } from "./Mat.model";
+import { MatRow, Time } from "./Mat.model";
 
 export interface Jwt {
     jwt?: string;
@@ -12,18 +12,8 @@ export interface User {
     userRoles?:   UserRole[];
     userApis?:    UserAPI[];
     expirable?:   boolean;
-    expireTime?:  ExpireTime;
+    expireTime?:  Time;
     enable?:      boolean;
-}
-
-export interface ExpireTime {
-    id?:     number;
-    year?:   number;
-    month?:  number;
-    day?:    number;
-    hours?:  number;
-    minute?: number;
-    second?: number;
 }
 
 export interface UserAPI {
@@ -32,7 +22,7 @@ export interface UserAPI {
     apiKey?:     string;
     expirable?:  boolean;
     enable?:     boolean;
-    expireTime?: ExpireTime;
+    expireTime?: Time;
 }
 
 export interface UserProfile {
