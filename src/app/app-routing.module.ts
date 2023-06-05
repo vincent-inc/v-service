@@ -9,6 +9,7 @@ import { VincentComponent } from './about/vincent/vincent.component';
 import { GeneralQuestionsComponent } from './trivia/general-questions/general-questions.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { CoolSymbolComponent } from './document/cool-symbol/cool-symbol.component';
+import { UserSettingComponent } from './setting/user-setting/user-setting.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,17 @@ const routes: Routes = [
       {
         path: 'questionnaire',
         component: GeneralQuestionsComponent
+      }
+    ]
+  },
+  {
+    path: 'setting',
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: 'user',
+        component: UserSettingComponent
       }
     ]
   },

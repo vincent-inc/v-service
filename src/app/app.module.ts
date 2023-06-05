@@ -20,6 +20,7 @@ import { LobbyDetailComponent } from './game/lobby/lobby-detail/lobby-detail.com
 import { VincentComponent } from './about/vincent/vincent.component';
 import { GeneralQuestionsComponent } from './trivia/general-questions/general-questions.component';
 import { CoolSymbolComponent } from './document/cool-symbol/cool-symbol.component';
+import { UserSettingComponent } from './setting/user-setting/user-setting.component';
 
 @NgModule({
   declarations: [			
@@ -34,7 +35,8 @@ import { CoolSymbolComponent } from './document/cool-symbol/cool-symbol.componen
       LobbyDetailComponent,
       VincentComponent,
       GeneralQuestionsComponent,
-      CoolSymbolComponent
+      CoolSymbolComponent,
+      UserSettingComponent
    ],
   imports: [
     NgEssentialModule,
