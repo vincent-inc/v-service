@@ -10,6 +10,7 @@ import { GeneralQuestionsComponent } from './trivia/general-questions/general-qu
 import { AuthGuard } from './shared/guards/auth.guard';
 import { CoolSymbolComponent } from './cool_util/cool-symbol/cool-symbol.component';
 import { UserSettingComponent } from './setting/user-setting/user-setting.component';
+import { SpringBootSnippetV01Component } from './cool_util/Spring-boot-snippet-v01/Spring-boot-snippet-v01.component';
 
 const routes: Routes = [
   {
@@ -73,6 +74,10 @@ const routes: Routes = [
       {
         path: 'ascii_symbol',
         component: CoolSymbolComponent
+      },
+      {
+        path: 'spring_boot_snippet_v01',
+        component: SpringBootSnippetV01Component
       }
     ]
   },

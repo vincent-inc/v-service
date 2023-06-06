@@ -21,6 +21,7 @@ import { VincentComponent } from './about/vincent/vincent.component';
 import { GeneralQuestionsComponent } from './trivia/general-questions/general-questions.component';
 import { CoolSymbolComponent } from './cool_util/cool-symbol/cool-symbol.component';
 import { UserSettingComponent } from './setting/user-setting/user-setting.component';
+import { SpringBootSnippetV01Component } from './cool_util/Spring-boot-snippet-v01/Spring-boot-snippet-v01.component';
 
 @NgModule({
   declarations: [			
@@ -36,7 +37,8 @@ import { UserSettingComponent } from './setting/user-setting/user-setting.compon
       VincentComponent,
       GeneralQuestionsComponent,
       CoolSymbolComponent,
-      UserSettingComponent
+      UserSettingComponent,
+      SpringBootSnippetV01Component
    ],
   imports: [
     NgEssentialModule,
