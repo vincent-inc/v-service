@@ -1,4 +1,5 @@
 <mat-form-field [appearance]="getAppearance()" [color]="matColor"  [style.width.ch]="getSize(value.toString())" [style.width]="styleWidth">
+  <mat-label>{{label}}</mat-label>
   <textarea [ngStyle]="{color: error ? 'red' : 'white'}" matInput (keyup.enter)="emitEnter()" [(ngModel)]="value" #input (paste)="emitValueWithCondition()" (ngModelChange)="emitValueWithCondition();" [placeholder]="placeholder" [required]="required" [disabled]="disable" [maxlength]="maxlength" [rows]="rows" [cols]="cols" [cdkTextareaAutosize]="autoResizeHeight"></textarea>
   <mat-error>{{label}} can't be empty</mat-error>
   <mat-hint *ngIf="error" style="color: red;" align="start">{{error}}</mat-hint>

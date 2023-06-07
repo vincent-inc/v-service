@@ -1,3 +1,117 @@
-<p>
-  Spring-boot-snippet-v01 works!
-</p>
+<ul class="margin-center">
+  <li><h1 class="text-center">Spring boot snippet</h1></li>
+  <li>
+    <app-mat-form-field-input
+    label="Package name"
+    placeholder="com.example"
+    [value]="packageName" (valueOutput)="packageName = $event"
+    [required]="true"
+    ></app-mat-form-field-input>
+  </li>
+  <li>
+    <app-mat-form-field-input
+    label="Entity name"
+    placeholder="SomeClasses"
+    [value]="entityName" (valueOutput)="entityName = $event"
+    [required]="true"
+    ></app-mat-form-field-input>
+  </li>
+  <li>
+    <mat-form-field>
+      <mat-label>Detection method</mat-label>
+      <mat-select [(ngModel)]="detectMethod">
+        <mat-option value="manual">Manual Input</mat-option>
+        <mat-option value="auto">Auto detect</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </li>
+  <li *ngIf="detectMethod==='manual'">
+    <app-mat-form-field-input
+    label="Number Of Field"
+    [value]="numberOfField" (valueOutput)="numberOfField = $event"
+    (onValueChange)="updateFieds()"
+    [required]="true"
+    defaultType="number"
+    min="0"
+    [showClearIcon]="false"
+    ></app-mat-form-field-input>
+
+    <ul>
+      <li *ngFor="let field of fields">
+        <app-mat-form-field-input
+        label="Data type"
+        placeholder="Integer"
+        [value]="field.dataType" (valueOutput)="field.dataType = $event"
+        [required]="true"
+        ></app-mat-form-field-input>
+        <app-mat-form-field-input
+        label="Field name"
+        placeholder="someName"
+        [value]="field.name" (valueOutput)="field.name = $event"
+        [required]="true"
+        ></app-mat-form-field-input>
+      </li>
+    </ul>
+  </li>
+  <li *ngIf="detectMethod==='auto'">
+    <app-mat-form-field-text-area
+    label="Input Text here"
+    placeholder="Entity class"
+    [value]="inputText" (valueOutput)="inputText = $event"
+    (onEnter)="extractField()"
+    styleWidth="100%"
+    [required]="true"
+    ></app-mat-form-field-text-area>
+
+    <button mat-raised-button color="primary" [disabled]="!inputText" (click)="extractField()">Extract Field</button>
+  </li>
+  <hr>
+  <li>
+    <button mat-raised-button color="primary" [disabled]="fields.length <= 0" (click)="generatedAll()">Generate All</button>
+  </li>
+  <li>
+    <mat-form-field>
+      <mat-label>Generated</mat-label>
+      <mat-select [(ngModel)]="generatedFile">
+        <mat-option value="entity">Entity File</mat-option>
+        <mat-option value="dao">Dao File</mat-option>
+        <mat-option value="service">Service File</mat-option>
+        <mat-option value="controller">Controller</mat-option>
+        <mat-option value="openFiegnInterface">Open feign interface</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </li>
+
+  <li *ngIf="generatedFile === 'entity'">
+    <app-mat-form-field-text-area
+    label="entity"
+    [value]="entityFile" (valueOutput)="entityFile = $event"
+    styleWidth="100%"
+    [showCopyToClipboard]="true"
+    ></app-mat-form-field-text-area>
+  </li>
+
+  <li *ngIf="generatedFile === 'dao'">
+    <app-mat-form-field-text-area
+    label="dao"
+    [value]="daoFile" (valueOutput)="daoFile = $event"
+    styleWidth="100%"
+    ></app-mat-form-field-text-area>
+  </li>
+
+  <li *ngIf="generatedFile === 'service'">
+    <app-mat-form-field-text-area
+    label="service"
+    [value]="serviceFile" (valueOutput)="serviceFile = $event"
+    styleWidth="100%"
+    ></app-mat-form-field-text-area>
+  </li>
+
+  <li *ngIf="generatedFile === 'controller'">
+    <app-mat-form-field-text-area
+    label="controller"
+    [value]="controllerFile" (valueOutput)="controllerFile = $event"
+    styleWidth="100%"
+    ></app-mat-form-field-text-area>
+  </li>
+</ul>
