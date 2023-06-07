@@ -92,7 +92,7 @@ public class {1}Service {
         {1} {2} = this.databaseUtils.getAndExpire({4});
 
         if (ObjectUtils.isEmpty({2}))
-            HttpResponseThrowers.throwBadRequest("{1} ID not found");
+            HttpResponseThrowers.throwBadRequest("{1} {5} not found");
 
         return {2};
     }
