@@ -154,6 +154,7 @@ export class MatFormFieldInputComponent extends MatFormFieldComponent {
       return;
       
     this.valueOutput.emit(this.value);
+    this.onValueChange.emit();
   }
 
   getSize(data: string): number {
