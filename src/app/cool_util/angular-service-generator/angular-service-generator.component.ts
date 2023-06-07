@@ -8,6 +8,8 @@ import { ANGULAR_MODEL } from './angular-service-generator.model';
 })
 export class AngularServiceGeneratorComponent implements OnInit {
 
+  domainOptionKey: string  = 'domainOptions';
+
   entityName: string = '';
   schema: string = 'http';
   domain: string = '';
@@ -20,11 +22,14 @@ export class AngularServiceGeneratorComponent implements OnInit {
   angularFile: string = '';
   httpUtils: string = '';
 
-  domainOptions: string[] = ['one', 'two'];
+  domainOptions: string[] = [];
 
   constructor() { }
 
   ngOnInit() {
+    let domainOptions = localStorage.getItem(this.domainOptionKey);
+    if(domainOptions)
+      this.domainOptions = JSON.parse(domainOptions);
   }
 
   updatePaths(): void {
@@ -69,5 +74,8 @@ export class AngularServiceGeneratorComponent implements OnInit {
 
     if(this.generateHttpUtils)
       this.httpUtils = ANGULAR_MODEL.HTTP_UTILS;
+
+    this.domainOptions.push(this.domain);
+    localStorage.setItem(this.domainOptionKey, JSON.stringify(this.domainOptions));
   }
 }
