@@ -75,7 +75,8 @@ export class AngularServiceGeneratorComponent implements OnInit {
     if(this.generateHttpUtils)
       this.httpUtils = ANGULAR_MODEL.HTTP_UTILS;
 
-    this.domainOptions.push(this.domain);
+    if(!this.domainOptions.includes(this.domain))
+      this.domainOptions.push(this.domain);
     localStorage.setItem(this.domainOptionKey, JSON.stringify(this.domainOptions));
   }
 }
