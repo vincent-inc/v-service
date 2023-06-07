@@ -16,12 +16,26 @@ export class VGameService {
     private httpClient: HttpClient,
     private settingService: SettingService,
   ) { }
-  
+
   // Question
   public getAnyMatchQuestions(question: Question): Observable<Question[]> {
     let params = HttpClientUtils.toHttpParams(question);
+    return this.httpClient.get<Question[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/questions/match_any`, { params: params });
+  }
 
-    return this.httpClient.get<Question[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/questions/match_any`, {params: params});
+  public getAllMatchQuestions(question: Question): Observable<Question[]> {
+    let params = HttpClientUtils.toHttpParams(question);
+    return this.httpClient.get<Question[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/questions/match_all`, { params: params });
+  }
+
+  public getAnyMatchQuestionsWithMatchCase(question: Question, matchCase: string): Observable<Question[]> {
+    let params = HttpClientUtils.toHttpParams(question);
+    return this.httpClient.get<Question[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/questions/match_any/${matchCase}`, { params: params });
+  }
+
+  public getAllMatchQuestionsWithMatchCase(question: Question, matchCase: string): Observable<Question[]> {
+    let params = HttpClientUtils.toHttpParams(question);
+    return this.httpClient.get<Question[]>(`${this.settingService.getGatewayUrl()}/${this.prefix}/questions/match_all/${matchCase}`, { params: params });
   }
 
   public getQuestions(): Observable<Question[]> {
@@ -46,7 +60,7 @@ export class VGameService {
 
   public deleteQuestion(id: number): Observable<void> {
     return this.httpClient.delete<void>(`${this.settingService.getGatewayUrl()}/${this.prefix}/questions/${id}`);
-  }  
+  }
 
   // Lobby
   public joinLobby(lobbyId: string): Observable<Lobby> {
@@ -54,15 +68,15 @@ export class VGameService {
   }
 
   public joinLobbyWithPassword(lobbyId: string, password: string): Observable<Lobby> {
-    return this.httpClient.post<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/join/${lobbyId}`, {password: password});
+    return this.httpClient.post<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/join/${lobbyId}`, { password: password });
   }
-  
+
   public leaveLobby(lobbyId: string): Observable<Lobby> {
     return this.httpClient.post<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/leave/${lobbyId}`, null);
   }
 
   public sendMessage(lobbyId: string, message: string): Observable<Lobby> {
-    return this.httpClient.post<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/chat/${lobbyId}`, {message: message});
+    return this.httpClient.post<Lobby>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/chat/${lobbyId}`, { message: message });
   }
 
   public kickPlayer(lobbyId: string, userId: number) {
@@ -93,5 +107,5 @@ export class VGameService {
 
   public deleteLobby(id: string): Observable<void> {
     return this.httpClient.delete<void>(`${this.settingService.getGatewayUrl()}/${this.prefix}/lobbies/${id}`);
-  }  
+  }
 }
