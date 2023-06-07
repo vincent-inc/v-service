@@ -2,6 +2,8 @@ import { Component, Input, forwardRef } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { MatFormFieldComponent } from '../mat-form-field/mat-form-field.component';
+import { Observable, map, startWith } from 'rxjs';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-mat-form-field-input',
@@ -10,6 +12,9 @@ import { MatFormFieldComponent } from '../mat-form-field/mat-form-field.componen
   providers: [{provide: MatFormFieldComponent, useExisting: forwardRef(() => MatFormFieldInputComponent)}],
 })
 export class MatFormFieldInputComponent extends MatFormFieldComponent {
+
+  @Input()
+  options: string[] = [];
 
   @Input()
   maxlength: string = '';
@@ -87,8 +92,28 @@ export class MatFormFieldInputComponent extends MatFormFieldComponent {
   @Input()
   max: string = '';
 
+  // mat option
+  formControl!: FormControl;
+  filteredOptions!: Observable<string[]>;
+
   constructor() {
     super();
+  }
+
+  override ngOnInit(): void {
+    super.ngOnInit();
+
+    this.formControl = new FormControl(this.value);
+    this.filteredOptions = this.formControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value || '')),
+    );
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   override emitValue(): void {

@@ -22,6 +22,7 @@
     placeholder="google.com"
     [value]="domain" (valueOutput)="domain = $event"
     (onValueChange)="updateURL()"
+    [options]="domainOptions"
     ></app-mat-form-field-input>
   </li>
   <li>

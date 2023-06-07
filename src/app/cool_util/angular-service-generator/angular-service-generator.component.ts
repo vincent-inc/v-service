@@ -20,6 +20,8 @@ export class AngularServiceGeneratorComponent implements OnInit {
   angularFile: string = '';
   httpUtils: string = '';
 
+  domainOptions: string[] = ['one', 'two'];
+
   constructor() { }
 
   ngOnInit() {

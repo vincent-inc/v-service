@@ -25,6 +25,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { BrowserModule } from '@angular/platform-browser';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
  
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     BrowserModule,
     MatStepperModule,
     MatDatepickerModule,
+    MatAutocompleteModule
   ],
   exports: [
     MatButtonModule,
@@ -83,6 +85,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     BrowserModule,
     MatStepperModule,
     MatDatepickerModule,
+    MatAutocompleteModule
   ]
 })
 export class NgMaterialModule { }
