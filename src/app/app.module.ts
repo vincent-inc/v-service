@@ -22,6 +22,7 @@ import { GeneralQuestionsComponent } from './trivia/general-questions/general-qu
 import { CoolSymbolComponent } from './cool_util/cool-symbol/cool-symbol.component';
 import { UserSettingComponent } from './setting/user-setting/user-setting.component';
 import { SpringBootSnippetV01Component } from './cool_util/Spring-boot-snippet-v01/Spring-boot-snippet-v01.component';
+import { AngularServiceGeneratorComponent } from './cool_util/angular-service-generator/angular-service-generator.component';
 
 @NgModule({
   declarations: [			
@@ -38,7 +39,8 @@ import { SpringBootSnippetV01Component } from './cool_util/Spring-boot-snippet-v
       GeneralQuestionsComponent,
       CoolSymbolComponent,
       UserSettingComponent,
-      SpringBootSnippetV01Component
+      SpringBootSnippetV01Component,
+      AngularServiceGeneratorComponent
    ],
   imports: [
     NgEssentialModule,
