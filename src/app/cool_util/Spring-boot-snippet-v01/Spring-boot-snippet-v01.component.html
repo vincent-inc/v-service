@@ -96,6 +96,7 @@
     label="dao"
     [value]="daoFile" (valueOutput)="daoFile = $event"
     styleWidth="100%"
+    [showCopyToClipboard]="true"
     ></app-mat-form-field-text-area>
   </li>
 
@@ -104,6 +105,7 @@
     label="service"
     [value]="serviceFile" (valueOutput)="serviceFile = $event"
     styleWidth="100%"
+    [showCopyToClipboard]="true"
     ></app-mat-form-field-text-area>
   </li>
 
@@ -112,6 +114,7 @@
     label="controller"
     [value]="controllerFile" (valueOutput)="controllerFile = $event"
     styleWidth="100%"
+    [showCopyToClipboard]="true"
     ></app-mat-form-field-text-area>
   </li>
 </ul>

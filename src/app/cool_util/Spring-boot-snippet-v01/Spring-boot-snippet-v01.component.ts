@@ -200,7 +200,7 @@ export class SpringBootSnippetV01Component implements OnInit {
 
     method += queryT1 + method2 + queryT2 + method3;
 
-    return method;
+    return method.trim();
   }
 
   generateService(): void {
@@ -230,12 +230,12 @@ export class SpringBootSnippetV01Component implements OnInit {
    * {5} id field name uppercase
    */
   replaceStandardVariable(file: string) {
-    file.replaceAll('{0}', this.packageName);
-    file.replaceAll('{1}', this.upperCaseEntityName);
-    file.replaceAll('{2}', this.lowerCaseEntityName);
-    file.replaceAll('{3}', this.idFieldDataType);
-    file.replaceAll('{4}', this.idFieldDataNameLowerCase);
-    file.replaceAll('{5}', this.idFieldDataNameUpperCase);
+    file = file.replaceAll('{0}', this.packageName);
+    file = file.replaceAll('{1}', this.upperCaseEntityName);
+    file = file.replaceAll('{2}', this.lowerCaseEntityName);
+    file = file.replaceAll('{3}', this.idFieldDataType);
+    file = file.replaceAll('{4}', this.idFieldDataNameLowerCase);
+    file = file.replaceAll('{5}', this.idFieldDataNameUpperCase);
 
     return file;
   }

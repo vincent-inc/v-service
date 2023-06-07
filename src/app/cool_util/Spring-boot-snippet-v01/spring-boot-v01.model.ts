@@ -3,7 +3,7 @@
  * {1} uppercase entity name
  * {2} lowercase entity name
  * {3} id field data type
- * {4} id field name
+ * {4} id field name lowercase
  * {5} id field name uppercase
  */
 
@@ -35,8 +35,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class {1}
-{
+public class {1} {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private {3};
@@ -55,8 +54,7 @@ import org.springframework.data.repository.query.Param;
 
 import {0}.model.{1};
 
-public interface {1}Dao extends JpaRepository<{1}, {6}>
-{
+public interface {1}Dao extends JpaRepository<{1}, {6}> {
 {7}
 }`;
 
