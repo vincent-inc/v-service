@@ -129,6 +129,14 @@ export class AuthenticatorService {
     return this.httpClient.post<Jwt>(`${this.settingService.getGatewayUrl()}/login`, user);
   }
 
+  modifyCurrentUser(user: User) {
+    return this.httpClient.put<User>(`${this.settingService.getGatewayUrl()}/user`, user);
+  }
+
+  patchCurrentUser(user: User) {
+    return this.httpClient.patch<User>(`${this.settingService.getGatewayUrl()}/user`, user);
+  }
+
   // USERs
   public getUserWithGateway(): Observable<User> {
     return this.httpClient.get<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/users`);
