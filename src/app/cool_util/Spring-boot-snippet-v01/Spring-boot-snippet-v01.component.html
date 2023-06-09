@@ -17,13 +17,15 @@
     ></app-mat-form-field-input>
   </li>
   <li>
-    <mat-form-field>
-      <mat-label>Detection method</mat-label>
-      <mat-select [(ngModel)]="detectMethod">
-        <mat-option value="manual">Manual Input</mat-option>
-        <mat-option value="auto">Auto detect</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <app-mat-form-field-input-option
+    label="Detection method"
+    [value]="detectMethod" (valueOutput)="detectMethod = $event"
+    [options]="[
+      {value: 'manual', valueLabel: 'Manual Input'},
+      {value: 'auto', valueLabel: 'Auto detect'},
+    ]"
+    noneLabel=""
+    ></app-mat-form-field-input-option>
   </li>
   <li *ngIf="detectMethod==='manual'">
     <app-mat-form-field-input
@@ -70,16 +72,18 @@
     <button mat-raised-button color="primary" [disabled]="fields.length <= 0" (click)="generatedAll()">Generate All</button>
   </li>
   <li>
-    <mat-form-field>
-      <mat-label>Generated</mat-label>
-      <mat-select [(ngModel)]="generatedFile">
-        <mat-option value="entity">Entity File</mat-option>
-        <mat-option value="dao">Dao File</mat-option>
-        <mat-option value="service">Service File</mat-option>
-        <mat-option value="controller">Controller</mat-option>
-        <mat-option value="openFiegnInterface">Open feign interface</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <app-mat-form-field-input-option
+    label="Generated"
+    [value]="generatedFile" (valueOutput)="generatedFile = $event"
+    [options]="[
+      {value: 'entity', valueLabel: 'Entity File'},
+      {value: 'dao', valueLabel: 'Dao File'},
+      {value: 'service', valueLabel: 'Service File'},
+      {value: 'controller', valueLabel: 'Controller'},
+      {value: 'openFiegnInterface', valueLabel: 'Open feign interface', disable: true},
+    ]"
+    noneLabel=""
+    ></app-mat-form-field-input-option>
   </li>
 
   <li *ngIf="generatedFile === 'entity'">

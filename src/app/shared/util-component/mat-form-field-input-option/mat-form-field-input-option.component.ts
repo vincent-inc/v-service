@@ -10,7 +10,7 @@ import { MatFormFieldComponent } from '../mat-form-field/mat-form-field.componen
 export class MatFormFieldInputOptionComponent extends MatFormFieldComponent {
 
   @Input()
-  options: {value: any, message: string, disable?: boolean}[] = [];
+  options: {value: any, valueLabel: string, disable?: boolean}[] = [];
 
   @Input()
   noneLabel = 'None';

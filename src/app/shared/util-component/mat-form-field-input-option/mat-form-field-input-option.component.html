@@ -1,8 +1,8 @@
 <mat-form-field [appearance]="getAppearance()" [color]="matColor"  [style.width.ch]="getSize(value.toString())" [style.width]="styleWidth">
   <mat-label>{{label}}</mat-label>
-  <mat-select [(ngModel)]="value" [disabled]="disable" [required]="required">
-    <mat-option value="">{{noneLabel}}</mat-option>
-    <mat-option *ngFor="let option of options" [value]="option.value" [disabled]="option.disable">{{option.message}}</mat-option>
+  <mat-select [(ngModel)]="value" (ngModelChange)="emitValue()" [disabled]="disable" [required]="required">
+    <mat-option *ngIf="noneLabel" value="">{{noneLabel}}</mat-option>
+    <mat-option *ngFor="let option of options" [value]="option.value" [disabled]="option.disable">{{option.valueLabel}}</mat-option>
   </mat-select>
   <mat-error>{{label}} can't be empty</mat-error>
 </mat-form-field>
