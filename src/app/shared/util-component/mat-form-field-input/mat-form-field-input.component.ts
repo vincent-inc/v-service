@@ -23,21 +23,6 @@ export class MatFormFieldInputComponent extends MatFormFieldComponent {
   placeholder: string = '';
 
   @Input()
-  appearance: string = 'fill';
-
-  @Input()
-  matColor: ThemePalette = 'primary';
-
-  @Input()
-  width: number = 40;
-
-  @Input()
-  styleWidth?: string;
-
-  @Input()
-  autoResize: boolean = false;
-
-  @Input()
   showGoto: boolean = false;
 
   @Input()
@@ -182,7 +167,7 @@ export class MatFormFieldInputComponent extends MatFormFieldComponent {
     this.onValueChange.emit();
   }
 
-  getSize(data: string): number {
+  override getSize(data: string): number {
     let offset = 10;
     if (this.showCopyToClipboard)
       offset += 5;
@@ -200,26 +185,6 @@ export class MatFormFieldInputComponent extends MatFormFieldComponent {
       return this.width;
     else
       return data.length + offset;
-  }
-
-  getAppearance(): MatFormFieldAppearance {
-    let appearance: MatFormFieldAppearance = 'fill';
-    switch (this.appearance.toLowerCase()) {
-      case 'fill':
-      case '1':
-        appearance = 'fill'
-        break;
-
-      case 'outline':
-      case '2':
-        appearance = 'outline'
-        break;
-
-      default:
-        break;
-    }
-
-    return appearance;
   }
 
   openLink(link: string): void {

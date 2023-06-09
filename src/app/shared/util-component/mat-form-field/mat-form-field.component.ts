@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ThemePalette } from '@angular/material/core';
+import { MatFormFieldAppearance } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-mat-form-field',
@@ -27,6 +29,12 @@ export class MatFormFieldComponent implements OnInit, OnChanges {
   internalError = '';
 
   @Input()
+  matColor: ThemePalette = 'primary';
+
+  @Input()
+  appearance: string = 'fill';
+
+  @Input()
   label: string = '';
 
   @Input()
@@ -34,6 +42,15 @@ export class MatFormFieldComponent implements OnInit, OnChanges {
 
   @Input()
   disable: boolean = false;
+
+  @Input()
+  width: number = 40;
+
+  @Input()
+  styleWidth?: string;
+
+  @Input()
+  autoResize: boolean = false;
 
   constructor() { }
 
@@ -73,6 +90,38 @@ export class MatFormFieldComponent implements OnInit, OnChanges {
       return false;
 
     return true;
+  }
+
+  getSize(data: string): number {
+    let offset = 10;
+
+    if (!this.autoResize)
+      return this.width;
+
+    if (data.length <= 10)
+      return this.width;
+    else
+      return data.length + offset;
+  }
+
+  getAppearance(): MatFormFieldAppearance {
+    let appearance: MatFormFieldAppearance = 'fill';
+    switch (this.appearance.toLowerCase()) {
+      case 'fill':
+      case '1':
+        appearance = 'fill'
+        break;
+
+      case 'outline':
+      case '2':
+        appearance = 'outline'
+        break;
+
+      default:
+        break;
+    }
+
+    return appearance;
   }
 
   isValueChange(): boolean {

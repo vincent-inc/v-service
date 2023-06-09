@@ -12,6 +12,7 @@ import { MatFormFieldGroupDirective } from '../directive/mat-form-field-group.di
 import { MatFormFieldTextAreaComponent } from '../util-component/mat-form-field-text-area/mat-form-field-text-area.component';
 import { MatFormFieldComponent } from '../util-component/mat-form-field/mat-form-field.component';
 import { MatFormFieldInputTimeComponent } from '../util-component/mat-form-field-input-time/mat-form-field-input-time.component';
+import { MatFormFieldInputOptionComponent } from '../util-component/mat-form-field-input-option/mat-form-field-input-option.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { MatFormFieldInputTimeComponent } from '../util-component/mat-form-field
     MatFormFieldComponent,
     MatFormFieldGroupDirective,
     MatFormFieldTextAreaComponent,
-    MatFormFieldInputTimeComponent
+    MatFormFieldInputTimeComponent,
+    MatFormFieldInputOptionComponent
   ],
   imports: [
     NgMaterialModule,
@@ -42,7 +44,8 @@ import { MatFormFieldInputTimeComponent } from '../util-component/mat-form-field
     MatFormFieldComponent,
     MatFormFieldGroupDirective,
     MatFormFieldTextAreaComponent,
-    MatFormFieldInputTimeComponent
+    MatFormFieldInputTimeComponent,
+    MatFormFieldInputOptionComponent
   ]
 })
 export class NgComponentModule { }

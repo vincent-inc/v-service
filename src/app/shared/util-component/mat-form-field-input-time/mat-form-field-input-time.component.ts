@@ -45,12 +45,6 @@ export class MatFormFieldInputTimeComponent extends MatFormFieldComponent {
   @Input()
   range: boolean = false;
 
-  @Input()
-  matColor: ThemePalette = 'primary';
-
-  @Input()
-  autoResize: boolean = false;
-
   constructor(private authenticatorSerice: AuthenticatorService) {
     super()
   }
