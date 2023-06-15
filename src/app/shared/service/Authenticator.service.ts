@@ -130,11 +130,11 @@ export class AuthenticatorService {
   }
 
   modifyCurrentUser(user: User) {
-    return this.httpClient.put<User>(`${this.settingService.getGatewayUrl()}/user`, user);
+    return this.httpClient.put<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/auth/user`, user);
   }
 
   patchCurrentUser(user: User) {
-    return this.httpClient.patch<User>(`${this.settingService.getGatewayUrl()}/user`, user);
+    return this.httpClient.patch<User>(`${this.settingService.getGatewayUrl()}/${this.prefix}/auth/user`, user);
   }
 
   // USERs

@@ -70,7 +70,7 @@ export class UserSettingComponent implements OnInit, AfterViewChecked {
     if(!this.validInfoForm)
       return;
 
-    this.authenticatorService.patchUser(this.user).pipe(first()).subscribe(
+    this.authenticatorService.patchCurrentUser(this.user).pipe(first()).subscribe(
       res => {
         this.user = res;
         this.userClone = structuredClone(res);
