@@ -178,7 +178,7 @@ import {0}.service.{1}Service;
 
 @RestController
 @RequestMapping("/{2}s")
-class {1}Controller {
+public class {1}Controller {
     @Autowired
     {1}Service {2}Service;
 
