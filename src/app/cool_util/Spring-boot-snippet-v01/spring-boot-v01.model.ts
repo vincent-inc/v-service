@@ -75,11 +75,11 @@ import {0}.util.Http.HttpResponseThrowers;
 public class {1}Service {
     public static final String HASH_KEY = "{0}.service.{1}Service";
 
-    private DatabaseUtils<{1}, Integer> databaseUtils;
+    private DatabaseUtils<{1}, {3}> databaseUtils;
 
     private {1}Dao {2}Dao;
 
-    public {1}Service(DatabaseUtils<{1}, Integer> databaseUtils, {1}Dao {2}Dao) {
+    public {1}Service(DatabaseUtils<{1}, {3}> databaseUtils, {1}Dao {2}Dao) {
         this.databaseUtils = databaseUtils.init({2}Dao, HASH_KEY);
         this.{2}Dao = {2}Dao;
     }
@@ -180,7 +180,7 @@ import {0}.service.{1}Service;
 @RequestMapping("/{2}s")
 public class {1}Controller {
     @Autowired
-    {1}Service {2}Service;
+    private {1}Service {2}Service;
 
     @Operation(summary = "Get a list of all {1}")
     @GetMapping
