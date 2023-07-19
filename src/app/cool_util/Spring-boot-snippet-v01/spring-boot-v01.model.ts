@@ -123,8 +123,10 @@ public class {1}Service {
     }
 
     public {1} create{1}({1} {2}) {
-        this.databaseUtils.saveAndExpire({2});
-        return {2};
+        {1} new{1} = new {1}();
+        ReflectionUtils.patchValue(new{1}, {2});
+        new{1} = this.databaseUtils.saveAndExpire(new{1});
+        return new{1};
     }
 
     public {1} modify{1}({3} {4}, {1} {2}) {
