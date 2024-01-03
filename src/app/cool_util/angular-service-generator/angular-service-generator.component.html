@@ -56,21 +56,21 @@
     <label for="params">Generate Http Utils</label>
   </li>
   <li>
-    <app-mat-form-field-text-area
+    <app-mat-form-field-input-text-area
     label="Generated Method"
     [value]="angularFile"
     [showClearIcon]="false"
     [showCopyToClipboard]="true"
     styleWidth="100%"
-    ></app-mat-form-field-text-area>
+    ></app-mat-form-field-input-text-area>
   </li>
   <li *ngIf="generateHttpUtils">
-    <app-mat-form-field-text-area
+    <app-mat-form-field-input-text-area
     label="HttpClientUtils.model.ts"
     [value]="httpUtils"
     [showClearIcon]="false"
     [showCopyToClipboard]="true"
     styleWidth="100%"
-    ></app-mat-form-field-text-area>
+    ></app-mat-form-field-input-text-area>
   </li>
 </ul>

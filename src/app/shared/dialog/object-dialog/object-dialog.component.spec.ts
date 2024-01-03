@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { MatFormFieldTextAreaComponent } from './mat-form-field-text-area.component';
+import { ObjectDialog } from './object-dialog.component';
 
-describe('MatFormFieldTextAreaComponent', () => {
-  let component: MatFormFieldTextAreaComponent;
-  let fixture: ComponentFixture<MatFormFieldTextAreaComponent>;
+describe('ObjectDialogComponent', () => {
+  let component: ObjectDialog;
+  let fixture: ComponentFixture<ObjectDialog>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MatFormFieldTextAreaComponent ]
+      declarations: [ ObjectDialog ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MatFormFieldTextAreaComponent);
+    fixture = TestBed.createComponent(ObjectDialog);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

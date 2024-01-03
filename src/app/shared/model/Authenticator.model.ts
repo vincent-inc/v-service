@@ -1,4 +1,4 @@
-import { MatRow, Time } from "./Mat.model";
+import { MatColumn, Time } from "./Mat.model";
 
 export interface Jwt {
     jwt?: string;
@@ -52,7 +52,7 @@ export interface Route {
     roles?:  UserRole[];
 }
 
-export default class UserRow implements MatRow
+export default class UserRow
 {
     id?:                   number;
     username?:              string;

@@ -1,10 +1,10 @@
 <h1 mat-dialog-title>{{data.title}}</h1>
 <div mat-dialog-content>
-  <app-mat-form-field-text-area
+  <app-mat-form-field-input-text-area
   [value]="data.message"
   [autoResizeHeight]="true"
   [disable]="true"
-  ></app-mat-form-field-text-area>
+  ></app-mat-form-field-input-text-area>
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button color="primary" [mat-dialog-close]="yes.toLowerCase()">{{yes}}</button>

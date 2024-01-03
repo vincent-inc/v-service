@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgEssentialModule } from './shared/module/ng-essential.module';
 import { NgMaterialModule } from './shared/module/ng-material.module';
@@ -24,24 +22,38 @@ import { UserSettingComponent } from './setting/user-setting/user-setting.compon
 import { SpringBootSnippetV01Component } from './cool_util/Spring-boot-snippet-v01/Spring-boot-snippet-v01.component';
 import { AngularServiceGeneratorComponent } from './cool_util/angular-service-generator/angular-service-generator.component';
 
+export const defaultTextColor = 'black';
+
+const GAMES = [
+  BattleshipComponent,
+  LobbyComponent,
+  LobbyDetailComponent,
+]
+
+const COOL_SERVICE = [
+  AngularServiceGeneratorComponent,
+  CoolSymbolComponent,
+  SpringBootSnippetV01Component,
+]
+
+const LIST = [
+  AppComponent,
+  LoginComponent,
+  HeaderComponent,
+  SideDrawerComponent,
+  HomeComponent,
+  RegisterComponent,
+  VincentComponent,
+  GeneralQuestionsComponent,
+  UserSettingComponent,
+]
+
 @NgModule({
-  declarations: [			
-    AppComponent,
-      LoginComponent,
-      HeaderComponent,
-      SideDrawerComponent,
-      HomeComponent,
-      RegisterComponent,
-      BattleshipComponent,
-      LobbyComponent,
-      LobbyDetailComponent,
-      VincentComponent,
-      GeneralQuestionsComponent,
-      CoolSymbolComponent,
-      UserSettingComponent,
-      SpringBootSnippetV01Component,
-      AngularServiceGeneratorComponent
-   ],
+  declarations: [
+    ... GAMES,
+    ... LIST,
+    ... COOL_SERVICE
+  ],
   imports: [
     NgEssentialModule,
     NgMaterialModule,

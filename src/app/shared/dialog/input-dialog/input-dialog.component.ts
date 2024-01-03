@@ -13,21 +13,22 @@ export class InputDialog implements OnInit {
   input: string = '';
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {title: string, yes?: string, no?: string, multipleLine: boolean}
-    ) { }
+    @Inject(MAT_DIALOG_DATA) public data: { title: string, yes?: string, no?: string, multipleLine: boolean, input?: string }
+  ) { }
 
-  ngOnInit() 
-  {
-    if(this.data.yes)
+  ngOnInit() {
+    if (this.data.yes)
       this.yes = this.data.yes;
 
-    if(this.data.no || this.data.no === '')
+    if (this.data.no || this.data.no === '')
       this.no = this.data.no;
+
+    if(this.data.input)
+      this.input = this.data.input;
   }
 
-  getWidth(): number
-  {
-    if(this.input.length < 20)
+  getWidth(): number {
+    if (this.input.length < 20)
       return 20;
     else
       return this.input.length;

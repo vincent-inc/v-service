@@ -28,12 +28,12 @@
         </mat-date-range-picker>
     </mat-form-field>
     
-    <app-mat-form-field-text-area
+    <app-mat-form-field-input-text-area
     *ngIf="value"
     [disable]="true"
     label="Date picked"
     [value]="display"
-    ></app-mat-form-field-text-area>
+    ></app-mat-form-field-input-text-area>
 </ng-container>
 <br>
 <ng-container *ngIf="type === 'TIME' || type === 'DATE_TIME'">

@@ -7,29 +7,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { MatNativeDateModule } from '@angular/material/core';
 
+const list = [
+  CommonModule,
+  BrowserModule,
+  AppRoutingModule,
+  FormsModule,
+  BrowserAnimationsModule,
+  HttpClientModule,
+  ReactiveFormsModule,
+  MatNativeDateModule
+]
+
 @NgModule({
   declarations: [
-    
+
   ],
-  imports: [
-    CommonModule,
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    MatNativeDateModule
-  ],
-  exports: [
-    CommonModule,
-    BrowserModule,
-    AppRoutingModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    MatNativeDateModule
-  ]
+  imports: list,
+  exports: list
 })
 export class NgEssentialModule { }

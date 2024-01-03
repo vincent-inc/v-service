@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectorRef, ContentChild, ContentChildren, Directive, DoCheck, EventEmitter, OnDestroy, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectorRef, ContentChild, ContentChildren, Directive, DoCheck, EventEmitter, OnDestroy, Output, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MatFormFieldComponent } from '../util-component/mat-form-field/mat-form-field.component';
 
@@ -19,7 +19,6 @@ export class MatFormFieldGroupDirective implements AfterContentInit, AfterConten
   subscriptions: Subscription[] = []
 
   constructor() {
-
   }
 
   ngOnDestroy(): void {
@@ -58,5 +57,13 @@ export class MatFormFieldGroupDirective implements AfterContentInit, AfterConten
 
     this.onAllInputCheck.emit(valid);
     return valid;
+  }
+
+  emitAllValueOutput(): void {
+    if(this.matFormFields) {
+      this.matFormFields.forEach(e => {
+        e.emitValue();
+      });
+    }
   }
 }

@@ -1,15 +1,13 @@
 import { Component, EventEmitter, Input, Output, forwardRef } from '@angular/core';
-import { ThemePalette } from '@angular/material/core';
-import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { MatFormFieldComponent } from '../mat-form-field/mat-form-field.component';
 
 @Component({
-  selector: 'app-mat-form-field-text-area',
-  templateUrl: './mat-form-field-text-area.component.html',
-  styleUrls: ['./mat-form-field-text-area.component.scss'],
-  providers: [{provide: MatFormFieldComponent, useExisting: forwardRef(() => MatFormFieldTextAreaComponent)}],
+  selector: 'app-mat-form-field-input-text-area',
+  templateUrl: './mat-form-field-input-text-area.component.html',
+  styleUrls: ['./mat-form-field-input-text-area.component.scss'],
+  providers: [{provide: MatFormFieldComponent, useExisting: forwardRef(() => MatFormFieldInputTextAreaComponent)}],
 })
-export class MatFormFieldTextAreaComponent extends MatFormFieldComponent {
+export class MatFormFieldInputTextAreaComponent extends MatFormFieldComponent {
 
   @Input()
   override value: string = '';

@@ -1,13 +1,15 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
+import { defaultTextColor } from 'src/app/app.module';
+import { FixChangeDetection } from '../../directive/FixChangeDetection';
 
 @Component({
   selector: 'app-mat-form-field',
   templateUrl: './mat-form-field.component.html',
   styleUrls: ['./mat-form-field.component.scss']
 })
-export class MatFormFieldComponent implements OnInit, OnChanges {
+export class MatFormFieldComponent extends FixChangeDetection implements OnInit, OnChanges {
 
   @Input()
   value: string | number | any = '';
@@ -52,9 +54,21 @@ export class MatFormFieldComponent implements OnInit, OnChanges {
   @Input()
   autoResize: boolean = false;
 
-  constructor() { }
+  defaultTextColor = 'black';
+  
+  //key capture
+  keyDown: string[] = [];
+
+  //dynamic type
+  @Input()
+  blankObject?: any;
+
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
+    this.defaultTextColor = defaultTextColor;
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -70,6 +84,10 @@ export class MatFormFieldComponent implements OnInit, OnChanges {
     this.onEnter.emit();
   }
 
+  addKey(keybaordEvent: KeyboardEvent) {
+    console.log(keybaordEvent);
+  }
+
   clear(): void {
     if (this.isValueNumber())
       this.value = 0;
@@ -80,7 +98,7 @@ export class MatFormFieldComponent implements OnInit, OnChanges {
   }
 
   isValidInput(): boolean {
-    if (this.required && this.value === '')
+    if (this.required && !this.value)
       return false;
 
     if(this.internalError)
@@ -136,7 +154,38 @@ export class MatFormFieldComponent implements OnInit, OnChanges {
     return typeof this.value === 'string';
   }
 
+  isValueMultipleStringLine(): boolean {
+    return typeof this.value === 'string' && this.value.includes("\n");
+  }
+
+  isValueNonMultipleStringLine(): boolean {
+    return typeof this.value === 'string' && !this.value.includes("\n");
+  }
+
   isValueNumber(): boolean {
     return typeof this.value === 'number';
+  }
+
+  isValueBoolean(): boolean {
+    return typeof this.value === 'boolean';
+  }
+
+  resetValue(): void {
+    this.value = structuredClone(this.valueCopy);
+  }
+
+  isValueArray(): boolean {
+    return Array.isArray(this.value);
+  }
+
+  isValueObject(): boolean {
+    return typeof this.value === 'object';
+  }
+
+  isValuePrimitive(): boolean {
+    if(this.isValueArray() || this.isValueObject())
+      return false;
+    else
+      return true;
   }
 }

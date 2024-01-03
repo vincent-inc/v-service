@@ -56,14 +56,14 @@
     </ul>
   </li>
   <li *ngIf="detectMethod==='auto'">
-    <app-mat-form-field-text-area
+    <!-- <app-mat-form-field-input-text-area
     label="Input Text here"
     placeholder="Entity class"
     [value]="inputText" (valueOutput)="inputText = $event"
     (onEnter)="extractField()"
     styleWidth="100%"
     [required]="true"
-    ></app-mat-form-field-text-area>
+    ></app-mat-form-field-input-text-area> -->
 
     <button mat-raised-button color="primary" [disabled]="!inputText" (click)="extractField()">Extract Field</button>
   </li>
@@ -87,38 +87,38 @@
   </li>
 
   <li *ngIf="generatedFile === 'entity'">
-    <app-mat-form-field-text-area
+    <app-mat-form-field-input-text-area
     label="entity"
     [value]="entityFile" (valueOutput)="entityFile = $event"
     styleWidth="100%"
     [showCopyToClipboard]="true"
-    ></app-mat-form-field-text-area>
+    ></app-mat-form-field-input-text-area>
   </li>
 
   <li *ngIf="generatedFile === 'dao'">
-    <app-mat-form-field-text-area
+    <app-mat-form-field-input-text-area
     label="dao"
     [value]="daoFile" (valueOutput)="daoFile = $event"
     styleWidth="100%"
     [showCopyToClipboard]="true"
-    ></app-mat-form-field-text-area>
+    ></app-mat-form-field-input-text-area>
   </li>
 
   <li *ngIf="generatedFile === 'service'">
-    <app-mat-form-field-text-area
+    <app-mat-form-field-input-text-area
     label="service"
     [value]="serviceFile" (valueOutput)="serviceFile = $event"
     styleWidth="100%"
     [showCopyToClipboard]="true"
-    ></app-mat-form-field-text-area>
+    ></app-mat-form-field-input-text-area>
   </li>
 
   <li *ngIf="generatedFile === 'controller'">
-    <app-mat-form-field-text-area
+    <app-mat-form-field-input-text-area
     label="controller"
     [value]="controllerFile" (valueOutput)="controllerFile = $event"
     styleWidth="100%"
     [showCopyToClipboard]="true"
-    ></app-mat-form-field-text-area>
+    ></app-mat-form-field-input-text-area>
   </li>
 </ul>

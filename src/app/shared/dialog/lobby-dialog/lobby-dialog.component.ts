@@ -48,26 +48,7 @@ export class LobbyDialog implements OnInit, AfterViewChecked {
           );
         }
         else {
-          this.lobby = {
-            id: '',
-            name:                  '',
-            description:           '',
-            currentGame:           '',
-            password:              '',
-            currentNumberOfPlayer: 0,
-            maxPlayer:             2,
-            messages:              [],
-            lobbyInfo:             {
-              playerList:     [],
-              spectatingList: [],
-            },
-            battleshipGame:        {
-              maxPlayer:             2,
-              currentNumberOfPlayer: 0,
-              gridSize:              7,
-              maxNumberOfShip:       5
-            },
-          }
+          this.lobby = new Lobby();
 
           this.lobbyCopy = structuredClone(this.lobby);
 

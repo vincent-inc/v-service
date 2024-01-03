@@ -5,14 +5,16 @@
   label="Input"
   [value]="input" (valueOutput)="input = $event.toString()"
   [autoResize]="true"
+  styleWidth="100%"
   ></app-mat-form-field-input>
-  <app-mat-form-field-text-area
+  <app-mat-form-field-input-text-area
   *ngIf="data.multipleLine"
   label="input"
   [value]="input" (valueOutput)="input = $event.toString()"
   cols="50"
   rows="10"
-  ></app-mat-form-field-text-area>
+  styleWidth="100%"
+  ></app-mat-form-field-input-text-area>
 </div>
 <div mat-dialog-actions>
   <button mat-raised-button color="primary" [mat-dialog-close]="input" cdkFocusInitial>{{yes}}</button>

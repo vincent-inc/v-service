@@ -1,15 +1,16 @@
-import { Component, Input, forwardRef } from '@angular/core';
+import { AfterContentChecked, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, forwardRef, inject } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatFormFieldAppearance } from '@angular/material/form-field';
 import { MatFormFieldComponent } from '../mat-form-field/mat-form-field.component';
 import { Observable, map, startWith } from 'rxjs';
-import { FormControl } from '@angular/forms';
+import { FormControl, ValidatorFn, Validators } from '@angular/forms';
+import { FixChangeDetection } from '../../directive/FixChangeDetection';
 
 @Component({
   selector: 'app-mat-form-field-input',
   templateUrl: './mat-form-field-input.component.html',
   styleUrls: ['./mat-form-field-input.component.scss'],
-  providers: [{provide: MatFormFieldComponent, useExisting: forwardRef(() => MatFormFieldInputComponent)}],
+  providers: [{ provide: MatFormFieldComponent, useExisting: forwardRef(() => MatFormFieldInputComponent) }],
 })
 export class MatFormFieldInputComponent extends MatFormFieldComponent {
 
@@ -18,6 +19,9 @@ export class MatFormFieldInputComponent extends MatFormFieldComponent {
 
   @Input()
   maxlength: string = '';
+
+  @Input()
+  minlength: string = '';
 
   @Input()
   placeholder: string = '';
@@ -48,6 +52,9 @@ export class MatFormFieldInputComponent extends MatFormFieldComponent {
 
   @Input()
   manuallyEmitValue: boolean = false;
+
+  @Input()
+  focusoutEmit: boolean = true;
 
   //input copy
   @Input()
@@ -81,6 +88,17 @@ export class MatFormFieldInputComponent extends MatFormFieldComponent {
   formControl!: FormControl;
   filteredOptions!: Observable<string[]>;
 
+  //custom icon
+  @Output()
+  onCustomIconClick: EventEmitter<any> = new EventEmitter();
+
+  @Input()
+  customIconLabel: string = '';
+
+  //validator
+  @Input()
+  validateEmail: boolean = false;
+
   constructor() {
     super();
   }
@@ -89,20 +107,73 @@ export class MatFormFieldInputComponent extends MatFormFieldComponent {
     super.ngOnInit();
 
     this.formControl = new FormControl(this.value);
+
+    this.addValidator();
+
     this.filteredOptions = this.formControl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '')),
     );
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
+  private addValidator() {
+    if (this.disable)
+      this.formControl.disable({ onlySelf: true });
+
+    if (this.validateEmail)
+      this.formControl.addValidators(Validators.email);
+
+    if (this.max)
+      this.formControl.addValidators(Validators.max(+this.max));
+
+    if (this.min)
+      this.formControl.addValidators(Validators.min(+this.min));
+
+    if (this.maxlength)
+      this.formControl.addValidators(Validators.maxLength(+this.maxlength));
+
+    if (this.minlength)
+      this.formControl.addValidators(Validators.minLength(+this.minlength));
+
+    if(this.required)
+      this.formControl.addValidators(Validators.required);
+  }
+
+  getFormControlError(): string {
+    let errors = this.formControl.errors;
+
+    if(errors?.['email'])
+      return `Email is not valid`;
+
+    if(errors?.['max'])
+      return `${this.label} can not be bigger than ${this.max}`;
+
+    if(errors?.['min'])
+      return `${this.label} can not be smaller than ${this.min}`;
+
+    if(errors?.['maxLength'])
+      return `${this.label} can not be longer than ${this.maxlength} length`;
+
+    if(errors?.['minLength'])
+      return `${this.label} can not be shorter than ${this.minlength} length`;
+
+    if(errors?.['required'])
+      return `${this.label} can not be be empty`;
+    
+    return '';
+  }
+
+  private _filter(value: any): string[] {
+    let filterValue = value;
+
+    if (typeof filterValue === 'string')
+      filterValue = value.toLowerCase();
 
     return this.options.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   override emitValue(): void {
-    let value = this.value;
+    let value = structuredClone(this.value);
 
     if (this.alwayLowercase && typeof value === 'string')
       value = value.toLowerCase();
@@ -120,11 +191,24 @@ export class MatFormFieldInputComponent extends MatFormFieldComponent {
     this.onValueChange.emit();
   }
 
+  focusoutEmitValue() {
+    if (this.focusoutEmit)
+      this.emitValue();
+  }
+
+  emitCustomIcon() {
+    this.emitValue();
+    this.onCustomIconClick.emit(this.value);
+  }
+
   override isValidInput(): boolean {
+    if(this.getFormControlError())
+      return false;
+
     if (this.required && this.value === '')
       return false;
 
-    if(this.exceedMax() || this.exceedMin())
+    if (this.exceedMax() || this.exceedMin())
       return false;
 
     if (this.error)
@@ -134,21 +218,21 @@ export class MatFormFieldInputComponent extends MatFormFieldComponent {
   }
 
   exceedMax(): boolean {
-    if(this.isValueNumber() && this.max)
+    if (this.isValueNumber() && this.max)
       return +this.value > +this.max;
 
     return false;
   }
 
   exceedMin(): boolean {
-    if(this.isValueNumber() && this.min)
+    if (this.isValueNumber() && this.min)
       return +this.value < +this.min;
 
     return false;
   }
 
   emitValueWithCondition(): void {
-    if(this.manuallyEmitValue)
+    if (this.manuallyEmitValue)
       return;
 
     this.emitValue();
@@ -160,9 +244,9 @@ export class MatFormFieldInputComponent extends MatFormFieldComponent {
     else
       this.value = '';
 
-    if(this.manuallyEmitValue)
+    if (this.manuallyEmitValue)
       return;
-      
+
     this.valueOutput.emit(this.value);
     this.onValueChange.emit();
   }

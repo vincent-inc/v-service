@@ -3,31 +3,32 @@
 
   <input 
   #input 
-  [ngStyle]="{color: error ? 'red' : 'white'}" 
-  matInput [type]="defaultType" 
+  matInput 
+  [ngStyle]="{color: error ? 'red' : defaultTextColor}" 
+  [type]="defaultType" 
   (keyup.enter)="emitEnter()" 
+  (keydown)="addKey($event)"
   [(ngModel)]="value" 
+  (focusout)="focusoutEmitValue()"
   (paste)="emitValueWithCondition()" 
   (ngModelChange)="emitValueWithCondition();" 
   [placeholder]="placeholder" 
-  [required]="required" 
-  [disabled]="disable" 
-  [min]="min" 
-  [max]="max" 
   [maxlength]="maxlength"
   [formControl]="formControl"
   [matAutocomplete]="auto">
-  
-  <mat-error>{{label}} can't be empty</mat-error>
+  <mat-error>{{getFormControlError()}}</mat-error>
   <mat-hint *ngIf="error" style="color: red;" align="start">{{error}}</mat-hint>
   <mat-hint *ngIf="manuallyEmitValue && isValueChange()" style="color: goldenrod;" align="start">Press apply icon to apply input</mat-hint>
   <mat-hint *ngIf="isValueString() && maxlength" align="end">{{value.toString().length}} / {{maxlength}}</mat-hint>
   <mat-hint *ngIf="showMinMaxHint && isValueNumber() && value" align="end">
     <ng-container *ngIf="min">{{min + '\<'}}</ng-container>
-    <span [ngStyle]="{color: exceedMax() || exceedMin() ? 'red' : 'white'}">{{value}}</span>
+    <span [ngStyle]="{color: exceedMax() || exceedMin() ? 'red' : defaultTextColor}">{{value}}</span>
     <ng-container *ngIf="max">{{'\<' + max}}</ng-container>
   </mat-hint>
 
+  <button *ngIf="customIconLabel" matSuffix mat-icon-button (click)="emitCustomIcon()">
+    <mat-icon>{{customIconLabel}}</mat-icon>
+  </button>
   <button *ngIf="manuallyEmitValue && isValueChange()" matSuffix mat-icon-button (click)="emitValue()">
     <mat-icon>check_circle_outline</mat-icon>
   </button>
