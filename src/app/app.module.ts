@@ -21,6 +21,10 @@ import { CoolSymbolComponent } from './cool_util/cool-symbol/cool-symbol.compone
 import { UserSettingComponent } from './setting/user-setting/user-setting.component';
 import { SpringBootSnippetV01Component } from './cool_util/Spring-boot-snippet-v01/Spring-boot-snippet-v01.component';
 import { AngularServiceGeneratorComponent } from './cool_util/angular-service-generator/angular-service-generator.component';
+import { SideDrawerMainMenuComponent } from './side-drawer/side-drawer-main-menu/side-drawer-main-menu.component';
+import { AiReaderBodyComponent } from './ai_reader/ai-reader-body/ai-reader-body.component';
+import { SideDrawerAiReaderComponent } from './ai_reader/side-drawer-ai-reader/side-drawer-ai-reader.component';
+import { SideDrawerMenuComponent } from './side-drawer/side-drawer-menu/side-drawer-menu.component';
 
 export const defaultTextColor = 'black';
 
@@ -36,11 +40,21 @@ const COOL_SERVICE = [
   SpringBootSnippetV01Component,
 ]
 
+const SIDE_DRAWER = [
+  SideDrawerComponent,
+  SideDrawerMainMenuComponent,
+  SideDrawerMenuComponent
+]
+
+const AI_READER = [
+  AiReaderBodyComponent,
+  SideDrawerAiReaderComponent
+]
+
 const LIST = [
   AppComponent,
   LoginComponent,
   HeaderComponent,
-  SideDrawerComponent,
   HomeComponent,
   RegisterComponent,
   VincentComponent,
@@ -52,7 +66,9 @@ const LIST = [
   declarations: [
     ... GAMES,
     ... LIST,
-    ... COOL_SERVICE
+    ... COOL_SERVICE,
+    ... SIDE_DRAWER,
+    ... AI_READER
   ],
   imports: [
     NgEssentialModule,

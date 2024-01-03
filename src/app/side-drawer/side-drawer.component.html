@@ -1,35 +1,11 @@
-<ul>
-  <li><h1>Dashboard</h1></li>
-  <hr>
-  <li><button mat-flat-button [routerLink]="['/home']" routerLinkActive="router-link-active" >Home</button></li>
-  <li><button *ngIf="!authenticatorService.isLoginB" mat-flat-button [routerLink]="['/login']" routerLinkActive="router-link-active" >Login</button></li>
-  <li><button *ngIf="authenticatorService.isLoginB" mat-flat-button (click)="authenticatorService.logout()" >Logout</button></li>
-  <li><button *ngIf="!authenticatorService.isLoginB" mat-flat-button [routerLink]="['/register']" routerLinkActive="router-link-active" >Register</button></li>
-  <br>
-  <li><h1>GAME</h1></li>
-  <hr>
-  <li><button mat-flat-button [routerLink]="['/game/lobbies']" routerLinkActive="router-link-active"  >Lobbies</button></li>
-  <li><button mat-flat-button >Battle Ship</button></li>
-  <br>
-  <li><h1>Trivia</h1></li>
-  <hr>
-  <li><button mat-flat-button [routerLink]="['/trivia/questionnaire']" routerLinkActive="router-link-active" >Questionnaire Test</button></li>
-  <br>
-  <li><h1>AI</h1></li>
-  <hr>
-  <li><button mat-flat-button >ChatGPT</button></li>
-  <br>
-  <li><h1>Developer Utils</h1></li>
-  <hr>
-  <li><button mat-flat-button [routerLink]="['/utils/ascii_symbol']" routerLinkActive="router-link-active" >Ascii Symbol</button></li>
-  <li><button mat-flat-button [routerLink]="['/utils/spring_boot_snippet_v01']" routerLinkActive="router-link-active" >Spring boot snippet v01</button></li>
-  <li><button mat-flat-button [routerLink]="['/utils/angular_service_generator']" routerLinkActive="router-link-active" >Angular service generator</button></li>
-  <br>
-  <li><h1>Setting</h1></li>
-  <hr>
-  <li><button mat-flat-button [routerLink]="['/setting/user']" routerLinkActive="router-link-active" >User</button></li>
-  <br>
-  <li><h1>About</h1></li>
-  <hr>
-  <li><button mat-flat-button [routerLink]="['/about/vincent']" routerLinkActive="router-link-active" >Creator</button></li>
-</ul>
+<app-side-drawer-main-menu 
+*ngIf="currentMenu === 'main'"
+(onChangeMenu)="changeMenu($event)"
+(onBack)="changeMenu('main')"
+></app-side-drawer-main-menu>
+
+<app-side-drawer-ai-reader
+*ngIf="currentMenu === 'ai-menu'"
+(onChangeMenu)="changeMenu($event)"
+(onBack)="changeMenu('main')"
+></app-side-drawer-ai-reader>

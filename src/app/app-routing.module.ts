@@ -12,6 +12,7 @@ import { CoolSymbolComponent } from './cool_util/cool-symbol/cool-symbol.compone
 import { UserSettingComponent } from './setting/user-setting/user-setting.component';
 import { SpringBootSnippetV01Component } from './cool_util/Spring-boot-snippet-v01/Spring-boot-snippet-v01.component';
 import { AngularServiceGeneratorComponent } from './cool_util/angular-service-generator/angular-service-generator.component';
+import { AiReaderBodyComponent } from './ai_reader/ai-reader-body/ai-reader-body.component';
 
 const routes: Routes = [
   {
@@ -55,6 +56,17 @@ const routes: Routes = [
       {
         path: 'questionnaire',
         component: GeneralQuestionsComponent
+      }
+    ]
+  },
+  {
+    path: 'ai',
+    canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
+    children: [
+      {
+        path: 'reader',
+        component: AiReaderBodyComponent
       }
     ]
   },

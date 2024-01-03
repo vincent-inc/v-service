@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthenticatorService } from '../shared/service/Authenticator.service';
 
 @Component({
@@ -8,10 +8,15 @@ import { AuthenticatorService } from '../shared/service/Authenticator.service';
 })
 export class SideDrawerComponent implements OnInit {
 
-  constructor(public authenticatorService: AuthenticatorService) { }
+  currentMenu = "main";
+
+  constructor() { }
 
   ngOnInit() {
     
   }
 
+  changeMenu(menu: string) {
+    this.currentMenu = menu;
+  }
 }
