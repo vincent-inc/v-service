@@ -25,6 +25,7 @@ import { SideDrawerMainMenuComponent } from './side-drawer/side-drawer-main-menu
 import { AiReaderBodyComponent } from './ai_reader/ai-reader-body/ai-reader-body.component';
 import { SideDrawerAiReaderComponent } from './ai_reader/side-drawer-ai-reader/side-drawer-ai-reader.component';
 import { SideDrawerMenuComponent } from './side-drawer/side-drawer-menu/side-drawer-menu.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 export const defaultTextColor = 'black';
 
@@ -75,6 +76,7 @@ const LIST = [
     NgMaterialModule,
     NgComponentModule,
     NgDialogModule,
+    NgxExtendedPdfViewerModule
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
