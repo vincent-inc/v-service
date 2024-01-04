@@ -1,11 +1,11 @@
 <app-side-drawer-main-menu 
-*ngIf="currentMenu === 'main'"
+*ngIf="settingService.currentMenu === 'main'"
 (onChangeMenu)="changeMenu($event)"
 (onBack)="changeMenu('main')"
 ></app-side-drawer-main-menu>
 
 <app-side-drawer-ai-reader
-*ngIf="currentMenu === 'ai-menu'"
+*ngIf="settingService.currentMenu === 'ai-menu'"
 (onChangeMenu)="changeMenu($event)"
 (onBack)="changeMenu('main')"
 ></app-side-drawer-ai-reader>
