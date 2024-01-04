@@ -8,6 +8,8 @@ import { environment } from 'src/environments/environment.prod';
 })
 export class SettingService {
 
+  currentMenu = "main";
+
   apiGatewayUrl: string = environment.gateway_api;
 
   displayHeader: boolean = true;

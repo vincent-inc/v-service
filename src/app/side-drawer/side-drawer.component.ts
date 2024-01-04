@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { AuthenticatorService } from '../shared/service/Authenticator.service';
+import { SettingService } from '../shared/service/Setting.service';
 
 @Component({
   selector: 'app-side-drawer',
@@ -8,15 +9,13 @@ import { AuthenticatorService } from '../shared/service/Authenticator.service';
 })
 export class SideDrawerComponent implements OnInit {
 
-  currentMenu = "main";
-
-  constructor() { }
+  constructor(public settingService: SettingService) { }
 
   ngOnInit() {
     
   }
 
   changeMenu(menu: string) {
-    this.currentMenu = menu;
+    this.settingService.currentMenu = menu;
   }
 }
