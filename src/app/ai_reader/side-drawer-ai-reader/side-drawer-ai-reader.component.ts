@@ -1,5 +1,6 @@
-import { Component, OnInit, forwardRef } from '@angular/core';
+import { Component, Input, OnInit, forwardRef } from '@angular/core';
 import { SideDrawerMenuComponent } from 'src/app/side-drawer/side-drawer-menu/side-drawer-menu.component';
+import { AiReaderService } from '../ai-reader.service';
 
 @Component({
   selector: 'app-side-drawer-ai-reader',
@@ -9,8 +10,7 @@ import { SideDrawerMenuComponent } from 'src/app/side-drawer/side-drawer-menu/si
 })
 export class SideDrawerAiReaderComponent extends SideDrawerMenuComponent {
 
-  constructor() {
+  constructor(public aiReaderService: AiReaderService) {
     super();
   }
-
 }

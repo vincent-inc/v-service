@@ -26,6 +26,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 const list = [
   MatButtonModule,
@@ -53,7 +54,8 @@ const list = [
   BrowserModule,
   MatStepperModule,
   MatDatepickerModule,
-  MatAutocompleteModule
+  MatAutocompleteModule,
+  MatSlideToggleModule
 ]
 
 @NgModule({
