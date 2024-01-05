@@ -1,10 +1,16 @@
 <ul class="margin-center">
   <li>
-    <h1 class="text-center">AI Reader</h1>
-  </li>
-  <li>
     <ngx-extended-pdf-viewer
-      [src]="'../assets/pdf-test.pdf'">
+      [src]="'../assets/pdf-test.pdf'"
+      [textLayer]="true"
+      [showHandToolButton]="true"
+      [showToolbar]="aiReaderService.showToolBar"
+      showBookModeButton="always-visible"
+      showVerticalScrollButton="always-visible"
+      (textLayerRendered)="aiReaderService.onTextLayerRendered($event);"
+      (pageChange)="aiReaderService.onPageChange($event)"
+      >
     </ngx-extended-pdf-viewer>
   </li>
+  
 </ul>

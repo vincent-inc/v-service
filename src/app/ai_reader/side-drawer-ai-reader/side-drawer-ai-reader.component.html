@@ -4,5 +4,13 @@
     <button mat-raised-button (click)="emitOnBack()">
       <mat-icon>keyboard_return</mat-icon>Back</button>
   </li>
-  <br>
+  <hr>
+  <li>
+    <app-mat-form-field-input-dynamic
+    label="Show Tool bar"
+    [value]="aiReaderService.showToolBar"
+    (valueOutput)="aiReaderService.showToolBar = $event"
+    styleWidth="100%"
+    ></app-mat-form-field-input-dynamic>
+  </li>
 </ul>
