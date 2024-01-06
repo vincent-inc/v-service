@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, forwardRef } from '@angular/core';
 import { AuthenticatorService } from 'src/app/shared/service/Authenticator.service';
 import { SideDrawerMenuComponent } from '../side-drawer-menu/side-drawer-menu.component';
+import { SettingService } from 'src/app/shared/service/Setting.service';
 
 @Component({
   selector: 'app-side-drawer-main-menu',
@@ -10,7 +11,7 @@ import { SideDrawerMenuComponent } from '../side-drawer-menu/side-drawer-menu.co
 })
 export class SideDrawerMainMenuComponent extends SideDrawerMenuComponent {
 
-  constructor(public authenticatorService: AuthenticatorService) {
+  constructor(public authenticatorService: AuthenticatorService, public settingService: SettingService) {
     super();
   }
 

@@ -6,10 +6,29 @@
   </li>
   <hr>
   <li>
+    <h1>Tool bar</h1>
+  </li>
+  <li>
     <app-mat-form-field-input-dynamic
     label="Show Tool bar"
     [value]="aiReaderService.showToolBar"
     (valueOutput)="aiReaderService.showToolBar = $event"
+    styleWidth="100%"
+    ></app-mat-form-field-input-dynamic>
+  </li>
+  <hr>
+  <li>
+    <h1>AI reader</h1>
+  </li>
+  <li>
+    <button mat-raised-button color="primary" style="width: 100%;" (click)="playReading()">{{aiReaderService.playReading ? 'Stop' : 'Play'}}</button>
+  </li>
+  <li>
+    <app-mat-form-field-input-dynamic
+    *ngIf="aiReaderService.selectedSpeak"
+    label="Selected line"
+    [disable]="true"
+    [value]="aiReaderService.selectedSpeak.sentence"
     styleWidth="100%"
     ></app-mat-form-field-input-dynamic>
   </li>

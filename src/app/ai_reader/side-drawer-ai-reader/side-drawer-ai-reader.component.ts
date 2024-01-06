@@ -18,5 +18,9 @@ export class SideDrawerAiReaderComponent extends SideDrawerMenuComponent {
   override ngOnInit(): void {
       
   }
-  
+
+  playReading() {
+    this.aiReaderService.playReading = !this.aiReaderService.playReading;
+    this.aiReaderService.beginPlayReading();
+  }
 }

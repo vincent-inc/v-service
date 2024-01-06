@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { NgxExtendedPdfViewerService, TextLayerRenderedEvent} from 'ngx-extended-pdf-viewer';
 
-export class SpeakMap {
-  speak: Speak[] = [];
-}
-
 export class Speak {
   sentence: string = '';
   tts?: File;
+  span?: HTMLSpanElement;
+  page?: number;
+  row?: number;
 }
 
 @Injectable({
@@ -23,12 +22,62 @@ export class AiReaderService {
 
   showToolBar = true;
 
-  speakMap: SpeakMap[] = [];
+  table: Speak[][] = [[]];
+
+  selectedSpeak?: Speak;
 
   playReading: boolean = false;
 
   constructor() { 
     
+  }
+
+  private autoCorrectTable(page: number, row: number) {
+    while(this.table.length <= page)
+      this.table.push([]);
+
+    while(this.table[page].length <= row)
+      this.table[page].push(new Speak());
+  }
+
+  setTable(page: number, row: number, speak: Speak) {
+    this.autoCorrectTable(page, row);
+    this.table[page][row] = speak;
+  }
+
+  getTable(page: number, row: number): Speak {
+    this.autoCorrectTable(page, row);
+    return this.table[page][row];
+  }
+
+  onLineClick(page: number, row: number) {
+    this.selectedSpeak = this.table[page][row];
+  }
+
+  getNextFromSpeak(speak: Speak): Speak | null {
+    let page = speak.page;
+    let row = speak.row;
+
+    if(!page || !row)
+      return null;
+
+    let next = this.getTable(page, row + 1);
+    if(next)
+      return next;
+    
+    page++;
+    row = 0;
+    return this.getTable(page, row);
+  }
+
+  getNext(page: number, row: number): Speak {
+    let next = this.getTable(page, row + 1);
+    if(next)
+      return next;
+    
+    page++;
+    row = 0;
+    return this.getTable(page, row);
   }
 
   onPageChange(pageNumber: number) {
@@ -37,40 +86,37 @@ export class AiReaderService {
 
   onTextLayerRendered(event: TextLayerRenderedEvent) {
     let div = event.source.div;
-    let pageNumber = div.getAttribute('data-page-number');
-
-    if(!this.speakMap[+pageNumber!])
-      this.speakMap[+pageNumber!] = new SpeakMap();
-
+    let page = div.getAttribute('data-page-number');
     let textLayerDiv = div.getElementsByClassName('textLayer')[0] as HTMLDivElement;
     let spans = textLayerDiv.getElementsByTagName("span");
-    for (let sentenceIndex = 0; sentenceIndex < spans.length; sentenceIndex++) {
-      let span = spans[sentenceIndex] as HTMLSpanElement;
+
+    for (let row = 0; row < spans.length; row++) {
+      let span = spans[row] as HTMLSpanElement;
       let sentence = span.innerText;
-      let map = this.speakMap[+pageNumber!];
-      let speak = new Speak();
+      let speak: Speak = new Speak();
       speak.sentence = sentence;
+      speak.span = span;
+      speak.page = +page!;
+      speak.row = row;
+      span.addEventListener("mouseover", (event) => span.classList.add('greenHightLight'));
+      span.addEventListener("mouseleave", (event) => span.classList.remove('greenHightLight'));
+      span.addEventListener("click", event => this.onLineClick(+page!, row));
       //todo call BE to get TTS here
 
-      //update sentence only if not found
-      if(!map.speak[sentenceIndex])
-        map.speak[sentenceIndex] = speak;
+      this.setTable(+page!, row, speak);
     }
   }
 
-  public getMaxPage() {
-  }
-
-  public nextPage() {
+  nextPage() {
     this.pdfViewerService.scrollPageIntoView(3);
   }
 
-  public async exportAsText(): Promise<void> {
+  async exportAsText(): Promise<void> {
     this.extractedLines = [];
     this.extractedText = await this.pdfViewerService.getPageAsText(1);
   }
   
-  public async exportAsLines(): Promise<void> {
+  async exportAsLines(): Promise<void> {
     let page = this.pdfViewerService.getCurrentlyVisiblePageNumbers();
     const lines = await this.pdfViewerService.getPageAsLines(page[0]);
     this.extractedText = undefined;
@@ -90,8 +136,31 @@ export class AiReaderService {
     }
   }
 
-  public doMarkSentenceClassInBox(span: HTMLSpanElement, sentence: string): void {
+  doMarkSentenceClassInBox(span: HTMLSpanElement, sentence: string): void {
     if(span.innerText.toLowerCase().includes(sentence.toLowerCase()))
       span.classList.add('box');
   }
+
+  async beginPlayReading() {
+    return new Promise<void>((resolve) => {
+      if(!this.playReading)
+        resolve();
+      
+      if(!this.selectedSpeak)
+        this.selectedSpeak = this.getTable(this.pdfViewerService.getCurrentlyVisiblePageNumbers()[0], 0);
+      
+      if(this.selectedSpeak && this.selectedSpeak.span) {
+        this.selectedSpeak.span.classList.add('greenHightLight');
+        setTimeout(() => {
+          this.selectedSpeak!.span!.classList.remove('greenHightLight');
+          let next = this.getNextFromSpeak(this.selectedSpeak!);
+          if(next) {
+            this.selectedSpeak = next;
+            this.beginPlayReading();
+          }
+        }, 1000);
+      }
+    });
+  }
+  
 }
