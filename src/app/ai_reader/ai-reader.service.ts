@@ -129,7 +129,10 @@ export class AiReaderService {
   }
 
   playSpeak(speak: Speak): HTMLAudioElement | null {
-    if(this.isValidSpeak(speak) && speak.blob && speak.objectUrl) {
+    if(this.isValidSpeak(speak) && speak.blob) {
+      if(!speak.objectUrl)
+        speak.objectUrl = window.URL.createObjectURL(speak.blob);
+
       this.tts.src = speak.objectUrl;
       this.tts.load();
       this.tts.play();
