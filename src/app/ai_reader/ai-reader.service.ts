@@ -6,6 +6,7 @@ import { AIReaderService } from '../shared/service/AI.service';
 export class Speak {
   sentence: string = '';
   blob?: Blob;
+  objectUrl?: string;
   span?: HTMLSpanElement;
   page: number | null = null;
   row: number | null = null;
@@ -31,6 +32,8 @@ export class AiReaderService {
   playReading: boolean = false;
 
   playSpeakOnSelect: boolean = false;
+
+  tts = new Audio();
 
   constructor(private AIReaderService: AIReaderService) { 
     
@@ -69,9 +72,9 @@ export class AiReaderService {
       // }).then(() => console.log("Finish loading wav for: " + speak.tts.src));
       
       UtilsService.ObservableToPromise(this.AIReaderService.postSpeakWav(sentence)).then(res => {
-        
         let it = this.getTable(+page!, row);
         it.blob = res.body!;
+        it.objectUrl = window.URL.createObjectURL(it.blob);
       }).catch(error => console.log(error));
 
       // this.AIReaderService.generateSpeakWav(sentence).subscribe(
@@ -126,12 +129,11 @@ export class AiReaderService {
   }
 
   playSpeak(speak: Speak): HTMLAudioElement | null {
-    if(this.isValidSpeak(speak) && speak.blob) {
-      let url = window.URL.createObjectURL(speak.blob);
-      let tts = new Audio();
-      tts.src = url;
-      tts.play();
-      return tts;
+    if(this.isValidSpeak(speak) && speak.blob && speak.objectUrl) {
+      this.tts.src = speak.objectUrl;
+      this.tts.load();
+      this.tts.play();
+      return this.tts;
     }
 
     return null;
