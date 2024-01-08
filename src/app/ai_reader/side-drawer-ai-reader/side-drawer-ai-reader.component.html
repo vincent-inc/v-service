@@ -21,7 +21,12 @@
     <h1>AI reader</h1>
   </li>
   <li>
-    <button mat-raised-button color="primary" style="width: 100%;" (click)="playReading()">{{aiReaderService.playReading ? 'Stop' : 'Play'}}</button>
+    <button mat-raised-button color="primary" style="width: 100%;" (click)="aiReaderService.nowPlayReading()">{{aiReaderService.playReading ? 'Stop' : 'Play'}}</button>
+  </li>
+  <br>
+  <li>
+    <button mat-raised-button color="primary" style="width: 50%;" (click)="aiReaderService.previousSpeak()">Previous Line</button>
+    <button mat-raised-button color="primary" style="width: 50%;" (click)="aiReaderService.nextSpeak()">Next Line</button>
   </li>
   <li>
     <app-mat-form-field-input-dynamic
@@ -32,4 +37,5 @@
     styleWidth="100%"
     ></app-mat-form-field-input-dynamic>
   </li>
+  <hr>
 </ul>
