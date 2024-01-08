@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { NgxExtendedPdfViewerService, TextLayerRenderedEvent} from 'ngx-extended-pdf-viewer';
+import { UtilsService } from '../shared/service/Utils.service';
+import { AIReaderService } from '../shared/service/AI.service';
 
 export class Speak {
   sentence: string = '';
-  tts?: File;
+  blob?: Blob;
   span?: HTMLSpanElement;
   page: number | null = null;
   row: number | null = null;
@@ -28,7 +30,9 @@ export class AiReaderService {
 
   playReading: boolean = false;
 
-  constructor() { 
+  playSpeakOnSelect: boolean = false;
+
+  constructor(private AIReaderService: AIReaderService) { 
     
   }
 
@@ -45,6 +49,8 @@ export class AiReaderService {
     for (let row = 0; row < spans.length; row++) {
       let span = spans[row] as HTMLSpanElement;
       let sentence = span.innerText;
+      sentence = sentence.replaceAll("&", "and");
+      sentence = sentence.replaceAll("=", "equal");
       let speak: Speak = new Speak();
       speak.sentence = sentence;
       speak.span = span;
@@ -53,10 +59,39 @@ export class AiReaderService {
       span.addEventListener("mouseover", (event) => span.classList.add('greenHightLight'));
       span.addEventListener("mouseleave", (event) => span.classList.remove('greenHightLight'));
       span.addEventListener("click", event => this.onLineClick(+page!, row));
-      //todo call BE to get TTS here
-
       this.setTable(+page!, row, speak);
+
+      // speak.tts.src = this.AIReaderService.generateSpeakWavLink(sentence);
+      // new Promise<void>(resolve => {
+      //   console.log("Loading wav for: " + speak.tts.src);
+      //   speak.tts.load();
+      //   resolve();
+      // }).then(() => console.log("Finish loading wav for: " + speak.tts.src));
+      
+      UtilsService.ObservableToPromise(this.AIReaderService.postSpeakWav(sentence)).then(res => {
+        
+        let it = this.getTable(+page!, row);
+        it.blob = res.body!;
+      }).catch(error => console.log(error));
+
+      // this.AIReaderService.generateSpeakWav(sentence).subscribe(
+      //   res => {
+      //     let it = this.getTable(+page!, row);
+      //     it.tts = res;
+      //     console.log(it);
+      //     console.log(res);
+      //   },
+      //   error => {},
+      //   () => {console.log("finish")}
+      // )
     }
+  }
+
+  onLineClick(page: number, row: number) {
+    let speak = this.table[page][row];
+    this.selectSpeak(speak);
+    if(this.playSpeakOnSelect)
+      this.playSpeak(this.selectedSpeak!);
   }
 
   private autoCorrectTable(page: number, row: number) {
@@ -68,7 +103,7 @@ export class AiReaderService {
   }
 
   isValidSpeak(speak: Speak): boolean {
-    return speak.page !== null && speak.row !== null && speak.page >= 0 && speak.row >= 0;
+    return speak && speak.page !== null && speak.row !== null && speak.page >= 0 && speak.row >= 0;
   }
 
   setTable(page: number, row: number, speak: Speak) {
@@ -81,11 +116,6 @@ export class AiReaderService {
     return this.table[page][row];
   }
 
-  onLineClick(page: number, row: number) {
-    let speak = this.table[page][row];
-    this.selectSpeak(speak);
-  }
-
   selectSpeak(speak: Speak) {
     if(!this.selectedSpeak)
       this.selectedSpeak = speak;
@@ -93,6 +123,18 @@ export class AiReaderService {
     this.selectedSpeak!.span!.classList.remove('blueGreenHightLight');
     this.selectedSpeak = speak;
     this.selectedSpeak!.span!.classList.add('blueGreenHightLight');
+  }
+
+  playSpeak(speak: Speak): HTMLAudioElement | null {
+    if(this.isValidSpeak(speak) && speak.blob) {
+      let url = window.URL.createObjectURL(speak.blob);
+      let tts = new Audio();
+      tts.src = url;
+      tts.play();
+      return tts;
+    }
+
+    return null;
   }
 
   getPrevious(page: number, row: number): Speak {
