@@ -26,6 +26,7 @@
     [value]="aiReaderService.playSpeakOnSelect"
     (valueOutput)="aiReaderService.playSpeakOnSelect = $event"
     styleWidth="100%"
+    [disable]="aiReaderService.playReading"
     ></app-mat-form-field-input-dynamic>
   </li>
   <li>
@@ -33,8 +34,8 @@
   </li>
   <br>
   <li>
-    <button mat-raised-button color="primary" style="width: 50%;" (click)="aiReaderService.previousSpeak()">Previous Line</button>
-    <button mat-raised-button color="primary" style="width: 50%;" (click)="aiReaderService.nextSpeak()">Next Line</button>
+    <button mat-raised-button color="primary" style="width: 50%;" (click)="aiReaderService.previousSpeak()">Previous</button>
+    <button mat-raised-button color="primary" style="width: 50%;" (click)="aiReaderService.nextSpeak()">Next</button>
   </li>
   <li>
     <app-mat-form-field-input-dynamic

@@ -75,6 +75,7 @@ export interface Time {
     hours?: number;
     minute?: number;
     second?: number;
+    currentZoneId?: string;
 }
 
 export class MatListItem<T> {

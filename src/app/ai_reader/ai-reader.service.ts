@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { NgxExtendedPdfViewerService, TextLayerRenderedEvent} from 'ngx-extended-pdf-viewer';
 import { UtilsService } from '../shared/service/Utils.service';
 import { AIReaderService } from '../shared/service/AI.service';
+import { RaphaelTTSService } from '../shared/service/Raphael.service';
+import { TTS } from '../shared/model/AI.model';
 
 export class Speak {
   sentence: string = '';
-  blob?: Blob;
-  objectUrl?: string;
+  ttsId?: number;
   span?: HTMLSpanElement;
   page: number | null = null;
   row: number | null = null;
+  objectUrl: string | null = null;
 }
 
 @Injectable({
@@ -35,7 +37,9 @@ export class AiReaderService {
 
   tts = new Audio();
 
-  constructor(private AIReaderService: AIReaderService) { 
+  maxPreloadQueue = 5;
+
+  constructor(private raphaelTTSService: RaphaelTTSService) { 
     
   }
 
@@ -52,6 +56,7 @@ export class AiReaderService {
     for (let row = 0; row < spans.length; row++) {
       let span = spans[row] as HTMLSpanElement;
       let sentence = span.innerText;
+      sentence = sentence.trim();
       sentence = sentence.replaceAll("&", "and");
       sentence = sentence.replaceAll("=", "equal");
       let speak: Speak = new Speak();
@@ -61,32 +66,15 @@ export class AiReaderService {
       speak.row = row;
       span.addEventListener("mouseover", (event) => span.classList.add('greenHightLight'));
       span.addEventListener("mouseleave", (event) => span.classList.remove('greenHightLight'));
-      span.addEventListener("click", event => this.onLineClick(+page!, row));
+      span.addEventListener("click", async event => await this.onLineClick(+page!, row));
       this.setTable(+page!, row, speak);
 
-      // speak.tts.src = this.AIReaderService.generateSpeakWavLink(sentence);
-      // new Promise<void>(resolve => {
-      //   console.log("Loading wav for: " + speak.tts.src);
-      //   speak.tts.load();
-      //   resolve();
-      // }).then(() => console.log("Finish loading wav for: " + speak.tts.src));
-      
-      UtilsService.ObservableToPromise(this.AIReaderService.postSpeakWav(sentence)).then(res => {
-        let it = this.getTable(+page!, row);
-        it.blob = res.body!;
-        it.objectUrl = window.URL.createObjectURL(it.blob);
-      }).catch(error => console.log(error));
-
-      // this.AIReaderService.generateSpeakWav(sentence).subscribe(
-      //   res => {
-      //     let it = this.getTable(+page!, row);
-      //     it.tts = res;
-      //     console.log(it);
-      //     console.log(res);
-      //   },
-      //   error => {},
-      //   () => {console.log("finish")}
-      // )
+      if(sentence) {
+        UtilsService.ObservableToPromise(this.raphaelTTSService.post({text: sentence})).then(res => {
+          let it = this.getTable(+page!, row);
+          it.ttsId = res.id;
+        }).catch(error => console.log(error));
+      }
     }
   }
 
@@ -103,6 +91,12 @@ export class AiReaderService {
 
     while(this.table[page].length <= row)
       this.table[page].push(new Speak());
+  }
+
+  foreachSpeak(fn: (s: Speak) => void) {
+    this.table.forEach(page => {
+      page.forEach(speak => fn(speak));
+    })
   }
 
   isValidSpeak(speak: Speak): boolean {
@@ -128,18 +122,21 @@ export class AiReaderService {
     this.selectedSpeak!.span!.classList.add('blueGreenHightLight');
   }
 
-  playSpeak(speak: Speak): HTMLAudioElement | null {
-    if(this.isValidSpeak(speak) && speak.blob) {
-      if(!speak.objectUrl)
-        speak.objectUrl = window.URL.createObjectURL(speak.blob);
+  async playSpeak(speak: Speak): Promise<void> {
+    return new Promise<void>((resolve) => {
+      this.tts.onended = () => resolve();
 
-      this.tts.src = speak.objectUrl;
-      this.tts.load();
-      this.tts.play();
-      return this.tts;
-    }
+      if(this.isValidSpeak(speak) && (speak.objectUrl || (speak.sentence && speak.ttsId))) {
+        if(speak.objectUrl)
+          this.tts.src = speak.objectUrl;
+        else 
+          this.tts.src = this.raphaelTTSService.generateSpeakWavLinkWithId(speak.ttsId!);
 
-    return null;
+        this.tts.play().then().catch(er => {});
+      }
+      else
+        resolve();
+    })
   }
 
   getPrevious(page: number, row: number): Speak {
@@ -170,13 +167,19 @@ export class AiReaderService {
     return this.getPrevious(page!, row!);
   }
 
-  previousSpeak() {
+  async previousSpeak() {
     if(!this.selectedSpeak) {
       this.selectedSpeak = this.getTable(this.pdfViewerService.getCurrentlyVisiblePageNumbers()[0], 0);
+
+      if(this.playSpeakOnSelect)
+        await this.playSpeak(this.selectedSpeak);
       return;
     }
 
     this.selectSpeak(this.getPreviousFromSpeak(this.selectedSpeak)!);
+
+    if(this.playSpeakOnSelect)
+      await this.playSpeak(this.selectedSpeak);
   }
 
   getNext(page: number, row: number): Speak {
@@ -207,13 +210,19 @@ export class AiReaderService {
     return this.getNext(page!, row!);
   }
 
-  nextSpeak() {
+  async nextSpeak() {
     if(!this.selectedSpeak) {
       this.selectedSpeak = this.getTable(this.pdfViewerService.getCurrentlyVisiblePageNumbers()[0], 0);
+
+      if(this.playSpeakOnSelect)
+        await this.playSpeak(this.selectedSpeak);
       return;
     }
 
     this.selectSpeak(this.getNextFromSpeak(this.selectedSpeak)!);
+
+    if(this.playSpeakOnSelect)
+      await this.playSpeak(this.selectedSpeak);
   }
 
   nextPage() {
@@ -250,31 +259,84 @@ export class AiReaderService {
       span.classList.add('box');
   }
 
-  nowPlayReading() {
-    this.playReading = !this.playReading;
-    this.beginPlayReading();
-  }
+  async nowPlayReading() {
+    if(!this.selectedSpeak) {
+      this.selectedSpeak = this.getTable(this.pdfViewerService.getCurrentlyVisiblePageNumbers()[0], 0);
+    }
 
-  async beginPlayReading() {
-    return new Promise<void>((resolve) => {
-      if(!this.playReading)
-        resolve();
-      
-      if(!this.selectedSpeak)
-        this.selectedSpeak = this.getTable(this.pdfViewerService.getCurrentlyVisiblePageNumbers()[0], 0);
-      
-      if(this.selectedSpeak && this.selectedSpeak.span) {
-        this.selectedSpeak.span.classList.add('blueGreenHightLight');
-        setTimeout(() => {
-          this.selectedSpeak!.span!.classList.remove('blueGreenHightLight');
-          let next = this.getNextFromSpeak(this.selectedSpeak!);
-          if(next) {
-            this.selectedSpeak = next;
-            this.beginPlayReading();
-          }
-        }, 1000);
+    this.playReading = !this.playReading;
+
+    if(!this.playReading) {
+      this.tts.pause();
+      return;
+    }
+
+    this.foreachSpeak(e => {
+      if(e.objectUrl) {
+        URL.revokeObjectURL(e.objectUrl);
+        e.objectUrl = null;
       }
     });
+    
+    this.playSpeakOnSelect = true;
+    await this.beginPlayReading();
+  }
+
+  private preloadAudio(): Promise<void> {
+    return new Promise<void>(async resolve => {
+      if(!this.selectedSpeak) {
+        this.selectedSpeak = this.getTable(this.pdfViewerService.getCurrentlyVisiblePageNumbers()[0], 0);
+      }
+  
+      let currentSpeak = this.getNextFromSpeak(this.selectedSpeak);
+      if(!currentSpeak)
+        resolve();
+
+      for(let i = 0; i < this.maxPreloadQueue; i ++) {
+        if (this.isValidSpeak(currentSpeak!) && currentSpeak!.sentence && currentSpeak!.ttsId) {
+          if(currentSpeak!.objectUrl) {
+            this.raphaelTTSService.checkValidUrl(currentSpeak!.objectUrl).then().catch(() => {
+              this.preload(currentSpeak?.page!, currentSpeak?.row!);
+            });
+          }
+          else 
+            this.preload(currentSpeak?.page!, currentSpeak?.row!);
+        }
+        
+        currentSpeak = this.getNextFromSpeak(currentSpeak!);
+        if(!currentSpeak)
+          break;
+      }
+
+      resolve();
+    })
+  }
+
+  private preload(page: number, row: number) {
+    let speak = this.getTable(page, row);
+    this.raphaelTTSService.getWavById(speak.ttsId!).then(wav => {
+      let url = URL.createObjectURL(wav.body!);
+      let speak = this.getTable(page, row);
+      speak.objectUrl = url;
+    });
+  }
+
+  private async beginPlayReading() {
+    this.preloadAudio().then().catch();
+    await this.playSpeak(this.selectedSpeak!);
+    if(this.playReading) {
+      let next = this.getNextFromSpeak(this.selectedSpeak!);
+      while(next && !next.sentence)
+        next = this.getNextFromSpeak(next);
+
+      if(!next) {
+        this.playReading = false;
+        return;
+      }
+      
+      this.selectSpeak(next);
+      this.beginPlayReading();
+    }
   }
   
 }
