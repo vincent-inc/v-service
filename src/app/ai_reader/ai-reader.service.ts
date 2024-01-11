@@ -12,6 +12,7 @@ export class Speak {
   row: number | null = null;
   objectUrl: string | null = null;
   elements: HTMLElement[] = [];
+  scrollTop: number | null = null;
 }
 
 @Injectable({
@@ -120,13 +121,21 @@ export class AiReaderService {
       newLine = true;
     }
 
-    this.foreachSpeak(s => {
-      UtilsService.ObservableToPromise(this.raphaelTTSService.post({text: s.sentence})).then(res => {
+    this.table.forEach(page => {
+      let totalRow = page.length;
+      let eachRowTop = 100 / totalRow;
+      let beginRowTop = eachRowTop;
+      page.forEach(s => {
+        let rowTop = beginRowTop;
         let page = s.page;
         let row = s.row;
-        let it = this.getTable(page!, row!);
-        it.ttsId = res.id;
-      }).catch(error => console.log(error));
+        UtilsService.ObservableToPromise(this.raphaelTTSService.post({text: s.sentence})).then(res => {
+          let it = this.getTable(page!, row!);
+          it.ttsId = res.id;
+          it.scrollTop = rowTop;
+        }).catch(error => console.log(error));
+        beginRowTop += eachRowTop;
+      });
     })
   }
 
@@ -167,7 +176,9 @@ export class AiReaderService {
   onLineClick(page: number, row: number) {
     let speak = this.table[page][row];
     this.selectSpeak(speak);
-    if(this.playSpeakOnSelect)
+    if(this.playReading)
+      this.beginPlayReading();
+    else if(this.playSpeakOnSelect)
       this.playSpeak(this.selectedSpeak!);
   }
 
@@ -210,7 +221,11 @@ export class AiReaderService {
 
   clearSelectedSpeak() {
     if(this.selectedSpeak) {
-      this.changeSpeakBackgroundColor(this.selectedSpeak!, "");
+      this.changeSpeakBackgroundColor(this.selectedSpeak!, "", this.mouseOverColor);
+      this.tts.pause();
+      if(this.playReading)
+        this.playReading = false;
+      
       this.selectedSpeak = null;
     }
   }
@@ -262,10 +277,10 @@ export class AiReaderService {
 
   async previousSpeak() {
     if(!this.selectedSpeak) {
-      this.selectedSpeak = this.getTable(this.pdfViewerService.getCurrentlyVisiblePageNumbers()[0], 0);
+      this.selectSpeak(this.getTable(this.pdfViewerService.getCurrentlyVisiblePageNumbers()[0], 0));
 
       if(this.playSpeakOnSelect)
-        await this.playSpeak(this.selectedSpeak);
+        await this.playSpeak(this.selectedSpeak!);
       return;
     }
 
@@ -305,10 +320,10 @@ export class AiReaderService {
 
   async nextSpeak() {
     if(!this.selectedSpeak) {
-      this.selectedSpeak = this.getTable(this.pdfViewerService.getCurrentlyVisiblePageNumbers()[0], 0);
+      this.selectSpeak(this.getTable(this.pdfViewerService.getCurrentlyVisiblePageNumbers()[0], 0));
 
       if(this.playSpeakOnSelect)
-        await this.playSpeak(this.selectedSpeak);
+        await this.playSpeak(this.selectedSpeak!);
       return;
     }
 
@@ -316,10 +331,6 @@ export class AiReaderService {
 
     if(this.playSpeakOnSelect)
       await this.playSpeak(this.selectedSpeak);
-  }
-
-  nextPage() {
-    this.pdfViewerService.scrollPageIntoView(3);
   }
 
   async exportAsText(): Promise<void> {
@@ -335,26 +346,19 @@ export class AiReaderService {
     console.log(lines);
   }
 
-  private boxSentences(div: HTMLDivElement, sentence: string, targetPageNumber?: number) {
-    let pageNumber = div.getAttribute('data-page-number');
-    if(!targetPageNumber || (pageNumber && targetPageNumber && +pageNumber === targetPageNumber)) {
-      let textLayerDiv = div.getElementsByClassName('textLayer')[0] as HTMLDivElement;
-      let spans = textLayerDiv.getElementsByTagName("span");
-      for (let i = 0; i < spans.length; i++) {
-        let span = spans[i] as HTMLSpanElement;
-        this.doMarkSentenceClassInBox(span, sentence);
-      }
-    }
+  scrollSpeakIntoView(speak: Speak) {
+    if(this.isValidSpeak(speak))
+      this.scroll(speak.page!, `${speak.scrollTop}%`);
   }
 
-  doMarkSentenceClassInBox(span: HTMLSpanElement, sentence: string): void {
-    if(span.innerText.toLowerCase().includes(sentence.toLowerCase()))
-      span.classList.add('box');
+  scroll(pageNumber: number, top: number | string | null): void {
+    if(top)
+      this.pdfViewerService.scrollPageIntoView(pageNumber, {top});
   }
 
-  async nowPlayReading() {
+  async onPlayReading() {
     if(!this.selectedSpeak) {
-      this.selectedSpeak = this.getTable(this.pdfViewerService.getCurrentlyVisiblePageNumbers()[0], 0);
+      this.selectSpeak(this.getTable(this.pdfViewerService.getCurrentlyVisiblePageNumbers()[0], 0));
     }
 
     this.playReading = !this.playReading;
@@ -416,6 +420,7 @@ export class AiReaderService {
 
   private async beginPlayReading() {
     this.preloadAudio().then().catch();
+    this.scrollSpeakIntoView(this.selectedSpeak!);
     await this.playSpeak(this.selectedSpeak!);
     if(this.playReading) {
       let next = this.getNextFromSpeak(this.selectedSpeak!);

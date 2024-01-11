@@ -30,12 +30,22 @@
     ></app-mat-form-field-input-dynamic>
   </li>
   <li>
-    <button mat-raised-button color="primary" style="width: 100%;" (click)="aiReaderService.nowPlayReading()">{{aiReaderService.playReading ? 'Stop' : 'Play'}}</button>
+    <button mat-raised-button color="primary" style="width: 100%;" (click)="aiReaderService.onPlayReading()">{{aiReaderService.playReading ? 'Stop' : 'Play'}}</button>
   </li>
   <br>
   <li>
     <button mat-raised-button color="primary" style="width: 50%;" (click)="aiReaderService.previousSpeak()">Previous</button>
     <button mat-raised-button color="primary" style="width: 50%;" (click)="aiReaderService.nextSpeak()">Next</button>
+  </li>
+  <br>
+  <li>
+    <button 
+    *ngIf="aiReaderService.selectedSpeak"
+    mat-raised-button 
+    color="primary" 
+    style="width: 100%;"
+    (click)="aiReaderService.clearSelectedSpeak()"
+    >Clear selected</button>
   </li>
   <li>
     <app-mat-form-field-input-dynamic
