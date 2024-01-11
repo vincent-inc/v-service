@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AiReaderService } from '../ai-reader.service';
 import { SettingService } from 'src/app/shared/service/Setting.service';
 import { NgxExtendedPdfViewerService, pdfDefaultOptions } from 'ngx-extended-pdf-viewer';
@@ -8,12 +8,16 @@ import { NgxExtendedPdfViewerService, pdfDefaultOptions } from 'ngx-extended-pdf
   templateUrl: './ai-reader-body.component.html',
   styleUrls: ['./ai-reader-body.component.scss']
 })
-export class AiReaderBodyComponent implements OnInit {
+export class AiReaderBodyComponent implements OnInit, OnDestroy {
   
   constructor(
     public aiReaderService: AiReaderService, 
     private pdfViewerService: NgxExtendedPdfViewerService, 
     private settingService: SettingService) { }
+
+  ngOnDestroy(): void {
+    this.aiReaderService.clearSelectedSpeak();
+  }
 
   ngOnInit() {
     this.aiReaderService.pdfViewerService = this.pdfViewerService;

@@ -383,6 +383,9 @@ export class AiReaderService {
 
   private preloadAudio(): Promise<void> {
     return new Promise<void>(async resolve => {
+      if(this.maxPreloadQueue <= 0)
+        resolve();
+
       if(!this.selectedSpeak) {
         this.selectedSpeak = this.getTable(this.pdfViewerService.getCurrentlyVisiblePageNumbers()[0], 0);
       }

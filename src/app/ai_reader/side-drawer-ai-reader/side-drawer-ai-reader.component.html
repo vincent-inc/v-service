@@ -55,17 +55,28 @@
   </li>
   <br>
   <li>
+    <app-mat-form-field-input
+    label="Preload TTS"
+    [value]="aiReaderService.maxPreloadQueue"
+    (valueOutput)="aiReaderService.maxPreloadQueue = $event"
+    style="width: 100%;"
+    defaultType="number"
+    min="0"
+    max="20"
+    [showMinMaxHint]="true"
+    [showClearIcon]="false"
+    ></app-mat-form-field-input>
+  </li>
+  <li *ngIf="aiReaderService.selectedSpeak">
     <button 
-    *ngIf="aiReaderService.selectedSpeak"
     mat-raised-button 
     color="primary" 
     style="width: 100%;"
     (click)="aiReaderService.clearSelectedSpeak()"
     >Clear selected</button>
   </li>
-  <li>
+  <li *ngIf="aiReaderService.selectedSpeak">
     <app-mat-form-field-input-dynamic
-    *ngIf="aiReaderService.selectedSpeak"
     label="Selected line"
     [disable]="true"
     [value]="aiReaderService.selectedSpeak.sentence"
