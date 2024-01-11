@@ -9,6 +9,22 @@
     <h1>Tool bar</h1>
   </li>
   <li>
+    <app-mat-form-field-input
+    label="Load From URL"
+    [value]="loadUrl"
+    (valueOutput)="loadUrl = $event"
+    [showGoto]="true"
+    ></app-mat-form-field-input>
+  </li>
+  <li>
+    <button mat-raised-button color="primary" (click)="aiReaderService.loadedSrc = loadUrl">Load file from url</button>
+  </li>
+  <br>
+  <li>
+    <button mat-raised-button color="primary" (click)="loadFromLocal()">Load from local</button>
+  </li>
+  <br>
+  <li>
     <app-mat-form-field-input-dynamic
     label="Show Tool bar"
     [value]="aiReaderService.showToolBar"

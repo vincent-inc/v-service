@@ -1,7 +1,7 @@
 <ul class="margin-center">
   <li>
     <ngx-extended-pdf-viewer
-      [src]="'../assets/pdf-test.pdf'"
+      [src]="aiReaderService.loadedSrc"
       [textLayer]="true"
       [showHandToolButton]="true"
       [showToolbar]="aiReaderService.showToolBar"

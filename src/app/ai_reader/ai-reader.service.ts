@@ -44,6 +44,8 @@ export class AiReaderService {
 
   autoSpeakColor = "blue";
 
+  loadedSrc = '../assets/pdf-test.pdf';
+
   constructor(private raphaelTTSService: RaphaelTTSService) { 
     
   }
