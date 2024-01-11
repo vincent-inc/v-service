@@ -46,6 +46,8 @@ export class AiReaderService {
 
   loadedSrc = '../assets/pdf-test.pdf';
 
+  speakSpeed = 1;
+
   constructor(private raphaelTTSService: RaphaelTTSService) { 
     
   }
@@ -82,7 +84,7 @@ export class AiReaderService {
       if(splitTexts) {
 
         for(let i = 0; i < splitTexts.length; i++) {
-          let text = splitTexts[i];
+          let text = splitTexts[i].replaceAll("\"", ".");
           if(newLine) {
             newLine = false;
             if(!speak.sentence) {
@@ -155,8 +157,6 @@ export class AiReaderService {
     }
     codeElement.innerText = text;
     codeElement.style.cssText = span.style.cssText;
-    // codeElement.style.transform = "";
-    // codeElement.style.color = "red";
     speak.elements.push(codeElement);
     span.appendChild(codeElement);
   }
@@ -241,7 +241,8 @@ export class AiReaderService {
           this.tts.src = speak.objectUrl;
         else 
           this.tts.src = this.raphaelTTSService.generateSpeakWavLinkWithId(speak.ttsId!);
-
+        
+        this.tts.playbackRate = this.speakSpeed;
         this.tts.play().then().catch(er => {});
       }
       else
