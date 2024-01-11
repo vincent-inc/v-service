@@ -67,7 +67,7 @@ export class AiReaderService {
     for (let row = 0; row < spans.length; row++) {
       let span = spans[row] as HTMLSpanElement;
 
-      if(span.getElementsByTagName(codeElement).length > 0)
+      if(span.dir !== "ltr" || span.getElementsByTagName(codeElement).length > 0)
         continue;
 
       let sentence = structuredClone(span.innerText);
