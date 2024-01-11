@@ -3,6 +3,7 @@ import { SideDrawerMenuComponent } from 'src/app/side-drawer/side-drawer-menu/si
 import { AiReaderService } from '../ai-reader.service';
 import { NgxExtendedPdfViewerService } from 'ngx-extended-pdf-viewer';
 import { UtilsService } from 'src/app/shared/service/Utils.service';
+import { RaphaelTTSService } from 'src/app/shared/service/Raphael.service';
 
 @Component({
   selector: 'app-side-drawer-ai-reader',
@@ -14,12 +15,21 @@ export class SideDrawerAiReaderComponent extends SideDrawerMenuComponent {
 
   loadUrl: string = '';
   
-  constructor(public aiReaderService: AiReaderService, private utilService: UtilsService) {
+  constructor(public aiReaderService: AiReaderService, private utilService: UtilsService, private raphaelTTSService: RaphaelTTSService) {
     super();
   }
 
   override ngOnInit(): void {
       
+  }
+
+  loadFromUrl() {
+    this.raphaelTTSService.fetchFromUrl(this.loadUrl).subscribe(
+      res => {
+        let url = URL.createObjectURL(res.body!);
+        this.aiReaderService.loadedSrc = url;
+      }
+    );
   }
 
   loadFromLocal() {

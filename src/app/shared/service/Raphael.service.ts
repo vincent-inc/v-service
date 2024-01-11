@@ -19,6 +19,10 @@ export class RaphaelTTSService extends ViesRestService<TTS> {
     return ['raphael', 'tts'];
   }
 
+  fetchFromUrl(url: string) {
+    return this.httpClient.get(url, {observe: 'response', responseType: 'blob'}).pipe(first());
+  }
+
   async checkValidUrl(url: string): Promise<void> {
     return new Promise<void>(async (resolve, reject) => {
       let request = this.httpClient.get(url, {observe: 'response', responseType: 'blob'}).pipe(first());

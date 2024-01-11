@@ -2,6 +2,7 @@ import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } fro
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AuthenticatorService } from '../service/Authenticator.service';
+import { environment } from 'src/environments/environment.prod';
 
 const headers = new HttpHeaders().set('content-type', 'application/json');
 
@@ -14,6 +15,9 @@ export class AuthInterceptor implements HttpInterceptor
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> 
   {
+    if(!req.url.includes(environment.gateway_api))
+      return next.handle(req);
+
     let body = req.body;
     let jwt = this.authenticatorService.getJwt();
 
