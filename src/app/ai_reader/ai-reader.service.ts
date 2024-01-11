@@ -8,10 +8,10 @@ import { TTS } from '../shared/model/AI.model';
 export class Speak {
   sentence: string = '';
   ttsId?: number;
-  span?: HTMLSpanElement;
   page: number | null = null;
   row: number | null = null;
   objectUrl: string | null = null;
+  elements: HTMLElement[] = [];
 }
 
 @Injectable({
@@ -39,6 +39,10 @@ export class AiReaderService {
 
   maxPreloadQueue = 5;
 
+  mouseOverColor = "green";
+
+  autoSpeakColor = "blue";
+
   constructor(private raphaelTTSService: RaphaelTTSService) { 
     
   }
@@ -48,34 +52,116 @@ export class AiReaderService {
   }
 
   onTextLayerRendered(event: TextLayerRenderedEvent) {
+    let codeElement = "a";
     let div = event.source.div;
     let page = div.getAttribute('data-page-number');
     let textLayerDiv = div.getElementsByClassName('textLayer')[0] as HTMLDivElement;
     let spans = textLayerDiv.getElementsByTagName("span");
+    let newLine = true;
 
+    let speak: Speak = new Speak();
+    let elementRow = 0;
     for (let row = 0; row < spans.length; row++) {
       let span = spans[row] as HTMLSpanElement;
-      let sentence = span.innerText;
+
+      if(span.getElementsByTagName(codeElement).length > 0)
+        continue;
+
+      let sentence = structuredClone(span.innerText);
       sentence = sentence.trim();
       sentence = sentence.replaceAll("&", "and");
       sentence = sentence.replaceAll("=", "equal");
-      let speak: Speak = new Speak();
-      speak.sentence = sentence;
-      speak.span = span;
-      speak.page = +page!;
-      speak.row = row;
-      span.addEventListener("mouseover", (event) => span.classList.add('greenHightLight'));
-      span.addEventListener("mouseleave", (event) => span.classList.remove('greenHightLight'));
-      span.addEventListener("click", async event => await this.onLineClick(+page!, row));
-      this.setTable(+page!, row, speak);
+      span.innerText = "";
+      
+      // span.innerText = `<span style="color: red;>${span.innerText}</span>`
+      
+      let splitTexts = sentence.match(/(?=[^])(?:\P{Sentence_Terminal}|\p{Sentence_Terminal}(?!['"`\p{Close_Punctuation}\p{Final_Punctuation}\s]))*(?:\p{Sentence_Terminal}+['"`\p{Close_Punctuation}\p{Final_Punctuation}]*|$)/guy);
+      if(splitTexts) {
 
-      if(sentence) {
-        UtilsService.ObservableToPromise(this.raphaelTTSService.post({text: sentence})).then(res => {
-          let it = this.getTable(+page!, row);
-          it.ttsId = res.id;
-        }).catch(error => console.log(error));
+        for(let i = 0; i < splitTexts.length; i++) {
+          let text = splitTexts[i];
+          if(newLine) {
+            newLine = false;
+            if(!speak.sentence) {
+              speak.sentence = text;
+              speak.page = +page!;
+              speak.row = elementRow;
+              elementRow++;
+            }
+            else if(this.isFirstCharUppercase(text)) {
+              speak = new Speak();
+              speak.sentence = text;
+              speak.page = +page!;
+              speak.row = elementRow;
+              elementRow++;
+            }
+            else {
+              speak.sentence += " " + text;
+            }
+          }
+          else {
+            speak = new Speak();
+            speak.sentence = text;
+            speak.page = +page!;
+            speak.row = elementRow;
+            elementRow++;
+          }
+
+          if(!this.isValidSpeak(speak)){
+            throw Error("something when wrong ");
+          }
+
+          this.addCodeElement(text, span, codeElement, speak);
+          this.setTable(speak.page!, speak.row!, speak);
+          
+        }
       }
+
+      newLine = true;
     }
+
+    this.foreachSpeak(s => {
+      UtilsService.ObservableToPromise(this.raphaelTTSService.post({text: s.sentence})).then(res => {
+        let page = s.page;
+        let row = s.row;
+        let it = this.getTable(page!, row!);
+        it.ttsId = res.id;
+      }).catch(error => console.log(error));
+    })
+  }
+
+  private isFirstCharUppercase(text: string): boolean {
+    let firstChar = text.substring(0, 1);
+    return firstChar === firstChar.toUpperCase();
+  }
+
+  private addCodeElement(text: string, span: HTMLSpanElement, element: string, speak: Speak) {
+    let codeElement = document.createElement(element);
+    if(text.trim()) {
+      codeElement.addEventListener("mouseover", (event) => this.changeSpeakBackgroundColorLocation(speak.page!, speak.row!, this.mouseOverColor, this.autoSpeakColor));
+      codeElement.addEventListener("mouseleave", (event) => this.changeSpeakBackgroundColorLocation(speak.page!, speak.row!, "", this.autoSpeakColor));
+      codeElement.addEventListener("click", async event => await this.onLineClick(speak.page!, speak.row!));
+    }
+    codeElement.innerText = text;
+    codeElement.style.cssText = span.style.cssText;
+    // codeElement.style.transform = "";
+    // codeElement.style.color = "red";
+    speak.elements.push(codeElement);
+    span.appendChild(codeElement);
+  }
+
+  changeSpeakBackgroundColor(speak: Speak, color: string, skipIfColor?: string) {
+    if(this.isValidSpeak(speak)) {
+      speak.elements.forEach(e => {
+        if(!(skipIfColor && e.style.backgroundColor === skipIfColor))
+          e.style.backgroundColor = color
+      });
+    }
+  }
+
+  changeSpeakBackgroundColorLocation(page: number, row: number, color: string, skipIfColor?: string) {
+    let speak = this.getTable(page, row);
+    this.changeSpeakBackgroundColor(speak, color, skipIfColor);
   }
 
   onLineClick(page: number, row: number) {
@@ -83,14 +169,6 @@ export class AiReaderService {
     this.selectSpeak(speak);
     if(this.playSpeakOnSelect)
       this.playSpeak(this.selectedSpeak!);
-  }
-
-  private autoCorrectTable(page: number, row: number) {
-    while(this.table.length <= page)
-      this.table.push([]);
-
-    while(this.table[page].length <= row)
-      this.table[page].push(new Speak());
   }
 
   foreachSpeak(fn: (s: Speak) => void) {
@@ -101,6 +179,14 @@ export class AiReaderService {
 
   isValidSpeak(speak: Speak): boolean {
     return speak && speak.page !== null && speak.row !== null && speak.page >= 0 && speak.row >= 0;
+  }
+
+  private autoCorrectTable(page: number, row: number) {
+    while(this.table.length <= page)
+      this.table.push([]);
+
+    while(this.table[page].length <= row)
+      this.table[page].push(new Speak());
   }
 
   setTable(page: number, row: number, speak: Speak) {
@@ -117,9 +203,16 @@ export class AiReaderService {
     if(!this.selectedSpeak)
       this.selectedSpeak = speak;
 
-    this.selectedSpeak!.span!.classList.remove('blueGreenHightLight');
+    this.changeSpeakBackgroundColor(this.selectedSpeak!, "");
     this.selectedSpeak = speak;
-    this.selectedSpeak!.span!.classList.add('blueGreenHightLight');
+    this.changeSpeakBackgroundColor(this.selectedSpeak!, this.autoSpeakColor);
+  }
+
+  clearSelectedSpeak() {
+    if(this.selectedSpeak) {
+      this.changeSpeakBackgroundColor(this.selectedSpeak!, "");
+      this.selectedSpeak = null;
+    }
   }
 
   async playSpeak(speak: Speak): Promise<void> {
