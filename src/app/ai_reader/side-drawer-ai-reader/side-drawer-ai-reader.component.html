@@ -84,6 +84,21 @@
     </mat-slider>
     </mat-card-content>
   </li>
+  <li>
+    <mat-card-content>
+      <div>
+        <label>Preload create TTS: {{slider3.value}}</label>
+      </div>
+      <mat-slider
+        [max]="100"
+        [min]="1"
+        [step]="1"
+        [discrete]="true"
+        [showTickMarks]="true">
+      <input matSliderThumb [(ngModel)]="aiReaderService.preloadSpeak" #slider3>
+    </mat-slider>
+    </mat-card-content>
+  </li>
   <li *ngIf="aiReaderService.selectedSpeak">
     <button 
     mat-raised-button 
