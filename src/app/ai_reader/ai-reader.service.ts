@@ -84,7 +84,7 @@ export class AiReaderService {
       if(splitTexts) {
 
         for(let i = 0; i < splitTexts.length; i++) {
-          let text = splitTexts[i].replaceAll("\"", ".");
+          let text = splitTexts[i].replaceAll("\"", ",");
           if(newLine) {
             newLine = false;
             if(!speak.sentence) {
