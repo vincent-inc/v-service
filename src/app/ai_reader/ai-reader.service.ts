@@ -38,6 +38,7 @@ export class AiReaderService {
 
   tts = new Audio();
 
+  maxPreloadSpeak = 30;
   maxPreloadQueue = 5;
 
   mouseOverColor = "green";
@@ -54,6 +55,7 @@ export class AiReaderService {
 
   onPageChange(pageNumber: number) {
     //do something on page change
+    this.preloadSpeak(pageNumber);
   }
 
   onTextLayerRendered(event: TextLayerRenderedEvent) {
@@ -133,14 +135,16 @@ export class AiReaderService {
         let rowTop = beginRowTop;
         let page = s.page;
         let row = s.row;
-        UtilsService.ObservableToPromise(this.raphaelTTSService.post({text: s.sentence})).then(res => {
-          let it = this.getTable(page!, row!);
-          it.ttsId = res.id;
-          it.scrollTop = rowTop;
-        }).catch(error => console.log(error));
+        s.scrollTop = rowTop;
+        // UtilsService.ObservableToPromise(this.raphaelTTSService.post({text: s.sentence})).then(res => {
+        //   let it = this.getTable(page!, row!);
+        //   it.ttsId = res.id;
+        // }).catch(error => console.log(error));
         beginRowTop += eachRowTop;
       });
     })
+
+    this.preloadSpeak(1);
   }
 
   private isFirstCharUppercase(text: string): boolean {
@@ -159,6 +163,41 @@ export class AiReaderService {
     codeElement.style.cssText = span.style.cssText;
     speak.elements.push(codeElement);
     span.appendChild(codeElement);
+  }
+
+  preloadSpeak(page: number, row?: number) {
+    let nextSpeak: Speak | null = this.getTable(page, row ?? 0);;
+    let previousSpeak: Speak | null = this.getTable(page, row ?? 0);;
+    
+    for(let i = 0; i < this.maxPreloadSpeak; i++) {
+      if(nextSpeak) {
+        let nextSpeakSentence = nextSpeak.sentence;
+        let nextSpeakPage = nextSpeak.page!;
+        let nextSpeakRow = nextSpeak.row!;
+        if(!nextSpeak.ttsId) {
+          UtilsService.ObservableToPromise(this.raphaelTTSService.post({text: nextSpeakSentence})).then(res => {
+            let it = this.getTable(nextSpeakPage, nextSpeakRow);
+            it.ttsId = res.id;
+          }).catch(error => console.log(error));
+        }
+
+        nextSpeak = this.getNextFromSpeak(nextSpeak!);
+      }
+
+      if(previousSpeak) {
+        let previousSpeakSentence = previousSpeak.sentence;
+        let previousSpeakPage = previousSpeak.page!;
+        let previousSpeakRow = previousSpeak.row!;
+        if(!previousSpeak.ttsId) {
+          UtilsService.ObservableToPromise(this.raphaelTTSService.post({text: previousSpeakSentence})).then(res => {
+            let it = this.getTable(previousSpeakPage, previousSpeakRow);
+            it.ttsId = res.id;
+          }).catch(error => console.log(error));
+        }
+
+        previousSpeak = this.getPreviousFromSpeak(previousSpeak!);
+      }
+    }
   }
 
   changeSpeakBackgroundColor(speak: Speak, color: string, skipIfColor?: string) {
