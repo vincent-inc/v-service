@@ -12,6 +12,7 @@ export abstract class ViesRestService<T extends Object>{
     protected getURI(): string {
         return environment.gateway_api;
     }
+    
     protected abstract getPrefixes(): string[];
 
     protected getPrefixPath(): string {

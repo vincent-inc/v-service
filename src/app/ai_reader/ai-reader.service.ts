@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { NgxExtendedPdfViewerService, TextLayerRenderedEvent} from 'ngx-extended-pdf-viewer';
 import { UtilsService } from '../shared/service/Utils.service';
 import { AIReaderService } from '../shared/service/AI.service';
-import { RaphaelTTSService } from '../shared/service/Raphael.service';
+import { RaphaelTTSServiceV1 } from '../shared/service/Raphael.service';
 import { TTS } from '../shared/model/AI.model';
 
 export class Speak {
@@ -38,7 +38,7 @@ export class AiReaderService {
 
   tts = new Audio();
 
-  maxPreloadSpeak = 20;
+  maxPreloadSpeak = 5;
   maxPreloadQueue = 5;
 
   mouseOverColor = "green";
@@ -49,13 +49,13 @@ export class AiReaderService {
 
   speakSpeed = 1;
 
-  constructor(private raphaelTTSService: RaphaelTTSService) { 
+  constructor(private raphaelTTSService: RaphaelTTSServiceV1) { 
     
   }
 
   onPageChange(pageNumber: number) {
     //do something on page change
-    this.preloadSpeak(pageNumber);
+    // this.preloadSpeak(pageNumber);
   }
 
   onTextLayerRendered(event: TextLayerRenderedEvent) {
@@ -144,7 +144,7 @@ export class AiReaderService {
       });
     })
 
-    this.preloadSpeak(1);
+    // this.preloadSpeak(1);
   }
 
   private isFirstCharUppercase(text: string): boolean {
@@ -165,36 +165,37 @@ export class AiReaderService {
     span.appendChild(codeElement);
   }
 
-  preloadSpeak(page: number, row?: number) {
+  async preloadTTS(speak: Speak) {
+    return new Promise<void>(resolve => {
+      let speakSentence = speak.sentence;
+      let speakPage = speak.page!;
+      let speakRow = speak.row!;
+      if(!speak.ttsId) {
+        UtilsService.ObservableToPromise(this.raphaelTTSService.post({text: speakSentence}))
+        .then(res => {
+          let it = this.getTable(speakPage, speakRow);
+          it.ttsId = res.id;
+        })
+        .catch(error => console.log(error))
+        .finally(() => {resolve()});
+      }
+      else
+        resolve();
+    })
+  }
+
+  preloadTTSs(page: number, row?: number) {
     let nextSpeak: Speak | null = this.getTable(page, row ?? 0);;
     let previousSpeak: Speak | null = this.getTable(page, row ?? 0);;
     
     for(let i = 0; i < this.maxPreloadSpeak; i++) {
       if(nextSpeak) {
-        let nextSpeakSentence = nextSpeak.sentence;
-        let nextSpeakPage = nextSpeak.page!;
-        let nextSpeakRow = nextSpeak.row!;
-        if(!nextSpeak.ttsId) {
-          UtilsService.ObservableToPromise(this.raphaelTTSService.post({text: nextSpeakSentence})).then(res => {
-            let it = this.getTable(nextSpeakPage, nextSpeakRow);
-            it.ttsId = res.id;
-          }).catch(error => console.log(error));
-        }
-
+        this.preloadTTS(nextSpeak);
         nextSpeak = this.getNextFromSpeak(nextSpeak!);
       }
 
       if(previousSpeak) {
-        let previousSpeakSentence = previousSpeak.sentence;
-        let previousSpeakPage = previousSpeak.page!;
-        let previousSpeakRow = previousSpeak.row!;
-        if(!previousSpeak.ttsId) {
-          UtilsService.ObservableToPromise(this.raphaelTTSService.post({text: previousSpeakSentence})).then(res => {
-            let it = this.getTable(previousSpeakPage, previousSpeakRow);
-            it.ttsId = res.id;
-          }).catch(error => console.log(error));
-        }
-
+        this.preloadTTS(previousSpeak);
         previousSpeak = this.getPreviousFromSpeak(previousSpeak!);
       }
     }
@@ -258,6 +259,8 @@ export class AiReaderService {
     this.changeSpeakBackgroundColor(this.selectedSpeak!, "");
     this.selectedSpeak = speak;
     this.changeSpeakBackgroundColor(this.selectedSpeak!, this.autoSpeakColor);
+    
+    this.preloadTTSs(speak.page!, speak.row!);
   }
 
   clearSelectedSpeak() {
@@ -272,7 +275,10 @@ export class AiReaderService {
   }
 
   async playSpeak(speak: Speak): Promise<void> {
-    return new Promise<void>((resolve) => {
+    if(this.isValidSpeak(speak) && !speak.objectUrl)
+      await this.preload(speak.page!, speak.row!);
+
+    return new Promise<void>(async (resolve) => {
       this.tts.onended = () => resolve();
 
       if(this.isValidSpeak(speak) && (speak.objectUrl || (speak.sentence && speak.ttsId))) {
@@ -421,7 +427,7 @@ export class AiReaderService {
     await this.beginPlayReading();
   }
 
-  private preloadAudio(): Promise<void> {
+  private preloadAudios(): Promise<void> {
     return new Promise<void>(async resolve => {
       if(this.maxPreloadQueue <= 0)
         resolve();
@@ -454,8 +460,16 @@ export class AiReaderService {
     })
   }
 
-  private preload(page: number, row: number) {
+  private async preload(page: number, row: number) {
     let speak = this.getTable(page, row);
+
+    if(!speak.ttsId)
+      await this.preloadTTS(speak);
+
+    this.loadWavObj(speak, page, row);
+  }
+
+  private loadWavObj(speak: Speak, page: number, row: number) {
     this.raphaelTTSService.getWavById(speak.ttsId!).then(wav => {
       let url = URL.createObjectURL(wav.body!);
       let speak = this.getTable(page, row);
@@ -464,7 +478,7 @@ export class AiReaderService {
   }
 
   private async beginPlayReading() {
-    this.preloadAudio().then().catch();
+    this.preloadAudios().then().catch();
     this.scrollSpeakIntoView(this.selectedSpeak!);
     await this.playSpeak(this.selectedSpeak!);
     if(this.playReading) {

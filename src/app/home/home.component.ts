@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  rightDomain = 'https://vincentprivate.synology.me:10780';
+  rightDomain = 'https://veco_service.viescloud.com';
 
   constructor() { }
 

@@ -16,7 +16,55 @@ export class RaphaelTTSService extends ViesRestService<TTS> {
   }
 
   protected override getPrefixes(): string[] {
-    return ['raphael', 'tts'];
+    return ['raphael', 'api', 'v2', 'tts'];
+  }
+
+  fetchFromUrl(url: string) {
+    return this.httpClient.get(url, {observe: 'response', responseType: 'blob'}).pipe(first());
+  }
+
+  async checkValidUrl(url: string): Promise<void> {
+    return new Promise<void>(async (resolve, reject) => {
+      let request = this.httpClient.get(url, {observe: 'response', responseType: 'blob'}).pipe(first());
+      let valid = await UtilsService.ObservableToPromise(request);
+      let isValid = valid.status === 200;
+      if(isValid)
+        resolve();
+      else
+        reject();
+    }); 
+  }
+
+  generateWav(input: string) {
+    let textPojo = {
+      text: input
+    }
+
+    let request = this.httpClient.post(`${this.getURI()}${this.getPrefixPath()}/wav`, textPojo, {observe: 'response', responseType: 'blob'}).pipe(first());
+    return UtilsService.ObservableToPromise(request);
+  }
+
+  preload(input: string) {
+    let textPojo = {
+      text: input
+    }
+
+    let request = this.httpClient.put(`${this.getURI()}${this.getPrefixPath()}/preload`, textPojo).pipe(first());
+    return UtilsService.ObservableToPromise(request);
+  }
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class RaphaelTTSServiceV1 extends ViesRestService<TTS> {
+
+  constructor(httpClient: HttpClient, private authenticatorService: AuthenticatorService) {
+    super(httpClient);
+  }
+
+  protected override getPrefixes(): string[] {
+    return ['raphael', 'api', 'v1', 'tts'];
   }
 
   fetchFromUrl(url: string) {

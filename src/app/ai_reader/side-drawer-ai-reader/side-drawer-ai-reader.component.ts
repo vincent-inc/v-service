@@ -1,9 +1,8 @@
-import { Component, Input, OnInit, forwardRef } from '@angular/core';
+import { Component, forwardRef } from '@angular/core';
 import { SideDrawerMenuComponent } from 'src/app/side-drawer/side-drawer-menu/side-drawer-menu.component';
 import { AiReaderService } from '../ai-reader.service';
-import { NgxExtendedPdfViewerService } from 'ngx-extended-pdf-viewer';
 import { UtilsService } from 'src/app/shared/service/Utils.service';
-import { RaphaelTTSService } from 'src/app/shared/service/Raphael.service';
+import { RaphaelTTSServiceV1 } from 'src/app/shared/service/Raphael.service';
 
 @Component({
   selector: 'app-side-drawer-ai-reader',
@@ -15,7 +14,7 @@ export class SideDrawerAiReaderComponent extends SideDrawerMenuComponent {
 
   loadUrl: string = '';
   
-  constructor(public aiReaderService: AiReaderService, private utilService: UtilsService, private raphaelTTSService: RaphaelTTSService) {
+  constructor(public aiReaderService: AiReaderService, private utilService: UtilsService, private raphaelTTSService: RaphaelTTSServiceV1) {
     super();
   }
 
