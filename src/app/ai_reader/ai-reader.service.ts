@@ -38,7 +38,7 @@ export class AiReaderService {
 
   tts = new Audio();
 
-  maxPreloadSpeak = 5;
+  maxPreloadSpeak = 10;
   maxPreloadQueue = 5;
 
   mouseOverColor = "green";
