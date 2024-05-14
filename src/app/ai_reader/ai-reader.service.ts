@@ -55,7 +55,6 @@ export class AiReaderService {
 
   onPageChange(pageNumber: number) {
     //do something on page change
-    // this.preloadSpeak(pageNumber);
   }
 
   onTextLayerRendered(event: TextLayerRenderedEvent) {
@@ -128,15 +127,9 @@ export class AiReaderService {
         let page = s.page;
         let row = s.row;
         s.scrollTop = rowTop;
-        // UtilsService.ObservableToPromise(this.raphaelTTSService.post({text: s.sentence})).then(res => {
-        //   let it = this.getTable(page!, row!);
-        //   it.ttsId = res.id;
-        // }).catch(error => console.log(error));
         beginRowTop += eachRowTop;
       });
     })
-
-    // this.preloadSpeak(1);
   }
 
   private nextElementRow(speak: Speak, text: string, page: string | null, elementRow: number) {
