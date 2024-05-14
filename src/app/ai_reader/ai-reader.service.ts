@@ -83,24 +83,19 @@ export class AiReaderService {
       // span.innerText = `<span style="color: red;>${span.innerText}</span>`
       
       let splitTexts = sentence.match(/(?=[^])(?:\P{Sentence_Terminal}|\p{Sentence_Terminal}(?!['"`\p{Close_Punctuation}\p{Final_Punctuation}\s]))*(?:\p{Sentence_Terminal}+['"`\p{Close_Punctuation}\p{Final_Punctuation}]*|$)/guy);
+      
       if(splitTexts) {
 
         for(let i = 0; i < splitTexts.length; i++) {
-          let text = splitTexts[i].replaceAll("\"", ",");
+          let text = splitTexts[i].replaceAll("\"", "").replaceAll("?", "");
           if(newLine) {
             newLine = false;
             if(!speak.sentence) {
-              speak.sentence = text;
-              speak.page = +page!;
-              speak.row = elementRow;
-              elementRow++;
+              elementRow = this.nextElementRow(speak, text, page, elementRow);
             }
             else if(this.isFirstCharUppercase(text)) {
               speak = new Speak();
-              speak.sentence = text;
-              speak.page = +page!;
-              speak.row = elementRow;
-              elementRow++;
+              elementRow = this.nextElementRow(speak, text, page, elementRow);
             }
             else {
               speak.sentence += " " + text;
@@ -108,10 +103,7 @@ export class AiReaderService {
           }
           else {
             speak = new Speak();
-            speak.sentence = text;
-            speak.page = +page!;
-            speak.row = elementRow;
-            elementRow++;
+            elementRow = this.nextElementRow(speak, text, page, elementRow);
           }
 
           if(!this.isValidSpeak(speak)){
@@ -145,6 +137,14 @@ export class AiReaderService {
     })
 
     // this.preloadSpeak(1);
+  }
+
+  private nextElementRow(speak: Speak, text: string, page: string | null, elementRow: number) {
+    speak.sentence = text;
+    speak.page = +page!;
+    speak.row = elementRow;
+    elementRow++;
+    return elementRow;
   }
 
   private isFirstCharUppercase(text: string): boolean {
