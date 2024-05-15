@@ -6,6 +6,9 @@ export interface Jwt {
 
 export interface User {
     id?:          number;
+    sub?:         string;
+    email?:       string;
+    name?:        string
     username?:    string;
     password?:    string;
     userProfile?: UserProfile;
@@ -77,4 +80,10 @@ export class Player {
         this.id = user.id!;
         this.alias = user.userProfile!.alias!;
     }
+}
+
+export interface OpenIdRequest {
+    code: string;
+    state: string;
+    redirectUri: string;
 }

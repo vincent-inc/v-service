@@ -1,7 +1,7 @@
 <ul>
   <li><h1><b>Dashboard</b></h1></li>
   <li><button mat-flat-button [routerLink]="['/home']" routerLinkActive="router-link-active" >Home</button></li>
-  <li><button *ngIf="!authenticatorService.isLoginB" mat-flat-button [routerLink]="['/login']" routerLinkActive="router-link-active" >Login</button></li>
+  <li><button *ngIf="!authenticatorService.isLoginB" mat-flat-button (click)="openIdService.authorizeFlow()">Login</button></li>
   <li><button *ngIf="authenticatorService.isLoginB" mat-flat-button (click)="authenticatorService.logout()" >Logout</button></li>
   <li><button *ngIf="!authenticatorService.isLoginB" mat-flat-button [routerLink]="['/register']" routerLinkActive="router-link-active" >Register</button></li>
   <hr>

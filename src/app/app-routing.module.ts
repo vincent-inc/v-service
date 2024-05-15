@@ -13,11 +13,16 @@ import { UserSettingComponent } from './setting/user-setting/user-setting.compon
 import { SpringBootSnippetV01Component } from './cool_util/Spring-boot-snippet-v01/Spring-boot-snippet-v01.component';
 import { AngularServiceGeneratorComponent } from './cool_util/angular-service-generator/angular-service-generator.component';
 import { AiReaderBodyComponent } from './ai_reader/ai-reader-body/ai-reader-body.component';
+import { OpenIdComponent } from './openId/openId.component';
 
 const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent
+  },
+  {
+    path: 'openId',
+    component: OpenIdComponent
   },
   {
     path: 'login',

@@ -26,6 +26,7 @@ import { AiReaderBodyComponent } from './ai_reader/ai-reader-body/ai-reader-body
 import { SideDrawerAiReaderComponent } from './ai_reader/side-drawer-ai-reader/side-drawer-ai-reader.component';
 import { SideDrawerMenuComponent } from './side-drawer/side-drawer-menu/side-drawer-menu.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { OpenIdComponent } from './openId/openId.component';
 
 export const defaultTextColor = 'black';
 
@@ -61,16 +62,17 @@ const LIST = [
   VincentComponent,
   GeneralQuestionsComponent,
   UserSettingComponent,
+  OpenIdComponent
 ]
 
 @NgModule({
-  declarations: [
+  declarations: [	
     ... GAMES,
     ... LIST,
     ... COOL_SERVICE,
     ... SIDE_DRAWER,
-    ... AI_READER
-  ],
+    ... AI_READER,
+   ],
   imports: [
     NgEssentialModule,
     NgMaterialModule,

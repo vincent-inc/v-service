@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Jwt, Route, User, UserRole } from '../model/Authenticator.model';
+import { Jwt, OpenIdRequest, Route, User, UserRole } from '../model/Authenticator.model';
 import { SettingService } from './Setting.service';
 import { Observable, first, interval } from 'rxjs';
 import { UsernameExistResponse } from '../model/Response.model';
@@ -127,6 +127,10 @@ export class AuthenticatorService {
 
   login(user: {username: string, password: string}): Observable<Jwt>{
     return this.httpClient.post<Jwt>(`${this.settingService.getGatewayUrl()}/login`, user);
+  }
+
+  loginWithOpenId(openIdRequest: OpenIdRequest) {
+    return this.httpClient.post<Jwt>(`${this.settingService.getGatewayUrl()}/openId`, openIdRequest);
   }
 
   modifyCurrentUser(user: User) {
