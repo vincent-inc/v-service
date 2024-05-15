@@ -29,7 +29,8 @@ export class HeaderComponent implements OnInit {
   }
 
   logout(): void {
-    this.authenticatorService.logout();
+    this.authenticatorService.logoutWithoutReroute();
+    this.openIdService.logoutFlow();
   }
 
   getURL(): string {

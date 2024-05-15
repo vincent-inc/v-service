@@ -15,6 +15,11 @@ export class OpenIdService {
     return `${window.location.protocol}//${window.location.host}/openId`;
   }
 
+  logoutFlow(): void {
+    let logoutUri = environment.authentik_openid_logout_url;
+    this.router.navigate(["/"]).then(result=>{window.location.href = logoutUri;});
+  }
+
   authorizeFlow(): void {
     let authentikUrl = environment.authentik_openid_url;
     let clientId = environment.authentik_client_id;

@@ -19,4 +19,9 @@ export class SideDrawerMainMenuComponent extends SideDrawerMenuComponent {
   override ngOnInit() {
 
   }
+
+  logout() {
+    this.authenticatorService.logoutWithoutReroute();
+    this.openIdService.logoutFlow();
+  }
 }

@@ -77,10 +77,10 @@ export class AuthenticatorService {
     if(isLogin && navigate)
       this.router.navigate([navigate]);
     else if(!isLogin)
-      this.router.navigate(["/login"]);
+      this.router.navigate(["/home"]);
   }
-  
-  logout(): void {
+
+  logoutWithoutReroute(): void {
     localStorage.removeItem("jwt");
     this.isLoginB = false;
     this.httpClient.get<void>(`${this.settingService.getGatewayUrl()}/logout`).pipe(first()).subscribe(
@@ -88,9 +88,13 @@ export class AuthenticatorService {
       error => {},
       () => {
         this.jwt = null;
-        this.router.navigate(["/login"]);
       }
     );
+  }
+  
+  logout(): void {
+    this.logoutWithoutReroute();
+    this.router.navigate(["/login"]);
   }
 
   getJwt(): string | null | undefined {
