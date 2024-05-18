@@ -102,27 +102,27 @@ export class GeneralQuestionsComponent implements OnInit {
     this.score = (100 / this.maxPoint) * this.point;
 
     if(this.score >= 90)
-      this.message = 'A+. Hello there Honey, I love you!'
+      this.message = 'A+'
     else if(this.score >= 85)
-      this.message = 'A. You are my girlfriend'
+      this.message = 'A'
     else if(this.score >= 80)
-      this.message = 'A-. almost girlfriend certify'
+      this.message = 'A-'
     else if(this.score >= 75)
-      this.message = 'B+. WOW that is almost impressive'
+      this.message = 'B+'
     else if(this.score >= 70)
-      this.message = 'B. quite average'
+      this.message = 'B'
     else if(this.score >= 65)
-      this.message = 'C+. are you who I think you are?'
+      this.message = 'C+'
     else if(this.score >= 60)
-      this.message = 'C. not bad, IMPOSTOR!'
+      this.message = 'C'
     else if(this.score >= 55)
-      this.message = 'D+. decent, but not good enough'
+      this.message = 'D+'
     else if(this.score >= 50)
-      this.message = 'D. are you even trying?'
+      this.message = 'D'
     else if(this.score >= 40)
-      this.message = 'E. definitely not my girlfriend'
+      this.message = 'E'
     else
-      this.message = 'F. Go Away, you impostor!'
+      this.message = 'F'
   }
 
   selectAnswer(question: Question, index: number, input: HTMLInputElement):void {
