@@ -1,7 +1,13 @@
 <h1 mat-dialog-title>User ID: {{data.userId}}</h1>
 <div mat-dialog-content>
-  <ul *ngIf="user && user.userProfile" appMatFormFieldGroup (onAllInputCheck)="validInputs = $event" (onFormSummit)="save()">
-    <li>
+  <ul *ngIf="user" appMatFormFieldGroup (onAllInputCheck)="validInputs = $event" (onFormSummit)="save()">
+    <app-mat-form-field-input-dynamic
+    [value]="user" (valueOutput)="user = $event"
+    [blankObject]="blankUser"
+    styleWidth="100%"
+    ></app-mat-form-field-input-dynamic>
+
+    <!-- <li>
       <app-mat-form-field-input
       #matInput
       label="Alias"
@@ -90,7 +96,8 @@
       min="0"
       max="99999"
       ></app-mat-form-field-input>
-    </li>
+    </li> -->
+    
     <hr *ngIf="user.id">
     <ng-container *ngIf="user.id">
       <li *ngFor="let role of user.userRoles; let i = index" >

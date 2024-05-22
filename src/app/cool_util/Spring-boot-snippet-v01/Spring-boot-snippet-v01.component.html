@@ -56,14 +56,14 @@
     </ul>
   </li>
   <li *ngIf="detectMethod==='auto'">
-    <!-- <app-mat-form-field-input-text-area
+    <app-mat-form-field-input-text-area
     label="Input Text here"
     placeholder="Entity class"
     [value]="inputText" (valueOutput)="inputText = $event"
     (onEnter)="extractField()"
     styleWidth="100%"
     [required]="true"
-    ></app-mat-form-field-input-text-area> -->
+    ></app-mat-form-field-input-text-area>
 
     <button mat-raised-button color="primary" [disabled]="!inputText" (click)="extractField()">Extract Field</button>
   </li>

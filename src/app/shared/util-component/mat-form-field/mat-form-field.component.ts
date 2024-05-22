@@ -46,6 +46,9 @@ export class MatFormFieldComponent extends FixChangeDetection implements OnInit,
   disable: boolean = false;
 
   @Input()
+  fakeDisable: boolean = false;
+
+  @Input()
   width: number = 40;
 
   @Input()

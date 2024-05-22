@@ -67,7 +67,7 @@ export interface MatOption {
     disable?: boolean
 }
 
-export interface Time {
+export class Time {
     id?: number;
     year?: number;
     month?: number;
@@ -76,6 +76,17 @@ export interface Time {
     minute?: number;
     second?: number;
     currentZoneId?: string;
+
+    constructor(id?: number, year?: number, month?: number, day?: number, hours?: number, minute?: number, second?: number, currentZoneId?: string) {
+        this.id = id ?? 0;
+        this.year = year ?? 0;
+        this.month = month ?? 0;
+        this.day = day ?? 0;
+        this.hours = hours ?? 0;
+        this.minute = minute ?? 0;
+        this.second = second ?? 0;
+        this.currentZoneId = currentZoneId;
+    }
 }
 
 export class MatListItem<T> {

@@ -10,6 +10,7 @@ import { QuestionDialog } from '../dialog/question-dialog/question-dialog.compon
 import { OrganizationRoleDialog } from '../dialog/organization/organization-role-dialog/organization-role-dialog.component';
 import { ObjectDialog } from '../dialog/object-dialog/object-dialog.component';
 import { OrganizationUserDialog } from '../dialog/organization/organization-user-dialog/organization-user-dialog.component';
+import { LoadingDialog } from '../dialog/loading-dialog/loading-dialog.component';
 
 const list = [
   ConfirmDialog,
@@ -19,7 +20,8 @@ const list = [
   QuestionDialog,
   OrganizationRoleDialog,
   ObjectDialog,
-  OrganizationUserDialog
+  OrganizationUserDialog,
+  LoadingDialog
 ]
 
 @NgModule({

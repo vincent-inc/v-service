@@ -28,6 +28,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSliderModule} from '@angular/material/slider';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 const list = [
   MatButtonModule,
@@ -57,7 +58,8 @@ const list = [
   MatDatepickerModule,
   MatAutocompleteModule,
   MatSlideToggleModule,
-  MatSliderModule
+  MatSliderModule,
+  MatProgressSpinnerModule
 ]
 
 @NgModule({

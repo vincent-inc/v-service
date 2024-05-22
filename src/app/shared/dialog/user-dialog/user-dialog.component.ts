@@ -1,7 +1,7 @@
 import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, Inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AuthenticatorService } from '../../service/Authenticator.service';
-import { User, UserRole } from '../../model/Authenticator.model';
+import { User, UserProfile, UserRole } from '../../model/Authenticator.model';
 import { first, isEmpty } from 'rxjs';
 import { MatFormFieldInputComponent } from '../../util-component/mat-form-field-input/mat-form-field-input.component';
 import { MatFormFieldGroupDirective } from '../../directive/mat-form-field-group.directive';
@@ -13,8 +13,9 @@ import { MatFormFieldGroupDirective } from '../../directive/mat-form-field-group
 })
 export class UserDialog implements OnInit, AfterViewChecked {
 
-  user!: User;
-  userClone!: User;
+  user!: User; // to be change
+  userClone!: User; // original
+  blankUser: User = new User();
 
   userRoles: UserRole[] = [];
 
@@ -44,24 +45,7 @@ export class UserDialog implements OnInit, AfterViewChecked {
     );
 
     if(id === 0) {
-      this.user = {
-        id: 0,
-        username: '',
-        password: '',
-        userProfile: {
-          firstName:   '',
-          lastName:    '',
-          phoneNumber: '',
-          email:       '',
-          address:     '',
-          city:        '',
-          state:       '',
-          zip:         '',
-          alias:       '',
-        },
-        enable: true,
-      }
-
+      this.user = new User();
       this.userClone = structuredClone(this.user);
     }
     else {
@@ -69,18 +53,8 @@ export class UserDialog implements OnInit, AfterViewChecked {
         res => {
           this.user = res; 
           if(!this.user.userProfile)
-            this.user.userProfile = {
-              firstName:   '',
-              lastName:    '',
-              phoneNumber: '',
-              email:       '',
-              address:     '',
-              city:        '',
-              state:       '',
-              zip:         '',
-              alias:       '',
-            }
-          this.userClone = structuredClone(res);
+            this.user.userProfile = new UserProfile();
+          this.userClone = structuredClone(this.user);
         },
         error => this.dialogRef.close()
       );
@@ -134,7 +108,7 @@ export class UserDialog implements OnInit, AfterViewChecked {
       );
     }
     else {
-      this.authenticatorService.putUser(this.user).pipe(first()).subscribe(
+      this.authenticatorService.patchUser(this.user).pipe(first()).subscribe(
         res => {
           this.dialogRef.close('save')
         },

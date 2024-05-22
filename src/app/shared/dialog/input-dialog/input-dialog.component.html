@@ -2,14 +2,14 @@
 <div mat-dialog-content>
   <app-mat-form-field-input
   *ngIf="!data.multipleLine"
-  label="Input"
+  [label]="label"
   [value]="input" (valueOutput)="input = $event.toString()"
   [autoResize]="true"
   styleWidth="100%"
   ></app-mat-form-field-input>
   <app-mat-form-field-input-text-area
   *ngIf="data.multipleLine"
-  label="input"
+  [label]="label"
   [value]="input" (valueOutput)="input = $event.toString()"
   cols="50"
   rows="10"

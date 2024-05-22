@@ -10,7 +10,7 @@
   ></app-mat-form-field-input>
 </ng-container>
 
-<ng-container *ngIf="isValueBoolean()" appMatFormFieldGroup (onAllInputCheck)="validInput = $event">
+<ng-container *ngIf="isValueBoolean() && !isSlideToggle" appMatFormFieldGroup (onAllInputCheck)="validInput = $event">
   <app-mat-form-field-input-option
     [label]="label"
     [value]="value" (valueOutput)="value = $event"
@@ -21,6 +21,16 @@
     [disable]="disable"
     [required]="required"
   ></app-mat-form-field-input-option>
+</ng-container>
+
+<ng-container *ngIf="isValueBoolean() && isSlideToggle" appMatFormFieldGroup (onAllInputCheck)="validInput = $event">
+  <mat-slide-toggle 
+  [color]="matColor"
+  [(ngModel)]="value" 
+  (ngModelChange)="emitValue()"
+  [disabled]="disable"
+  [required]="required"
+  >{{label}}</mat-slide-toggle>
 </ng-container>
 
 <ng-container *ngIf="isValueNonMultipleStringLine()" appMatFormFieldGroup (onAllInputCheck)="validInput = $event">

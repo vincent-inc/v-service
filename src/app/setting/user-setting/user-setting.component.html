@@ -55,8 +55,9 @@
       <app-mat-form-field-input
       label="Email"
       placeholder="Ex. email"
-      [value]="user.userProfile!.email?.toString() ?? ''" (valueOutput)="user.userProfile!.email = $event.toString()"
+      [value]="user.email?.toString() ?? ''"
       styleWidth="100%"
+      [disable]="true"
       ></app-mat-form-field-input>
     </li>
     <li>
