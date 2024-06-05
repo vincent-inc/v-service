@@ -8,7 +8,8 @@
 			"projectUrl": "https://github.com/vincent-inc/v-service",
 			"displayName": "v-service dev",
 			"dockerImage": "v-service",
-			"environment": "dev"
+			"environment": "dev",
+			"envFileId": "fef2ee70-534a-4613-b53d-65a43ea1a4a0"
 		}
 	},
 	{
@@ -33,7 +34,8 @@
 			"projectUrl": "https://github.com/vincent-inc/v-service",
 			"displayName": "v-service stage",
 			"dockerImage": "v-service",
-			"environment": "stage"
+			"environment": "stage",
+			"envFileId": "9e4f7dc1-440b-4f56-b743-952a6e72b4e6"
 		}
 	},
 	{
@@ -58,7 +60,8 @@
 			"projectUrl": "https://github.com/vincent-inc/v-service",
 			"displayName": "v-service prod",
 			"dockerImage": "v-service",
-			"environment": "prod"
+			"environment": "prod",
+			"envFileId": "d038916e-099b-459d-9d50-1ef7de67b944"
 		}
 	},
 	{
